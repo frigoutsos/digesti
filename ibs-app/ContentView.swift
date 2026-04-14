@@ -1,55 +1,41 @@
 //
 //  ContentView.swift
-//  ibs-app
+//  AheadAche
 //
-//  Created by Franklin Rigoutsos on 4/14/26.
+//  This view structures the layout of the app.
 //
-
+//  Created by Franklin Rigoutsos on 1/20/26.
+//
 import SwiftUI
-import SwiftData
 
-struct ContentView: View {
-    @Environment(\.modelContext) private var modelContext
-    @Query private var items: [Item]
-
+struct ContentView: View {    
     var body: some View {
-        NavigationSplitView {
-            List {
-                ForEach(items) { item in
-                    NavigationLink {
-                        Text("Item at \(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))")
-                    } label: {
-                        Text(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))
+        VStack {
+            // Set up the bottom TabView
+            TabView {
+                Tab("Home", systemImage: "house.fill") {
+                    NavigationStack {
+                        HomeView()
                     }
                 }
-                .onDelete(perform: deleteItems)
-            }
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    EditButton()
-                }
-                ToolbarItem {
-                    Button(action: addItem) {
-                        Label("Add Item", systemImage: "plus")
+                
+                Tab("Calendar", systemImage: "calendar") {
+                    NavigationStack {
+                        CalendarView()
                     }
                 }
-            }
-        } detail: {
-            Text("Select an item")
-        }
-    }
-
-    private func addItem() {
-        withAnimation {
-            let newItem = Item(timestamp: Date())
-            modelContext.insert(newItem)
-        }
-    }
-
-    private func deleteItems(offsets: IndexSet) {
-        withAnimation {
-            for index in offsets {
-                modelContext.delete(items[index])
+                
+                Tab("History", systemImage: "clock.fill") {
+                    NavigationStack {
+                        HistoryView()
+                    }
+                }
+                
+                Tab("Insights", systemImage: "lightbulb") {
+                    NavigationStack {
+                        InsightsView()
+                    }
+                }
             }
         }
     }
@@ -57,5 +43,4 @@ struct ContentView: View {
 
 #Preview {
     ContentView()
-        .modelContainer(for: Item.self, inMemory: true)
 }
