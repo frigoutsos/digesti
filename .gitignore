@@ -117,7 +117,8 @@ iOSInjectionProject/
 Packages
 xcuserdata
 *.xcodeproj
-
+*.xcodeproj/project.xcworkspace/
+*.xcworkspace
 
 ### SwiftPM ###
 
