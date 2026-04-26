@@ -1,23 +1,24 @@
 //
 //  LoggingView.swift
-//  AheadAche
+//  ibs-app
 //
-//  This view guides the user through logging headaches.
-//
-//  Created by Franklin Rigoutsos on 1/20/26.
+//  This view guides the user through logging episodes.
 //
 import SwiftUI
 import SwiftData
 
 /*
  * Here we make a temporary object to hold user input,
- * which will then be turned into a Headache object.
+ * which will then be turned into an Episode object.
  */
-struct HeadacheInput {
+struct EpisodeInput {
+    var onset: Date = Date()
+    var movement: Date = Date()
     var intensity: Double = 5
-    var onsetDateAndTime: Date = Date()
-    var locations: [HeadacheLocation] = []
-    var triggers: [HeadacheTrigger] = []
+    var stress: Double = 5
+    var bloating: Bool = false
+    var triggers: [Trigger] = []
+    var stools: [Stool] = []
 }
 
 struct LoggingView: View {
@@ -31,30 +32,15 @@ struct LoggingView: View {
     @State private var step: Int = 1
     
     // State of the user's input as they go through the screen
-    @State private var input = HeadacheInput()
+    @State private var input = EpisodeInput()
     
-    // State to track if we saved a user's headache yet
+    // State to track if we saved a user's episode yet
     @State private var didSave = false
     
     var body: some View {
         // Change the view programatically as the user clicks through the prompts
         NavigationStack {
             VStack(alignment: .leading, spacing: 24) {
-                HStack(spacing: 12) {
-                    Text("Progress:")
-                        .font(.subheadline)
-                        .fontWeight(.semibold)
-                        .foregroundStyle(.secondary)
-                    
-                    // Display a progress bar to the user
-                    ProgressView(value: Double(step), total: 4)
-                        .tint(.blue)
-                }
-                .frame(maxWidth: .infinity)
-                .padding(.horizontal)
-                .padding(.top, 8)
-                .padding(.bottom, 48)
-                
                 // Programmatically change the content displayed based on the user's step
                 VStack(spacing: 16) {
                     stepContent
@@ -76,24 +62,24 @@ struct LoggingView: View {
     private var stepContent: some View {
         switch step {
         case 1:
-            timeAndIntensityStep
+            backgroundStep
         case 2:
-            locationStep
-        case 3:
             triggerStep
+        case 3:
+            stoolStep
         case 4:
             summaryStep
         default:
-            timeAndIntensityStep
+            backgroundStep
         }
     }
     
     // Computed property to change the title based on the user's step
     private var navigationTitle: String {
         switch step {
-        case 1: return "Time and Intensity"
-        case 2: return "Location"
-        case 3: return "Triggers"
+        case 1: return "Background"
+        case 2: return "Triggers"
+        case 3: return "Recent Stool"
         case 4: return "Summary"
         default: return ""
         }
@@ -123,132 +109,163 @@ struct LoggingView: View {
                 }
             } else {
                 Button("Done", role: .confirm) {
-                    saveHeadache()
+                    saveEpisode()
                 }
-                // Provide user with a success haptic upon saving the headache
+                // Provide user with a success haptic upon saving the episode
                 .sensoryFeedback(.success, trigger: didSave)
             }
         }
     }
     
-    // Computed property to build the headache on the fly
-    private var builtHeadache: Headache {
-        Headache(
-            onsetDateAndTime: input.onsetDateAndTime,
-            // Cast intensity to Int when saving the headache, since the input slider uses decimal increments to slide more smoothly, which means the user is saving a Double
+    // Computed property to build the episode on-the-fly
+    private var builtEpisode: Episode {
+        Episode(
+            onset: input.onset,
+            movement: input.movement,
+            // Cast intensity to Int when saving the episode, since the input slider uses decimal increments to slide more smoothly, which means the user is saving a Double
             intensity: Int(input.intensity),
-            locations: input.locations,
-            triggers: input.triggers
+            stress: Int(input.stress),
+            bloating: input.bloating,
+            triggers: input.triggers,
+            stools: input.stools
         )
     }
     
-    // Function to save a headache when the user is done with the input flow
-    private func saveHeadache() {
+    // Function to save a episode when the user is done with the input flow
+    private func saveEpisode() {
         if (!didSave) {
-            context.insert(builtHeadache)
+            context.insert(builtEpisode)
             
             do {
                 try context.save()
                 didSave = true
                 dismiss()
             } catch {
-                print("Error saving headache:", error)
+                print("Error saving episode:", error)
             }
         }
     }
 
     // Display a DatePicker and slider to the user to input date/intensity
-    var timeAndIntensityStep: some View {
-        VStack(alignment: .leading, spacing: 24) {
-            Label("When did your headache start?", systemImage: "calendar")
-                .font(.headline)
-                .foregroundStyle(.blue)
-                
-            DatePicker("Onset:",
-                       selection: $input.onsetDateAndTime,
-                       in: ...Date(),
-                       displayedComponents: [.date, .hourAndMinute])
-            .font(.subheadline)
-            .foregroundStyle(.secondary)
-            
-            Label("How intense is your headache?", systemImage: "speedometer")
-                .font(.headline)
-                .foregroundStyle(.red)
-            
-            // Make step 0.2 to make the slider more fluid, even though we truncate any decimals inputted
-            Slider(value: $input.intensity, in: 1...10, step: 0.15)
-                .tint(.red)
-            
-            HStack {
-                Text("Intensity")
-                    .font(.subheadline)
-                    .foregroundStyle(.secondary)
-                
-                Spacer()
-                
-                Text("Intensity: \(input.intensity, specifier: "%.0f") / 10")
-                    .font(.title3)
-                    .fontWeight(.semibold)
-                    .foregroundStyle(.red)
+    var backgroundStep: some View {
+        VStack(alignment: .leading, spacing: 16) {
+            VStack(alignment: .leading, spacing: 16) {
+                HStack {
+                    Image(systemName: "calendar")
+                        .foregroundStyle(.accent)
+                    
+                    Text("When did your episode start?")
+                        .font(.headline)
+                        .foregroundStyle(.primary)
+                }
+                    
+                DatePicker("Onset:",
+                           selection: $input.onset,
+                           in: ...Date(),
+                           displayedComponents: [.date, .hourAndMinute])
+                .font(.subheadline)
+                .foregroundStyle(.secondary)
             }
-        }
-        .padding()
-    }
-    
-    // Display a list of locations for the user to pick for their headache
-    var locationStep: some View {
-        VStack(alignment: .leading, spacing: 24) {
-            Label("Where does your headache hurt most?", systemImage: "location.fill")
-                .font(.headline)
-                .foregroundStyle(.orange)
             
-            // Allow scrolling through location buttons for those using larger text sizes
-            ScrollView {
-                // Organize the list into a grid
-                LazyVGrid(columns: [GridItem(.adaptive(minimum: 120))], spacing: 12) {
-                    ForEach(HeadacheLocation.allCases, id: \.self) { loc in
-                        Button {
-                            withAnimation(.easeInOut(duration: 0.1)) {
-                                // Toggle selection
-                                if input.locations.contains(loc) {
-                                    input.locations.removeAll { $0 == loc }
-                                } else {
-                                    input.locations.append(loc)
-                                }
-                            }
-                        } label: {
-                            Text(loc.rawValue)
-                                .font(.subheadline)
-                                .fontWeight(.medium)
-                                .foregroundStyle(input.locations.contains(loc) ? .black : .primary)
-                                .padding(.vertical, 10)
-                                .frame(maxWidth: .infinity)
-                                .background(input.locations.contains(loc) ? Color.orange : Color.orange.opacity(0.15))
-                                .clipShape(RoundedRectangle(cornerRadius: 12))
-                        }
-                        // Use selection feedback to indicate to user that elements are being selected on screen
-                        .sensoryFeedback(.selection, trigger: input.locations.contains(loc))
-                    }
+            VStack(alignment: .leading, spacing: 16) {
+                HStack {
+                    Image(systemName: "clock")
+                        .foregroundStyle(.accent)
+                    
+                    Text("When was your last bowel movement?")
+                        .font(.headline)
+                        .foregroundStyle(.primary)
+                }
+                
+                DatePicker("Movement:",
+                           selection: $input.movement,
+                           in: ...Date(),
+                           displayedComponents: [.date, .hourAndMinute])
+                .font(.subheadline)
+                .foregroundStyle(.secondary)
+            }
+            
+            VStack(alignment: .leading, spacing: 16) {
+                HStack {
+                    Image(systemName: "speedometer")
+                        .foregroundStyle(.accent)
+                    
+                    Text("How intense is your episode?")
+                        .font(.headline)
+                        .foregroundStyle(.primary)
+                }
+                
+                // Make step 0.2 to make the slider more fluid, even though we truncate any decimals inputted
+                Slider(value: $input.intensity, in: 1...10, step: 0.15)
+                    .tint(.accent)
+                
+                HStack {
+                    Spacer()
+                 
+                    Text("\(input.intensity, specifier: "%.0f") / 10")
+                        .font(.title3)
+                        .fontWeight(.semibold)
+                        .foregroundStyle(.primary)
+                }
+            }
+            
+            VStack(alignment: .leading, spacing: 16) {
+                HStack {
+                    Image(systemName: "figure.mind.and.body")
+                        .foregroundStyle(.accent)
+                    
+                    Text("How stressed are you?")
+                        .font(.headline)
+                        .foregroundStyle(.primary)
+                }
+                
+                // Make step 0.2 to make the slider more fluid, even though we truncate any decimals inputted
+                Slider(value: $input.stress, in: 1...10, step: 0.15)
+                    .tint(.accent)
+                
+                HStack {
+                    Spacer()
+                    
+                    Text("\(input.stress, specifier: "%.0f") / 10")
+                        .font(.title3)
+                        .fontWeight(.semibold)
+                        .foregroundStyle(.primary)
+                }
+            }
+            
+            VStack(alignment: .leading, spacing: 16) {
+                HStack {
+                    Image(systemName: "balloon.fill")
+                        .foregroundStyle(.accent)
+                    
+                    Toggle("Are you experiencing bloating?", isOn: $input.bloating)
+                        .font(.headline)
+                        .foregroundStyle(.primary)
                 }
             }
         }
         .padding()
     }
     
-    // Display a list of triggers for the user to pick for their headache
+    // Display a list of locations for the user to pick for their episode
     var triggerStep: some View {
-        VStack(alignment: .leading, spacing: 24) {
-            Label("What triggered your headache?", systemImage: "bolt.fill")
-                .font(.headline)
-                .foregroundStyle(.yellow)
+        VStack(alignment: .leading, spacing: 16) {
+            HStack {
+                Image(systemName: "bolt.fill")
+                    .foregroundStyle(.accent)
+                
+                Text("What triggered your episode?")
+                    .font(.headline)
+                    .foregroundStyle(.primary)
+            }
             
             // Allow scrolling through trigger buttons for those using larger text sizes
             ScrollView {
                 // Organize the list into a grid
                 LazyVGrid(columns: [GridItem(.adaptive(minimum: 120))], spacing: 12) {
-                    ForEach(HeadacheTrigger.allCases, id: \.self) { trig in
+                    ForEach(Trigger.allCases, id: \.self) { trig in
                         Button {
-                            withAnimation(.easeInOut(duration: 0.15)) {
+                            withAnimation(.easeInOut(duration: 0.1)) {
                                 // Toggle selection
                                 if input.triggers.contains(trig) {
                                     input.triggers.removeAll { $0 == trig }
@@ -263,7 +280,7 @@ struct LoggingView: View {
                                 .foregroundStyle(input.triggers.contains(trig) ? .black : .primary)
                                 .padding(.vertical, 10)
                                 .frame(maxWidth: .infinity)
-                                .background(input.triggers.contains(trig) ? Color.yellow : Color.yellow.opacity(0.2))
+                                .background(input.triggers.contains(trig) ? Color.accentColor : Color.accentColor.opacity(0.15))
                                 .clipShape(RoundedRectangle(cornerRadius: 12))
                         }
                         // Use selection feedback to indicate to user that elements are being selected on screen
@@ -275,17 +292,62 @@ struct LoggingView: View {
         .padding()
     }
     
-    // Display the user a summary of the headache they entered
+    // Display a list of triggers for the user to pick for their episode
+    var stoolStep: some View {
+        VStack(alignment: .leading, spacing: 16) {
+            HStack {
+                Image(systemName: "toilet.fill")
+                    .foregroundStyle(.accent)
+                
+                Text("How would you describe your stool?")
+                    .font(.headline)
+                    .foregroundStyle(.primary)
+            }
+            
+            // Allow scrolling through stool buttons for those using larger text sizes
+            ScrollView {
+                // Organize the list into a grid
+                LazyVGrid(columns: [GridItem(.adaptive(minimum: 120))], spacing: 12) {
+                    ForEach(Stool.allCases, id: \.self) { stool in
+                        Button {
+                            withAnimation(.easeInOut(duration: 0.15)) {
+                                // Toggle selection
+                                if input.stools.contains(stool) {
+                                    input.stools.removeAll { $0 == stool }
+                                } else {
+                                    input.stools.append(stool)
+                                }
+                            }
+                        } label: {
+                            Text(stool.rawValue)
+                                .font(.subheadline)
+                                .fontWeight(.medium)
+                                .foregroundStyle(input.stools.contains(stool) ? .black : .primary)
+                                .padding(.vertical, 10)
+                                .frame(maxWidth: .infinity)
+                                .background(input.stools.contains(stool) ? Color.accentColor : Color.accentColor.opacity(0.2))
+                                .clipShape(RoundedRectangle(cornerRadius: 12))
+                        }
+                        // Use selection feedback to indicate to user that elements are being selected on screen
+                        .sensoryFeedback(.selection, trigger: input.stools.contains(stool))
+                    }
+                }
+            }
+        }
+        .padding()
+    }
+    
+    // Display the user a summary of the episode they entered
     var summaryStep: some View {
-        VStack(alignment: .leading, spacing: 24) {
-            Label("Review your headache:", systemImage: "checkmark.circle.fill")
+        VStack(alignment: .leading, spacing: 16) {
+            Text("Review your episode:")
                 .font(.headline)
-                .foregroundStyle(.green)
+                .foregroundStyle(.primary)
             
             // Allow scrolling through summary view for those using larger text sizes
             ScrollView {
-                // Reuse the headache card with the built headache passed in
-                HeadacheView(headacheToView: builtHeadache)
+                // Reuse the episode card with the built episode passed in
+                EpisodeView(episodeToView: builtEpisode)
             }
         }
         .padding()

@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		7D84A79C2F8EA439008C8016 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D84A79B2F8EA439008C8016 /* Item.swift */; };
 		7D84A7BD2F8EA453008C8016 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7D84A7BA2F8EA453008C8016 /* Assets.xcassets */; };
 		7D84A7C12F8EA453008C8016 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D84A7BB2F8EA453008C8016 /* ContentView.swift */; };
 		7D84A7CB2F8EA453008C8016 /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D84A7B92F8EA453008C8016 /* App.swift */; };
@@ -15,7 +14,6 @@
 
 /* Begin PBXFileReference section */
 		7D84A7942F8EA439008C8016 /* ibs-app.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ibs-app.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		7D84A79B2F8EA439008C8016 /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		7D84A7B92F8EA453008C8016 /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
 		7D84A7BA2F8EA453008C8016 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7D84A7BB2F8EA453008C8016 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -27,13 +25,13 @@
 			membershipExceptions = (
 				Calendar/CalendarUIKitView.swift,
 				Calendar/CalendarView.swift,
-				Headache/HeadacheView.swift,
+				Episode/EpisodeView.swift,
 				History/HistoryView.swift,
 				Home/HomeView.swift,
 				Insights/InsightsView.swift,
 				Insights/LifetimeCardView.swift,
 				Insights/MonthlyCardView.swift,
-				Insights/MostRecentHeadacheView.swift,
+				Insights/MostRecentEpisodeView.swift,
 				Logging/LoggingView.swift,
 			);
 			target = 7D84A7932F8EA439008C8016 /* ibs-app */;
@@ -75,7 +73,6 @@
 				7D84A7B92F8EA453008C8016 /* App.swift */,
 				7D84A7BA2F8EA453008C8016 /* Assets.xcassets */,
 				7D84A7BB2F8EA453008C8016 /* ContentView.swift */,
-				7D84A79B2F8EA439008C8016 /* Item.swift */,
 				7D84A7952F8EA439008C8016 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -165,7 +162,6 @@
 			files = (
 				7D84A7C12F8EA453008C8016 /* ContentView.swift in Sources */,
 				7D84A7CB2F8EA453008C8016 /* App.swift in Sources */,
-				7D84A79C2F8EA439008C8016 /* Item.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

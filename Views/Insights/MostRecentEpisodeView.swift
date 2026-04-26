@@ -1,23 +1,21 @@
 //
-//  MostRecentHeadacheView.swift
-//  AheadAche
+//  MostRecentEpisodeView.swift
+//  ibs-app
 //
-//  This view creates a card to display a summary of lifetime headaches.
-//
-//  Created by Franklin Rigoutsos on 2/17/26.
+//  This view creates a card to display a summary of lifetime episodes.
 //
 import SwiftUI
 
-struct MostRecentHeadacheView: View {
-    // The user may not have inputted any headaches yet, so make this input optional
-    let mostRecentHeadache: Headache?
+struct MostRecentEpisodeView: View {
+    // The user may not have inputted any episodes yet, so make this input optional
+    let mostRecentEpisode: Episode?
     
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
             
             // Title
             HStack(spacing: 8) {
-                Label("Most Recent Headache", systemImage: "clock.arrow.circlepath")
+                Label("Most Recent Episode", systemImage: "clock.arrow.circlepath")
                     .font(.headline)
                     .foregroundStyle(.secondary)
             }
@@ -25,12 +23,12 @@ struct MostRecentHeadacheView: View {
             Divider()
             
             VStack(alignment: .leading, spacing: 12) {
-                // If there is a headache to display, create a HeadacheView card
-                if let headache = mostRecentHeadache {
-                    HeadacheView(headacheToView: headache)
-                // Otherwise, tell the user there are no headaches to display
+                // If there is an episode to display, create an EpisodeView card
+                if let episode = mostRecentEpisode {
+                    EpisodeView(episodeToView: episode)
+                // Otherwise, tell the user there are no episodes to display
                 } else {
-                    Text("No headaches to display.")
+                    Text("No episodes to display.")
                         .foregroundStyle(.secondary)
                         .frame(maxWidth: .infinity, alignment: .center)
                 }
