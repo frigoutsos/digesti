@@ -35,7 +35,7 @@ struct CalendarView: View {
             // Display our calendar
             CalendarUIKitView(
                 selectedDate: $selectedDate,
-                episodeDays: episodeDays
+                episodeDays: episodeDays,
             )
             .fixedSize(horizontal: false, vertical: true)
             .foregroundStyle(.accent)

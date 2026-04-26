@@ -68,7 +68,7 @@ struct CalendarUIKitView: UIViewRepresentable {
             let startOfDay = Calendar.current.startOfDay(for: date)
             
             if parent.episodeDays.contains(startOfDay) {
-                return .default(color: .accent, size: .large)
+        return .default(color: UIColor(Color.accent), size: .large)
             }
             
             return nil
