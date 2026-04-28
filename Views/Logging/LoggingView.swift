@@ -108,7 +108,7 @@ struct LoggingView: View {
                     step += 1
                 }
             } else {
-                Button("Done", role: .confirm) {
+                Button("Done") {
                     saveEpisode()
                 }
                 // Provide user with a success haptic upon saving the episode
