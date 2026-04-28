@@ -44,10 +44,10 @@ struct EpisodeView: View {
                     .foregroundStyle(.accent)
                     .padding(.top, 2)
                 
-                Text("Triggers:")
+                Text("Foods:")
                     .fontWeight(.semibold)
                 
-                Text(episodeToView.triggers.map { $0.rawValue }.joined(separator: ", "))
+                Text(episodeToView.foods.map { $0.name }.joined(separator: ", "))
                     .fixedSize(horizontal: false, vertical: true)
                     .foregroundStyle(.secondary)
             }

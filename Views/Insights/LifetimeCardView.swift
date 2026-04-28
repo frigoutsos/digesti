@@ -9,7 +9,7 @@ import SwiftUI
 struct LifetimeCardView: View {
     // Pass the calculated values to display, rather than the entire list of episodes
     let episodeCount: Int
-    let mostCommonLifetimeTrigger: Trigger?
+    let mostCommonLifetimeTrigger: Food?
     let mostCommonLifetimeStool: Stool?
     
     var body: some View {
@@ -41,7 +41,7 @@ struct LifetimeCardView: View {
                     Text("Most common trigger:")
                         .fontWeight(.semibold)
                     
-                    Text(mostCommonLifetimeTrigger?.rawValue ?? "Unknown")
+                    Text(mostCommonLifetimeTrigger?.name ?? "Unknown")
                         .foregroundStyle(.secondary)
                 }
                 .font(.subheadline)

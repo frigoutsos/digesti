@@ -9,7 +9,7 @@ import SwiftUI
 struct MonthlyCardView: View {
     // Pass the calculated values to display, rather than the entire list of episodes
     let episodeCount: Int
-    let mostCommonMonthTrigger: Trigger?
+    let mostCommonMonthTrigger: Food?
     let mostCommonMonthStool: Stool?
     
     var body: some View {
@@ -41,7 +41,7 @@ struct MonthlyCardView: View {
                     Text("Most common trigger:")
                         .fontWeight(.semibold)
                     
-                    Text(mostCommonMonthTrigger?.rawValue ?? "Unknown")
+                    Text(mostCommonMonthTrigger?.name ?? "Unknown")
                         .foregroundStyle(.secondary)
                 }
                 .font(.subheadline)

@@ -1,0 +1,26 @@
+[
+  {
+    "id": "beans",
+    "name": "Beans",
+    "category": "Legumes",
+    "highFodmap": false
+  },
+  {
+    "id": "milk",
+    "name": "Milk",
+    "category": "Dairy",
+    "highFodmap": true
+  },
+  {
+    "id": "apple",
+    "name": "Apple",
+    "category": "Fruit",
+    "highFodmap": false
+  },
+  {
+    "id": "bread",
+    "name": "Bread",
+    "category": "Grain",
+    "highFodmap": true
+  }
+]

@@ -17,7 +17,7 @@ struct EpisodeInput {
     var intensity: Double = 5
     var stress: Double = 5
     var bloating: Bool = false
-    var triggers: [Trigger] = []
+    var foods: [Food] = []
     var stools: [Stool] = []
 }
 
@@ -36,6 +36,9 @@ struct LoggingView: View {
     
     // State to track if we saved a user's episode yet
     @State private var didSave = false
+    
+    // State to load the foods from JSON once and keep them in memory
+    @State private var allFoods: [Food] = getFoods()
     
     var body: some View {
         // Change the view programatically as the user clicks through the prompts
@@ -126,7 +129,7 @@ struct LoggingView: View {
             intensity: Int(input.intensity),
             stress: Int(input.stress),
             bloating: input.bloating,
-            triggers: input.triggers,
+            foods: input.foods,
             stools: input.stools
         )
     }
@@ -263,28 +266,28 @@ struct LoggingView: View {
             ScrollView {
                 // Organize the list into a grid
                 LazyVGrid(columns: [GridItem(.adaptive(minimum: 120))], spacing: 12) {
-                    ForEach(Trigger.allCases, id: \.self) { trig in
+                    ForEach(allFoods, id: \.id) { food in
                         Button {
                             withAnimation(.easeInOut(duration: 0.1)) {
                                 // Toggle selection
-                                if input.triggers.contains(trig) {
-                                    input.triggers.removeAll { $0 == trig }
+                                if input.foods.contains(where: { $0.id == food.id }) {
+                                    input.foods.removeAll { $0.id == food.id }
                                 } else {
-                                    input.triggers.append(trig)
+                                    input.foods.append(food)
                                 }
                             }
                         } label: {
-                            Text(trig.rawValue)
+                            Text(food.name)
                                 .font(.subheadline)
                                 .fontWeight(.medium)
-                                .foregroundStyle(input.triggers.contains(trig) ? .black : .primary)
+                                .foregroundStyle(input.foods.contains(where: { $0.id == food.id }) ? .black : .primary)
                                 .padding(.vertical, 10)
                                 .frame(maxWidth: .infinity)
-                                .background(input.triggers.contains(trig) ? Color.accentColor : Color.accentColor.opacity(0.15))
+                                .background(input.foods.contains(where: { $0.id == food.id }) ? Color.accentColor : Color.accentColor.opacity(0.15))
                                 .clipShape(RoundedRectangle(cornerRadius: 12))
                         }
                         // Use selection feedback to indicate to user that elements are being selected on screen
-                        .sensoryFeedback(.selection, trigger: input.triggers.contains(trig))
+                        .sensoryFeedback(.selection, trigger: input.foods.contains(where: { $0.id == food.id }))
                     }
                 }
             }
