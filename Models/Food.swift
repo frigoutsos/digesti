@@ -4,7 +4,7 @@
 //
 //  This is an enum to represent possible episode triggers (including foods).
 //
-enum Trigger: String, Codable, CaseIterable {
-    case broccoli = "Broccoli"
+enum Trigger: Dictionary, Codable, CaseIterable {
+    case beans = {"name": "Beans", "category": "Legumes", highFodmap: false}
     // TODO: ADD MORE FOODS/TRIGGERS TO THE LIST!
 }

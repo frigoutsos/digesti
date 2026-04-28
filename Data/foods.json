@@ -1,0 +1,14 @@
+[
+  {
+    "id": "beans",
+    "name": "Beans",
+    "category": "Legumes",
+    "highFodmap": false
+  },
+  {
+    "id": "milk",
+    "name": "Milk",
+    "category": "Dairy",
+    "highFodmap": true
+  }
+]
