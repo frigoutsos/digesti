@@ -19,12 +19,12 @@ struct InsightsView: View {
     }
     
     // Computed property for most common monthly epsiode trigger
-    private var mostCommonMonthTrigger: Trigger? {
+    private var mostCommonMonthTrigger: Food? {
         // flatMap since the triggers field contains an array of triggers for each Episode object
-        let triggers = episodesLastMonth.flatMap { $0.triggers }
+        let foods = episodesLastMonth.flatMap { $0.foods }
         
-        let counts = triggers.reduce(into: [Trigger: Int]()) { counts, trig in
-            counts[trig, default: 0] += 1
+        let counts = foods.reduce(into: [Food: Int]()) { counts, food in
+            counts[food, default: 0] += 1
         }
         
         return counts.max(by: { $0.value < $1.value })?.key
@@ -43,13 +43,13 @@ struct InsightsView: View {
     }
     
     // Computed property for most common lifetime episode trigger
-    private var mostCommonLifetimeTrigger: Trigger? {
+    private var mostCommonLifetimeTrigger: Food? {
         // flatMap since the triggers field contains an array of triggers for each episode object
-        let triggers = episodes.flatMap { $0.triggers }
+        let foods = episodes.flatMap { $0.foods }
         
         // Create dictionary of counts
-        let counts = triggers.reduce(into: [Trigger: Int]()) { counts, trig in
-            counts[trig, default: 0] += 1
+        let counts = foods.reduce(into: [Food: Int]()) { counts, food in
+            counts[food, default: 0] += 1
         }
         
         // Find the key with the maximum count

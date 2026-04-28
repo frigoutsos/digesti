@@ -15,7 +15,7 @@ final class Episode {
     var intensity: Int
     var stress: Int
     var bloating: Bool
-    var triggers: [Trigger]
+    var foods: [Food]
     var stools: [Stool]
     
     // Assign data to each field in the initializer
@@ -25,7 +25,7 @@ final class Episode {
         intensity: Int,
         stress: Int,
         bloating: Bool,
-        triggers: [Trigger],
+        foods: [Food],
         stools: [Stool]
     ) {
         self.onset = onset
@@ -33,7 +33,7 @@ final class Episode {
         self.intensity = intensity
         self.stress = stress
         self.bloating = bloating
-        self.triggers = triggers
+        self.foods = foods
         self.stools = stools
     }
 }

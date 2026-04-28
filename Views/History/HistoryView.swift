@@ -65,7 +65,7 @@ struct HistoryView: View {
                             .navigationBarTitleDisplayMode(.inline)
                             .toolbar {
                                 ToolbarItem(placement: .topBarTrailing) {
-                                    Button("Close", role: .close) {
+                                    Button("Close") {
                                         selectedEpisode = nil
                                     }
                                 }

@@ -52,6 +52,11 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		7DD5EF212FA1262200D882EC /* Data */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Data;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,6 +73,7 @@
 		7D84A78B2F8EA439008C8016 = {
 			isa = PBXGroup;
 			children = (
+				7DD5EF212FA1262200D882EC /* Data */,
 				7D84A7D12F8EA619008C8016 /* Models */,
 				7D84A7E22F8EA619008C8016 /* Views */,
 				7D84A7B92F8EA453008C8016 /* App.swift */,
@@ -102,6 +108,7 @@
 			);
 			fileSystemSynchronizedGroups = (
 				7D84A7D12F8EA619008C8016 /* Models */,
+				7DD5EF212FA1262200D882EC /* Data */,
 			);
 			name = "ibs-app";
 			packageProductDependencies = (
