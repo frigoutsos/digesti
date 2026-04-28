@@ -1,10 +1,8 @@
 //
 //  ContentView.swift
-//  AheadAche
+//  ibs-app
 //
 //  This view structures the layout of the app.
-//
-//  Created by Franklin Rigoutsos on 1/20/26.
 //
 import SwiftUI
 
@@ -25,7 +23,7 @@ struct ContentView: View {
                     }
                 }
                 
-                Tab("History", systemImage: "clock.fill") {
+                Tab("History", systemImage: "clock") {
                     NavigationStack {
                         HistoryView()
                     }
@@ -37,6 +35,7 @@ struct ContentView: View {
                     }
                 }
             }
+            .tint(.accent)
         }
     }
 }

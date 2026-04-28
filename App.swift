@@ -1,10 +1,8 @@
 //
 //  App.swift
-//  AheadAche
+//  ibs-app
 //
 //  This contains the App's top level logic.
-//
-//  Created by Franklin Rigoutsos on 1/20/26.
 //
 import SwiftUI
 import SwiftData
@@ -16,6 +14,6 @@ struct MyApp: App {
             ContentView()
         }
         // Set up the SwiftData model container
-        .modelContainer(for: Headache.self)
+        .modelContainer(for: Episode.self)
     }
 }

@@ -1,34 +1,32 @@
 //
 //  CalendarView.swift
-//  AheadAche
+//  ibs-app
 //
-//  This view displays headaches on a calendar of the current month.
-//
-//  Created by Franklin Rigoutsos on 1/20/26.
+//  This view displays episodes on a calendar of the current month.
 //
 import SwiftUI
 import SwiftData
 
 struct CalendarView: View {
-    // Get a list of headaches, reverse sorted by time
-    @Query(sort: \Headache.onsetDateAndTime, order: .reverse) private var headaches: [Headache]
+    // Get a list of episodes, reverse sorted by time
+    @Query(sort: \Episode.onset, order: .reverse) private var episodes: [Episode]
     
-    // State variables to handle showing headache info cards for selected dates
+    // State variables to handle showing episode info cards for selected dates
     @State private var selectedDate = Date()
     @State private var showInfo: Bool = false
     
-    // Computed property to get set of Dates that had at least one headache logged on them
-    private var headacheDays: Set<Date> {
-        Set(headaches.map {
-            Calendar.current.startOfDay(for: $0.onsetDateAndTime)
+    // Computed property to get set of Dates that had at least one episode logged on them
+    private var episodeDays: Set<Date> {
+        Set(episodes.map {
+            Calendar.current.startOfDay(for: $0.onset)
         })
     }
     
-    // Computed property to get the list of headaches for the selected date
-    private var headachesForSelectedDay: [Headache] {
+    // Computed property to get the list of episodes for the selected date
+    private var episodesForSelectedDay: [Episode] {
         let day = Calendar.current.startOfDay(for: selectedDate)
-        return headaches.filter {
-            Calendar.current.isDate($0.onsetDateAndTime, inSameDayAs: day)
+        return episodes.filter {
+            Calendar.current.isDate($0.onset, inSameDayAs: day)
         }
     }
     
@@ -37,35 +35,36 @@ struct CalendarView: View {
             // Display our calendar
             CalendarUIKitView(
                 selectedDate: $selectedDate,
-                headacheDays: headacheDays
+                episodeDays: episodeDays,
             )
             .fixedSize(horizontal: false, vertical: true)
+            .foregroundStyle(.accent)
             .frame(maxWidth: 325)
             .padding(.horizontal)
             .frame(maxWidth: .infinity)
             
             Divider()
             
-            // Prompt the user to select a date on the calendar to see a headache card
-            Text("Select a day to view a headache.")
+            // Prompt the user to select a date on the calendar to see an episode card
+            Text("Select a day to view an episode.")
                 .multilineTextAlignment(.center)
                 .foregroundStyle(Color.secondary)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
         .navigationTitle("Calendar")
         .onChange(of: selectedDate) {
-            if (headacheDays.contains(selectedDate)) {
+            if (episodeDays.contains(selectedDate)) {
                 showInfo = true
             }
         }
-        // If the user clicks on a date, pop up a sheet with a headache card
+        // If the user clicks on a date, pop up a sheet with an episode card
         .sheet(isPresented: $showInfo) {
             NavigationStack {
                 ScrollView {
                     VStack(spacing: 16) {
-                        // Iterate through and display headaches for the selected day
-                        ForEach(headachesForSelectedDay) { headache in
-                            HeadacheView(headacheToView: headache)
+                        // Iterate through and display episodes for the selected day
+                        ForEach(episodesForSelectedDay) { episode in
+                            EpisodeView(episodeToView: episode)
                                 .padding()
                                 .frame(maxWidth: 400)
                                 .background(
@@ -78,7 +77,7 @@ struct CalendarView: View {
                     .padding()
                 }
                 .background(Color(.systemGroupedBackground))
-                .navigationTitle("Headaches")
+                .navigationTitle("Episodes")
                 .navigationBarTitleDisplayMode(.inline)
                 .toolbar {
                     ToolbarItem(placement: .topBarTrailing) {

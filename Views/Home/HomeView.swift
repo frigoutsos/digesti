@@ -1,15 +1,13 @@
 //
 //  HomeView.swift
-//  AheadAche
+//  ibs-app
 //
 //  This view holds the app's home screen.
-//
-//  Created by Franklin Rigoutsos on 1/20/26.
 //
 import SwiftUI
 
 struct HomeView: View {
-    // State to track if the user clicked the "Log Headache" button
+    // State to track if the user clicked the "Log Episode" button
     @State private var showLogger = false
     
     var body: some View {
@@ -19,11 +17,11 @@ struct HomeView: View {
                 
                 // Homepage welcome
                 VStack(spacing: 12) {
-                    Image(systemName: "brain.head.profile")
+                    Image(systemName: "figure.mind.and.body")
                         .font(.system(size: 48))
-                        .foregroundStyle(.blue)
+                        .foregroundStyle(.accent)
                     
-                    Text("Track Your Headaches")
+                    Text("Track Your IBS Episodes")
                         .font(.title2)
                         .fontWeight(.semibold)
                     
@@ -37,13 +35,13 @@ struct HomeView: View {
                 Button {
                     showLogger = true
                 } label: {
-                    Label("Log Headache", systemImage: "plus.circle.fill")
+                    Label("Log Episode", systemImage: "plus.circle.fill")
                         .font(.headline)
                         .frame(maxWidth: .infinity)
                         .padding()
                 }
                 .buttonStyle(.borderedProminent)
-                .tint(.blue)
+                .tint(.accent)
                 .padding(.horizontal)
                 // Direct the user to the logging view after clicking the log button
                 .sheet(isPresented: $showLogger) {

@@ -1,33 +1,31 @@
 //
 //  LifetimeCardView.swift
-//  AheadAche
+//  ibs-app
 //
-//  This view creates a card to display a summary of lifetime headaches.
-//
-//  Created by Franklin Rigoutsos on 2/17/26.
+//  This view creates a card to display a summary of lifetime episodes.
 //
 import SwiftUI
 
 struct LifetimeCardView: View {
-    // Pass the calculated values to display, rather than the entire list of headaches
-    let headacheCount: Int
-    let mostCommonLifetimeTrigger: HeadacheTrigger?
-    let mostCommonLifetimeLocation: HeadacheLocation?
+    // Pass the calculated values to display, rather than the entire list of episodes
+    let episodeCount: Int
+    let mostCommonLifetimeTrigger: Trigger?
+    let mostCommonLifetimeStool: Stool?
     
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
             
-            // Title and number of headaches
+            // Title and number of episodes
             Label("All Time", systemImage: "chart.bar.fill")
                 .font(.headline)
                 .foregroundStyle(.secondary)
             
             HStack(alignment: .firstTextBaseline, spacing: 6) {
-                Text("\(headacheCount)")
+                Text("\(episodeCount)")
                     .font(.system(size: 36, weight: .bold, design: .rounded))
                 
-                // Proper pluralization for the word headaches
-                Text("headache\(headacheCount == 1 ? "" : "s")")
+                // Proper pluralization for the word episodes
+                Text("episode\(episodeCount == 1 ? "" : "s")")
                     .font(.title3)
                     .foregroundStyle(.secondary)
             }
@@ -35,29 +33,29 @@ struct LifetimeCardView: View {
             Divider()
             
             VStack(alignment: .leading, spacing: 8) {
-                // Most common location
-                HStack(spacing: 8) {
-                    Image(systemName: "location.fill")
-                        .foregroundStyle(.orange)
-                    
-                    Text("Most common location:")
-                        .fontWeight(.semibold)
-                    
-                    Text(mostCommonLifetimeLocation?.rawValue ?? "Unknown")
-                        .foregroundStyle(.primary)
-                }
-                .font(.subheadline)
-                
                 // Most common trigger
                 HStack(spacing: 8) {
-                    Image(systemName: "bolt.heart.fill")
-                        .foregroundStyle(.red)
+                    Image(systemName: "exclamationmark.triangle.fill")
+                        .foregroundStyle(.accent)
                     
                     Text("Most common trigger:")
                         .fontWeight(.semibold)
                     
                     Text(mostCommonLifetimeTrigger?.rawValue ?? "Unknown")
-                        .foregroundStyle(.primary)
+                        .foregroundStyle(.secondary)
+                }
+                .font(.subheadline)
+                
+                // Most common stool type
+                HStack(spacing: 8) {
+                    Image(systemName: "toilet.fill")
+                        .foregroundStyle(.accent)
+                    
+                    Text("Most common stool type:")
+                        .fontWeight(.semibold)
+                    
+                    Text(mostCommonLifetimeStool?.rawValue ?? "Unknown")
+                        .foregroundStyle(.secondary)
                 }
                 .font(.subheadline)
             }

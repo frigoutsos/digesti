@@ -1,10 +1,8 @@
 //
 //  CalendarUIKitView.swift
-//  AheadAche
+//  ibs-app
 //
 //  UIKitView representation for the Calendar object, which allows for date-based decorations.
-//
-//  Created by Franklin Rigoutsos on 2/16/26.
 //
 import SwiftUI
 import UIKit
@@ -12,7 +10,7 @@ import UIKit
 struct CalendarUIKitView: UIViewRepresentable {
     
     @Binding var selectedDate: Date
-    var headacheDays: Set<Date>
+    var episodeDays: Set<Date>
     
     func makeCoordinator() -> Coordinator {
         Coordinator(self)
@@ -33,11 +31,11 @@ struct CalendarUIKitView: UIViewRepresentable {
         context.coordinator.parent = self
         
         /*
-         * When we re-render this view, we want to get the list of headache days to update the decorations.
-         * This is mainly for going back to the calendar view after logging a new headache.
+         * When we re-render this view, we want to get the list of episode days to update the decorations.
+         * This is mainly for going back to the calendar view after logging a new episode.
          */
         let calendar = Calendar.current
-        let components = headacheDays.map {
+        let components = episodeDays.map {
             calendar.dateComponents([.year, .month, .day], from: $0)
         }
         
@@ -69,9 +67,8 @@ struct CalendarUIKitView: UIViewRepresentable {
             
             let startOfDay = Calendar.current.startOfDay(for: date)
             
-            // TODO: we do not update the red dots after adding the headache!
-            if parent.headacheDays.contains(startOfDay) {
-                return .default(color: .systemRed, size: .large)
+            if parent.episodeDays.contains(startOfDay) {
+        return .default(color: UIColor(Color.accent), size: .large)
             }
             
             return nil

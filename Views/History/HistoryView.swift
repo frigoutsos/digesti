@@ -1,57 +1,55 @@
 //
 //  HistoryView.swift
-//  AheadAche
+//  ibs-app
 //
-//  This view displays the user's headaches as a scrollable list.
-//
-//  Created by Franklin Rigoutsos on 2/1/26.
+//  This view displays the user's episodes as a scrollable list.
 //
 import SwiftUI
 import SwiftData
 
 struct HistoryView: View {
-    // Get a list of headaches, reverse sorted by time
-    @Query(sort: \Headache.onsetDateAndTime, order: .reverse) private var headaches: [Headache]
+    // Get a list of episodes, reverse sorted by time
+    @Query(sort: \Episode.onset, order: .reverse) private var episodes: [Episode]
     
     // Access the configured model context
     @Environment(\.modelContext) private var modelContext
     
-    // State to track selected headache being viewed, if any
-    @State private var selectedHeadache: Headache? = nil
+    // State to track selected episode being viewed, if any
+    @State private var selectedEpisode: Episode? = nil
     
     var body: some View {
         NavigationStack {
             VStack {
-                // If there are no headaches, inform the user
-                if (headaches.isEmpty) {
-                    Text("No headaches to display.")
+                // If there are no episodes, inform the user
+                if (episodes.isEmpty) {
+                    Text("No episodes to display.")
                         .foregroundStyle(.secondary)
-                // Otherwise, display all the headaches in a list
+                // Otherwise, display all the episodes in a list
                 } else {
                     List {
-                        ForEach(headaches) { headache in
+                        ForEach(episodes) { episode in
                             VStack(alignment: .leading) {
-                                Text(headache.onsetDateAndTime.formatted(date: .abbreviated, time: .shortened))
+                                Text(episode.onset.formatted(date: .abbreviated, time: .shortened))
                                     .font(.headline)
-                                Text("Intensity: \(headache.intensity) / 10")
+                                Text("Intensity: \(episode.intensity) / 10")
                                     .font(.subheadline)
                             }
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .contentShape(Rectangle())
-                            // Set the selected headache state when clicking a headache
+                            // Set the selected episode state when clicking on it
                             .onTapGesture {
-                                selectedHeadache = headache
+                                selectedEpisode = episode
                             }
                         }
                         .onDelete(perform: deleteItem)
                     }
-                    // A sheet will popup when the user clicks a headache
-                    .sheet(item: $selectedHeadache) { headache in
+                    // A sheet will popup when the user clicks an episode
+                    .sheet(item: $selectedEpisode) { episode in
                         NavigationStack {
                             // Allow scrolling through summary view for those using larger text sizes
                             ScrollView {
                                 VStack(spacing: 16) {
-                                    HeadacheView(headacheToView: headache)
+                                    EpisodeView(episodeToView: episode)
                                         .padding()
                                         .frame(maxWidth: 400)
                                         .background(
@@ -63,12 +61,12 @@ struct HistoryView: View {
                                 .padding()
                             }
                             .background(Color(.systemGroupedBackground))
-                            .navigationTitle("Headache Summary")
+                            .navigationTitle("Episode Summary")
                             .navigationBarTitleDisplayMode(.inline)
                             .toolbar {
                                 ToolbarItem(placement: .topBarTrailing) {
                                     Button("Close", role: .close) {
-                                        selectedHeadache = nil
+                                        selectedEpisode = nil
                                     }
                                 }
                             }
@@ -81,11 +79,11 @@ struct HistoryView: View {
     }
     
     /*
-     * Function to delete a headache from the list and the SwiftData model.
+     * Function to delete an episode from the list and the SwiftData model.
      */
     func deleteItem(at offsets: IndexSet) {
         for index in offsets {
-            let item = headaches[index]
+            let item = episodes[index]
             modelContext.delete(item)
         }
         
