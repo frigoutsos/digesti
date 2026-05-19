@@ -61,7 +61,7 @@ struct FoodSelectionView: View {
                             // Display each food in that category
                             VStack(spacing: 10) {
                                 ForEach(categorizedFoods[categoryName] ?? [], id: \.self) { food in
-                                    FoodButton(food: food, isSelected: selectedFoods.contains(food)) {
+                                    CustomButton(text: food.name, isSelected: selectedFoods.contains(food)) {
                                         // Toggle selection logic
                                         if selectedFoods.contains(food) {
                                             selectedFoods.removeAll { $0 == food }
@@ -69,24 +69,24 @@ struct FoodSelectionView: View {
                                             selectedFoods.append(food)
                                         }
                                     }
+                                    .sensoryFeedback(.selection, trigger: selectedFoods.contains(food))
                                 }
                             }
                             .padding(.horizontal)
                         }
-                        .padding(.bottom, 10)
                     }
                 } else {
-                    VStack(spacing: 10) {
+                    VStack(spacing: 20) {
                         Text("Search Results for \"\(searchText)\":").font(.subheadline).foregroundStyle(.secondary)
                         
                         // Filter and display results
-                        let results = allFoods.filter { $0.name.localizedCaseInsensitiveContains(searchText) }
+                        let results = allFoods.filter { $0.name.starts(with: searchText) }
                         
                         if results.isEmpty {
                             Text("No foods found matching '\(searchText)'").foregroundStyle(.secondary)
                         } else {
                             ForEach(results) { food in
-                                FoodButton(food: food, isSelected: selectedFoods.contains(food)) {
+                                CustomButton(text: food.name, isSelected: selectedFoods.contains(food)) {
                                     // Toggle selection logic
                                     if selectedFoods.contains(food) {
                                         selectedFoods.removeAll { $0 == food }

@@ -1,14 +1,14 @@
 //
-//  FoodButton.swift
+//  CustomButton.swift
 //  ibs-app
 //
-//  This struct creates a button for a food object.
+//  This struct creates a button to display a string.
 //
 import SwiftUI
 
-struct FoodButton: View {
-    // What food is this button for
-    let food: Food
+struct CustomButton: View {
+    // What text this button should display
+    let text: String
     
     // Is the button selected
     var isSelected: Bool
@@ -18,13 +18,13 @@ struct FoodButton: View {
     
     var body: some View {
         Button(action: action) {
-            Text(food.name)
+            Text(text)
                 .font(.subheadline)
                 .fontWeight(.medium)
                 .foregroundStyle(isSelected ? .black : .primary)
                 .padding(.vertical, 10)
                 .frame(maxWidth: .infinity)
-                .background(isSelected ? Color.accentColor : Color(.systemGray5))
+                .background(isSelected ? Color.accentColor : Color.accentColor.opacity(0.2))
                 .clipShape(RoundedRectangle(cornerRadius: 12))
         }
         // Prevents the button from applying default SwiftUI background colors when selected

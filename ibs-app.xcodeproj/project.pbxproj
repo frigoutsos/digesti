@@ -34,7 +34,7 @@
 				Insights/MostRecentEpisodeView.swift,
 				Logging/BackgroundView.swift,
 				Logging/CategoryView.swift,
-				Logging/FoodButton.swift,
+				Logging/CustomButton.swift,
 				Logging/FoodSelectionView.swift,
 				Logging/LoggingView.swift,
 				Logging/StoolView.swift,

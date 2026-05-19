@@ -23,9 +23,9 @@ struct StoolView: View {
             }
             
             ScrollView {
-                LazyVGrid(columns: [GridItem(.adaptive(minimum: 120))], spacing: 12) {
+                VStack(alignment: .leading, spacing: 20) {
                     ForEach(Stool.allCases, id: \.self) { stool in
-                        Button {
+                        CustomButton(text: stool.rawValue, isSelected: input.stools.contains(stool)) {
                             withAnimation(.easeInOut(duration: 0.15)) {
                                 // Toggle selection
                                 if input.stools.contains(stool) {
@@ -34,19 +34,11 @@ struct StoolView: View {
                                     input.stools.append(stool)
                                 }
                             }
-                        } label: {
-                            Text(stool.rawValue)
-                                .font(.subheadline)
-                                .fontWeight(.medium)
-                                .foregroundStyle(input.stools.contains(stool) ? .black : .primary)
-                                .padding(.vertical, 10)
-                                .frame(maxWidth: .infinity)
-                                .background(input.stools.contains(stool) ? Color.accentColor : Color.accentColor.opacity(0.2))
-                                .clipShape(RoundedRectangle(cornerRadius: 12))
                         }
                         .sensoryFeedback(.selection, trigger: input.stools.contains(stool))
                     }
                 }
+                .padding(.horizontal)
             }
         }
         .padding()
