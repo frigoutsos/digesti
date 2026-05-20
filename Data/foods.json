@@ -1,38 +1,140 @@
 [
   {
     "id": "beans",
-    "name": "Beans",
-    "category": "Legumes",
-    "highFodmap": false
-  },
-  {
-    "id": "milk",
-    "name": "Milk",
-    "category": "Dairy",
+    "name": "Beans (various types)",
+    "category": ["Legumes", "Cruciferous", "FODMAP"],
     "highFodmap": true
   },
   {
-    "id": "apple",
-    "name": "Apple",
-    "category": "Fruit",
+    "id": "lentils",
+    "name": "Lentils",
+    "category": ["Legumes", "Cruciferous", "FODMAP"],
+    "highFodmap": true
+  },
+  {
+    "id": "broccoli",
+    "name": "Broccoli",
+    "category": ["Cruciferous", "Vegetable"],
+    "highFodmap": true
+  },
+  {
+    "id": "cabbage",
+    "name": "Cabbage",
+    "category": ["Cruciferous", "Vegetable"],
+    "highFodmap": true
+  },
+  {
+    "id": "milk",
+    "name": "Cow's Milk",
+    "category": ["Dairy", "FODMAP"],
+    "highFodmap": true
+  },
+  {
+    "id": "soft_cheeses",
+    "name": "Soft Cheeses (Ricotta, Cottage)",
+    "category": ["Dairy", "FODMAP"],
+    "highFodmap": true
+  },
+  {
+    "id": "yogurt",
+    "name": "Yogurt (high lactose)",
+    "category": ["Dairy", "FODMAP"],
+    "highFodmap": true
+  },
+  {
+    "id": "garlic",
+    "name": "Garlic",
+    "category": ["Aromatic", "FODMAP"],
+    "highFodmap": true
+  },
+  {
+    "id": "onions",
+    "name": "Onions",
+    "category": ["Aromatic", "FODMAP"],
+    "highFodmap": true
+  },
+  {
+    "id": "apples",
+    "name": "Apples (High FODMAP varieties)",
+    "category": ["Fruit", "FODMAP"],
+    "highFodmap": true
+  },
+  {
+    "id": "cherries",
+    "name": "Cherries",
+    "category": ["Fruit", "FODMAP"],
+    "highFodmap": true
+  },
+  {
+    "id": "sparkling_water",
+    "name": "Artificial Sparkling Water",
+    "category": ["Beverage", "Carbonation", "FODMAP"],
+    "highFodmap": true
+  },
+  {
+    "id": "soda",
+    "name": "Sugar-Sweetened Soda",
+    "category": ["Beverage", "Carbonation", "FODMAP"],
+    "highFodmap": true
+  },
+  {
+    "id": "coffee",
+    "name": "Coffee (High Caffeine)",
+    "category": ["Beverage", "Caffeine", "Stimulant"],
+    "highFodmap": false
+  },
+  {
+    "id": "alcohol",
+    "name": "Alcohol (Beer/Wine)",
+    "category": ["Beverage", "Alcohol", "Irritant"],
+    "highFodmap": true
+  },
+  {
+    "id": "tea",
+    "name": "Black Tea",
+    "category": ["Beverage", "Caffeine", "Stimulant"],
     "highFodmap": false
   },
   {
     "id": "bread",
-    "name": "Bread",
-    "category": "Grain",
+    "name": "Wheat Bread",
+    "category": ["Grain", "Gluten", "Wheat", "FODMAP"],
     "highFodmap": true
   },
   {
     "id": "pasta",
     "name": "Pasta",
-    "category": "Grain",
+    "category": ["Grain", "Gluten", "Wheat", "FODMAP"],
     "highFodmap": true
   },
   {
     "id": "pizza",
-    "name": "Pizza",
-    "category": "Grain",
+    "name": "High-Fat Pizza",
+    "category": ["Processed", "Gluten", "Fat", "High-Fodmap"],
     "highFodmap": true
   },
+  {
+    "id": "fried_snacks",
+    "name": "Fried Snacks (Chips, etc.)",
+    "category": ["Processed", "Fat", "Digestive"],
+    "highFodmap": false
+  },
+  {
+    "id": "burgers",
+    "name": "Processed Burgers",
+    "category": ["Processed", "Fat", "Digestive"],
+    "highFodmap": false
+  },
+  {
+    "id": "sugar_free_gum",
+    "name": "Sugar-Free Gum/Candies",
+    "category": ["Sweetener", "FODMAP"],
+    "highFodmap": true
+  },
+  {
+    "id": "artificial_sweets",
+    "name": "Artificial Sweeteners",
+    "category": ["Sweetener", "FODMAP"],
+    "highFodmap": true
+  }
 ]

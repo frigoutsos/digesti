@@ -14,9 +14,32 @@ struct FoodSelectionView: View {
     
     @State var searchText: String = ""
     
+    // Assuming this is part of the FoodDataStore class
+    private var allCategories: [String] {
+        // Flatten into a long array
+        let allCategoryNames = allFoods.flatMap { $0.category }
+        
+        // Remove duplicates using a set and return as an array
+        return Array(Set(allCategoryNames)).sorted()
+    }
+
+    
     // Helper to group all foods by category name
-    var categorizedFoods: [String: [Food]] {
-        Dictionary(grouping: allFoods, by: { $0.category })
+    private var categorizedFoods: [String: [Food]] {
+        var dictionary: [String: [Food]] = [:]
+        let uniqueCategories = allCategories
+        
+        for categoryName in uniqueCategories {
+            // Get the list of food in each category
+            let foodsInThisCategory = allFoods.filter { food in
+                food.category.contains(categoryName)
+            }
+            
+            // Store the result in the dictionary
+            dictionary[categoryName] = foodsInThisCategory
+        }
+            
+        return dictionary
     }
     
     var body: some View {
@@ -46,7 +69,7 @@ struct FoodSelectionView: View {
                     }
                 )
             
-            // 3. Content Display: Conditional logic for Search vs. Browse
+            // Display all content, or just results if searching
             ScrollView {
                 if searchText.isEmpty {
                     VStack(alignment: .leading, spacing: 20) {
@@ -60,16 +83,16 @@ struct FoodSelectionView: View {
                             
                             // Display each food in that category
                             VStack(spacing: 10) {
-                                ForEach(categorizedFoods[categoryName] ?? [], id: \.self) { food in
-                                    CustomButton(text: food.name, isSelected: selectedFoods.contains(food)) {
+                                ForEach(categorizedFoods[categoryName] ?? [], id: \.id) { food in
+                                    CustomButton(text: food.name, isSelected: selectedFoods.contains(where: { $0.id == food.id})) {
                                         // Toggle selection logic
-                                        if selectedFoods.contains(food) {
-                                            selectedFoods.removeAll { $0 == food }
+                                        if selectedFoods.contains(where: { $0.id == food.id }) {
+                                            selectedFoods.removeAll(where: { $0.id == food.id })
                                         } else {
                                             selectedFoods.append(food)
                                         }
                                     }
-                                    .sensoryFeedback(.selection, trigger: selectedFoods.contains(food))
+                                    .sensoryFeedback(.selection, trigger: selectedFoods.contains(where: { $0.id == food.id }))
                                 }
                             }
                             .padding(.horizontal)
@@ -80,16 +103,18 @@ struct FoodSelectionView: View {
                         Text("Search Results for \"\(searchText)\":").font(.subheadline).foregroundStyle(.secondary)
                         
                         // Filter and display results
-                        let results = allFoods.filter { $0.name.starts(with: searchText) }
+                        let results = allFoods.filter { food in
+                            food.name.localizedCaseInsensitiveContains(searchText)
+                        }
                         
                         if results.isEmpty {
                             Text("No foods found matching '\(searchText)'").foregroundStyle(.secondary)
                         } else {
                             ForEach(results) { food in
-                                CustomButton(text: food.name, isSelected: selectedFoods.contains(food)) {
+                                CustomButton(text: food.name, isSelected: selectedFoods.contains(where: { $0.id == food.id })) {
                                     // Toggle selection logic
-                                    if selectedFoods.contains(food) {
-                                        selectedFoods.removeAll { $0 == food }
+                                    if selectedFoods.contains(where: { $0.id == food.id }) {
+                                        selectedFoods.removeAll(where: { $0.id == food.id })
                                     } else {
                                         selectedFoods.append(food)
                                     }

@@ -27,7 +27,7 @@ struct CustomButton: View {
                 .background(isSelected ? Color.accentColor : Color.accentColor.opacity(0.2))
                 .clipShape(RoundedRectangle(cornerRadius: 12))
         }
-        // Prevents the button from applying default SwiftUI background colors when selected
+        // Remove default button background
         .buttonStyle(PlainButtonStyle())
     }
 }

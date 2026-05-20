@@ -44,7 +44,7 @@ struct CategoryView: View {
     
     private var filteredFoods: [Food] {
         return allFoods.filter { food in
-            food.category == category
+            food.category.contains(category)
         }
     }
 }
