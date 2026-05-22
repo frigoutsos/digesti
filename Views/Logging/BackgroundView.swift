@@ -15,7 +15,7 @@ struct BackgroundView: View {
     @Binding var bloating: Bool
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 16) {
+        VStack(alignment: .leading, spacing: 32) {
             VStack(alignment: .leading, spacing: 16) {
                 HStack {
                     Image(systemName: "calendar")
@@ -26,12 +26,12 @@ struct BackgroundView: View {
                         .foregroundStyle(.primary)
                 }
                     
-                DatePicker("Onset:",
+                DatePicker("Onset",
                            selection: $onset,
                            in: ...Date(),
                            displayedComponents: [.date, .hourAndMinute])
-                .font(.subheadline)
-                .foregroundStyle(.secondary)
+                    .font(.subheadline)
+                    .foregroundStyle(.secondary)
             }
             
             VStack(alignment: .leading, spacing: 16) {
@@ -44,12 +44,12 @@ struct BackgroundView: View {
                         .foregroundStyle(.primary)
                 }
                 
-                DatePicker("Movement:",
+                DatePicker("Movement",
                            selection: $movement,
                            in: ...Date(),
                            displayedComponents: [.date, .hourAndMinute])
-                .font(.subheadline)
-                .foregroundStyle(.secondary)
+                    .font(.subheadline)
+                    .foregroundStyle(.secondary)
             }
             
             VStack(alignment: .leading, spacing: 16) {
@@ -66,6 +66,10 @@ struct BackgroundView: View {
                     .tint(.accent)
                 
                 HStack {
+                    Text("Intensity")
+                        .font(.subheadline)
+                        .foregroundStyle(.secondary)
+                    
                     Spacer()
                  
                     Text("\(intensity, specifier: "%.0f") / 10")
@@ -89,6 +93,10 @@ struct BackgroundView: View {
                     .tint(.accent)
                 
                 HStack {
+                    Text("Stress")
+                        .font(.subheadline)
+                        .foregroundStyle(.secondary)
+
                     Spacer()
                     
                     Text("\(stress, specifier: "%.0f") / 10")
