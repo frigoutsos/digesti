@@ -32,7 +32,13 @@
 				Insights/LifetimeCardView.swift,
 				Insights/MonthlyCardView.swift,
 				Insights/MostRecentEpisodeView.swift,
+				Logging/BackgroundView.swift,
+				Logging/CategoryView.swift,
+				Logging/CustomButton.swift,
+				Logging/FoodSelectionView.swift,
 				Logging/LoggingView.swift,
+				Logging/StoolView.swift,
+				Logging/SummaryView.swift,
 			);
 			target = 7D84A7932F8EA439008C8016 /* ibs-app */;
 		};
