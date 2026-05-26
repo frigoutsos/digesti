@@ -1,6 +1,6 @@
 //
 //  EpisodeInput.swift
-//  ibs-app
+//  ibsapp
 //
 //  Contains a temporary object to hold user input, which will be turned into an Episode object.
 //
@@ -12,6 +12,5 @@ struct EpisodeInput {
     var intensity: Double = 5
     var stress: Double = 5
     var bloating: Bool = false
-    var foods: [Food] = []
     var stools: [Stool] = []
 }

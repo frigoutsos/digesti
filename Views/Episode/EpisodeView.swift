@@ -37,21 +37,6 @@ struct EpisodeView: View {
                     .foregroundStyle(.secondary)
             }
             .font(.subheadline)
-
-            // Trigger(s) info
-            HStack(alignment: .top, spacing: 8) {
-                Image(systemName: "bolt.fill")
-                    .foregroundStyle(.accent)
-                    .padding(.top, 2)
-                
-                Text("Foods:")
-                    .fontWeight(.semibold)
-                
-                Text(episodeToView.foods.map { $0.name }.joined(separator: ", "))
-                    .fixedSize(horizontal: false, vertical: true)
-                    .foregroundStyle(.secondary)
-            }
-            .font(.subheadline)
             
             // Stool type(s) info
             HStack(alignment: .top, spacing: 8) {

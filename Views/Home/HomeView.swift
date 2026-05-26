@@ -8,7 +8,9 @@ import SwiftUI
 
 struct HomeView: View {
     // State to track if the user clicked the "Log Episode" button
-    @State private var showLogger = false
+    @State private var showEpisodeLogger = false
+    // State to track if the user clicked the "Log Foods" button
+    @State private var showFoodLogger = false
     
     var body: some View {
         NavigationStack {
@@ -21,11 +23,11 @@ struct HomeView: View {
                         .font(.system(size: 48))
                         .foregroundStyle(.accent)
                     
-                    Text("Track Your IBS Episodes")
+                    Text("Track Food Intake and IBS Episodes")
                         .font(.title2)
                         .fontWeight(.semibold)
                     
-                    Text("Log episodes and uncover patterns.")
+                    Text("Log episodes and foods to uncover patterns.")
                         .font(.subheadline)
                         .foregroundStyle(.secondary)
                         .multilineTextAlignment(.center)
@@ -33,7 +35,7 @@ struct HomeView: View {
                 }
                 
                 Button {
-                    showLogger = true
+                    showEpisodeLogger = true
                 } label: {
                     Label("Log Episode", systemImage: "plus.circle.fill")
                         .font(.headline)
@@ -44,8 +46,24 @@ struct HomeView: View {
                 .tint(.accent)
                 .padding(.horizontal)
                 // Direct the user to the logging view after clicking the log button
-                .sheet(isPresented: $showLogger) {
-                    LoggingView()
+                .sheet(isPresented: $showEpisodeLogger) {
+                    EpisodeLoggingView()
+                }
+                
+                Button {
+                    showFoodLogger = true
+                } label: {
+                    Label("Log Meal", systemImage: "plus.circle.fill")
+                        .font(.headline)
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                }
+                .buttonStyle(.borderedProminent)
+                .tint(.accent)
+                .padding(.horizontal)
+                // Direct the user to the logging view after clicking the log button
+                .sheet(isPresented: $showFoodLogger) {
+                    FoodLoggingView()
                 }
                 
                 Spacer()

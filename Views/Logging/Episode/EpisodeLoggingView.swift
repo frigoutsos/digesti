@@ -7,7 +7,7 @@
 import SwiftUI
 import SwiftData
 
-struct LoggingView: View {
+struct EpisodeLoggingView: View {
     // Access the configured model context
     @Environment(\.modelContext) private var context
     
@@ -23,21 +23,16 @@ struct LoggingView: View {
     // State to track if we saved a user's episode yet
     @State private var didSave = false
     
-    // State to load the foods from JSON once and keep them in memory
-    @State private var allFoods: [Food] = getFoods()
-    
     var body: some View {
         // Change the view programatically as the user clicks through the prompts
         NavigationStack {
             VStack(alignment: .leading, spacing: 24) {
                 // Programmatically change the content displayed based on the user's step
-                VStack(spacing: 16) {
-                    stepContent
-                }
-                .frame(maxWidth: .infinity, alignment: .leading)
+                stepContent
                 
                 Spacer()
             }
+            .frame(maxWidth: .infinity, alignment: .leading)
             .navigationTitle(navigationTitle)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
@@ -60,11 +55,9 @@ struct LoggingView: View {
                 bloating: $input.bloating
             )
         case 2:
-            FoodSelectionView(allFoods: allFoods, selectedFoods: $input.foods)
-        case 3:
             // Pass in the binding $input
             StoolView(input: $input)
-        case 4:
+        case 3:
             SummaryView(builtEpisode: builtEpisode)
         default:
             // Pass in the current View's input state
@@ -82,9 +75,8 @@ struct LoggingView: View {
     private var navigationTitle: String {
         switch step {
         case 1: return "Background"
-        case 2: return "Triggers"
-        case 3: return "Recent Stool"
-        case 4: return "Summary"
+        case 2: return "Recent Stool"
+        case 3: return "Summary"
         default: return ""
         }
     }
@@ -107,7 +99,7 @@ struct LoggingView: View {
         }
         
         ToolbarItem(placement: .topBarTrailing) {
-            if step < 4 {
+            if step < 3 {
                 Button("Next") {
                     step += 1
                 }
@@ -129,7 +121,6 @@ struct LoggingView: View {
             intensity: Int(input.intensity),
             stress: Int(input.stress),
             bloating: input.bloating,
-            foods: input.foods,
             stools: input.stools
         )
     }

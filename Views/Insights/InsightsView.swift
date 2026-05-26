@@ -11,6 +11,9 @@ struct InsightsView: View {
     // Get a list of episodes, reverse sorted by time
     @Query(sort: \Episode.onset, order: .reverse) private var episodes: [Episode]
     
+    // Get a list of meals, reverse sorted by time
+    @Query(sort: \Meal.date, order: .reverse) private var meals: [Meal]
+    
     // Computed property to get episodes last month
     private var episodesLastMonth: [Episode] {
         let oneMonthAgo = Calendar.current.date(byAdding: .month, value: -1, to: Date()) ?? Date()
@@ -18,10 +21,17 @@ struct InsightsView: View {
         return episodes.filter { $0.onset >= oneMonthAgo }
     }
     
-    // Computed property for most common monthly epsiode trigger
-    private var mostCommonMonthTrigger: Food? {
-        // flatMap since the triggers field contains an array of triggers for each Episode object
-        let foods = episodesLastMonth.flatMap { $0.foods }
+    // Computed property to get meals last month
+    private var mealsLastMonth: [Meal] {
+        let oneMonthAgo = Calendar.current.date(byAdding: .month, value: -1, to: Date()) ?? Date()
+        
+        return meals.filter { $0.date >= oneMonthAgo }
+    }
+    
+    // Computed property for most common monthly food
+    private var mostCommonMonthFood: Food? {
+        // flatMap since the triggers field contains an array of triggers for each Meal object
+        let foods = mealsLastMonth.flatMap { $0.foods }
         
         let counts = foods.reduce(into: [Food: Int]()) { counts, food in
             counts[food, default: 0] += 1
@@ -32,7 +42,7 @@ struct InsightsView: View {
 
     // Computed property for most common monthly stool type
     private var mostCommonMonthStool: Stool? {
-        // flatMap since the locations field contains an array of locations for each episode object
+        // flatMap since the locations field contains an array of locations for each Episode object
         let stools = episodesLastMonth.flatMap { $0.stools }
         
         let counts = stools.reduce(into: [Stool: Int]()) { counts, stool in
@@ -42,10 +52,10 @@ struct InsightsView: View {
         return counts.max(by: { $0.value < $1.value })?.key
     }
     
-    // Computed property for most common lifetime episode trigger
-    private var mostCommonLifetimeTrigger: Food? {
-        // flatMap since the triggers field contains an array of triggers for each episode object
-        let foods = episodes.flatMap { $0.foods }
+    // Computed property for most common lifetime food
+    private var mostCommonLifetimeFood: Food? {
+        // flatMap since the triggers field contains an array of triggers for each Meal object
+        let foods = meals.flatMap { $0.foods }
         
         // Create dictionary of counts
         let counts = foods.reduce(into: [Food: Int]()) { counts, food in
@@ -81,12 +91,12 @@ struct InsightsView: View {
                  * triggers, and locations, we do it here and pass the 3 results into the views.
                  */
                 MonthlyCardView(episodeCount: episodesLastMonth.count,
-                                mostCommonMonthTrigger: mostCommonMonthTrigger,
+                                mostCommonMonthFood: mostCommonMonthFood,
                                 mostCommonMonthStool: mostCommonMonthStool)
                     .frame(maxWidth: 400)
                 
                 LifetimeCardView(episodeCount: episodesLastMonth.count,
-                                 mostCommonLifetimeTrigger: mostCommonLifetimeTrigger,
+                                 mostCommonLifetimeFood: mostCommonLifetimeFood,
                                  mostCommonLifetimeStool: mostCommonLifetimeStool)
                     .frame(maxWidth: 400)
             }
