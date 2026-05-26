@@ -1,6 +1,6 @@
 //
 //  CustomButton.swift
-//  ibs-app
+//  ibsapp
 //
 //  This struct creates a button to display a string.
 //
