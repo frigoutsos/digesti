@@ -1,6 +1,6 @@
 //
 //  LifetimeCardView.swift
-//  ibs-app
+//  ibsapp
 //
 //  This view creates a card to display a summary of lifetime episodes.
 //
