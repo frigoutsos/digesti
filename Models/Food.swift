@@ -1,6 +1,6 @@
 //
 //  Food.swift
-//  ibs-app
+//  ibsapp
 //
 //  This creates food objects based on the present JSON data.
 //
