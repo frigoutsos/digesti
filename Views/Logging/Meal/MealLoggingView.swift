@@ -61,25 +61,12 @@ struct FoodLoggingView: View {
                     Image(systemName: "bolt.fill")
                         .foregroundStyle(.accent)
                     
-                    Text("What was your most recent meal?")
+                    Text("What was in your most recent meal?")
                         .font(.headline)
                         .foregroundStyle(.primary)
                 }
-                
-                // Search Bar
-                TextField("Search by food name...", text: $searchText)
-                    .padding(10)
-                    .background(Color(.systemGray6))
-                    .cornerRadius(8)
-                    .overlay(
-                        // Conditional clear button
-                        Group {
-                            Button("Clear Search", role: .cancel) {
-                                searchText = ""
-                            }
-                            .opacity(searchText.isEmpty ? 0 : 1)
-                        }
-                    )
+                .searchable(text: $searchText, placement: .navigationBarDrawer, prompt: "Search episodes…")
+                .autocorrectionDisabled()
                 
                 // Display all content, or just results if searching
                 ScrollView {
