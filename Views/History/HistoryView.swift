@@ -100,77 +100,82 @@ struct HistoryView: View {
         
         NavigationStack {
             
-            VStack {
+            // Always render the List so .searchable() has a stable host view.
+            // Moving the empty state inside the List prevents the search bar
+            // from disappearing when there are no results.
+            List {
                 
-                // Empty state
                 if filteredEpisodes.isEmpty {
                     
-                    if searchText.isEmpty {
-                        Text("No episodes to display.")
-                            .foregroundStyle(.secondary)
-                    } else {
-                        Text("No matching episodes found.")
-                            .foregroundStyle(.secondary)
-                    }
+                    // Empty state
+                    ContentUnavailableView(
+                        searchText.isEmpty ? "No Episodes" : "No Results",
+                        systemImage: searchText.isEmpty
+                            ? "list.bullet"
+                            : "magnifyingglass",
+                        description: Text(
+                            searchText.isEmpty
+                                ? "No episodes to display."
+                                : "No matching episodes found."
+                        )
+                    )
+                    .listRowBackground(Color.clear)
                     
                 } else {
                     
-                    List {
+                    ForEach(filteredEpisodes) { episode in
                         
-                        ForEach(filteredEpisodes) { episode in
+                        VStack(alignment: .leading, spacing: 6) {
                             
-                            VStack(alignment: .leading, spacing: 6) {
+                            Text(
+                                episode.onset.formatted(
+                                    date: .abbreviated,
+                                    time: .shortened
+                                )
+                            )
+                            .font(.headline)
+                            
+                            Text("Intensity: \(episode.intensity) / 10")
+                                .font(.subheadline)
+                            
+                            Text("Stress: \(episode.stress) / 10")
+                                .font(.subheadline)
+                            
+                            if episode.bloating {
+                                Text("Bloating")
+                                    .font(.caption)
+                                    .foregroundStyle(.orange)
+                            }
+                            
+                            // Foods preview
+                            if !episode.foods.isEmpty {
                                 
                                 Text(
-                                    episode.onset.formatted(
-                                        date: .abbreviated,
-                                        time: .shortened
-                                    )
+                                    "Foods: " +
+                                    episode.foods
+                                        .map { $0.name }
+                                        .joined(separator: ", ")
                                 )
-                                .font(.headline)
-                                
-                                Text("Intensity: \(episode.intensity) / 10")
-                                    .font(.subheadline)
-                                
-                                Text("Stress: \(episode.stress) / 10")
-                                    .font(.subheadline)
-                                
-                                if episode.bloating {
-                                    Text("Bloating")
-                                        .font(.caption)
-                                        .foregroundStyle(.orange)
-                                }
-                                
-                                // Foods preview
-                                if !episode.foods.isEmpty {
-                                    
-                                    Text(
-                                        "Foods: " +
-                                        episode.foods
-                                            .map { $0.name }
-                                            .joined(separator: ", ")
-                                    )
-                                    .font(.caption)
-                                    .foregroundStyle(.secondary)
-                                    .lineLimit(2)
-                                }
-                            }
-                            .padding(.vertical, 4)
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                            .contentShape(Rectangle())
-                            .onTapGesture {
-                                selectedEpisode = episode
+                                .font(.caption)
+                                .foregroundStyle(.secondary)
+                                .lineLimit(2)
                             }
                         }
-                        .onDelete(perform: deleteItem)
+                        .padding(.vertical, 4)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .contentShape(Rectangle())
+                        .onTapGesture {
+                            selectedEpisode = episode
+                        }
                     }
-                    .searchable(
-                        text: $searchText,
-                        prompt: "Search episodes"
-                    )
-                    .autocorrectionDisabled()
+                    .onDelete(perform: deleteItem)
                 }
             }
+            .searchable(
+                text: $searchText,
+                prompt: "Search episodes"
+            )
+            .autocorrectionDisabled()
             .navigationTitle("History")
         }
         
