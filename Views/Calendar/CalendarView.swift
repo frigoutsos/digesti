@@ -1,6 +1,6 @@
 //
 //  CalendarView.swift
-//  ibs-app
+//  ibsapp
 //
 //  This view displays episodes on a calendar of the current month.
 //

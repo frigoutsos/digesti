@@ -1,25 +1,11 @@
 //
 //  LoggingView.swift
-//  ibs-app
+//  ibsapp
 //
 //  This view guides the user through logging episodes.
 //
 import SwiftUI
 import SwiftData
-
-/*
- * Here we make a temporary object to hold user input,
- * which will then be turned into an Episode object.
- */
-struct EpisodeInput {
-    var onset: Date = Date()
-    var movement: Date = Date()
-    var intensity: Double = 5
-    var stress: Double = 5
-    var bloating: Bool = false
-    var foods: [Food] = []
-    var stools: [Stool] = []
-}
 
 struct LoggingView: View {
     // Access the configured model context
@@ -65,15 +51,30 @@ struct LoggingView: View {
     private var stepContent: some View {
         switch step {
         case 1:
-            backgroundStep
+            // Pass in the current View's input state
+            BackgroundView(
+                onset: $input.onset,
+                movement: $input.movement,
+                intensity: $input.intensity,
+                stress: $input.stress,
+                bloating: $input.bloating
+            )
         case 2:
-            triggerStep
+            FoodSelectionView(allFoods: allFoods, selectedFoods: $input.foods)
         case 3:
-            stoolStep
+            // Pass in the binding $input
+            StoolView(input: $input)
         case 4:
-            summaryStep
+            SummaryView(builtEpisode: builtEpisode)
         default:
-            backgroundStep
+            // Pass in the current View's input state
+            BackgroundView(
+                onset: $input.onset,
+                movement: $input.movement,
+                intensity: $input.intensity,
+                stress: $input.stress,
+                bloating: $input.bloating
+            )
         }
     }
     
@@ -125,7 +126,6 @@ struct LoggingView: View {
         Episode(
             onset: input.onset,
             movement: input.movement,
-            // Cast intensity to Int when saving the episode, since the input slider uses decimal increments to slide more smoothly, which means the user is saving a Double
             intensity: Int(input.intensity),
             stress: Int(input.stress),
             bloating: input.bloating,
@@ -147,212 +147,5 @@ struct LoggingView: View {
                 print("Error saving episode:", error)
             }
         }
-    }
-
-    // Display a DatePicker and slider to the user to input date/intensity
-    var backgroundStep: some View {
-        VStack(alignment: .leading, spacing: 16) {
-            VStack(alignment: .leading, spacing: 16) {
-                HStack {
-                    Image(systemName: "calendar")
-                        .foregroundStyle(.accent)
-                    
-                    Text("When did your episode start?")
-                        .font(.headline)
-                        .foregroundStyle(.primary)
-                }
-                    
-                DatePicker("Onset:",
-                           selection: $input.onset,
-                           in: ...Date(),
-                           displayedComponents: [.date, .hourAndMinute])
-                .font(.subheadline)
-                .foregroundStyle(.secondary)
-            }
-            
-            VStack(alignment: .leading, spacing: 16) {
-                HStack {
-                    Image(systemName: "clock")
-                        .foregroundStyle(.accent)
-                    
-                    Text("When was your last bowel movement?")
-                        .font(.headline)
-                        .foregroundStyle(.primary)
-                }
-                
-                DatePicker("Movement:",
-                           selection: $input.movement,
-                           in: ...Date(),
-                           displayedComponents: [.date, .hourAndMinute])
-                .font(.subheadline)
-                .foregroundStyle(.secondary)
-            }
-            
-            VStack(alignment: .leading, spacing: 16) {
-                HStack {
-                    Image(systemName: "speedometer")
-                        .foregroundStyle(.accent)
-                    
-                    Text("How intense is your episode?")
-                        .font(.headline)
-                        .foregroundStyle(.primary)
-                }
-                
-                // Make step 0.2 to make the slider more fluid, even though we truncate any decimals inputted
-                Slider(value: $input.intensity, in: 1...10, step: 0.15)
-                    .tint(.accent)
-                
-                HStack {
-                    Spacer()
-                 
-                    Text("\(input.intensity, specifier: "%.0f") / 10")
-                        .font(.title3)
-                        .fontWeight(.semibold)
-                        .foregroundStyle(.primary)
-                }
-            }
-            
-            VStack(alignment: .leading, spacing: 16) {
-                HStack {
-                    Image(systemName: "figure.mind.and.body")
-                        .foregroundStyle(.accent)
-                    
-                    Text("How stressed are you?")
-                        .font(.headline)
-                        .foregroundStyle(.primary)
-                }
-                
-                // Make step 0.2 to make the slider more fluid, even though we truncate any decimals inputted
-                Slider(value: $input.stress, in: 1...10, step: 0.15)
-                    .tint(.accent)
-                
-                HStack {
-                    Spacer()
-                    
-                    Text("\(input.stress, specifier: "%.0f") / 10")
-                        .font(.title3)
-                        .fontWeight(.semibold)
-                        .foregroundStyle(.primary)
-                }
-            }
-            
-            VStack(alignment: .leading, spacing: 16) {
-                HStack {
-                    Image(systemName: "balloon.fill")
-                        .foregroundStyle(.accent)
-                    
-                    Toggle("Are you experiencing bloating?", isOn: $input.bloating)
-                        .font(.headline)
-                        .foregroundStyle(.primary)
-                }
-            }
-        }
-        .padding()
-    }
-    
-    // Display a list of locations for the user to pick for their episode
-    var triggerStep: some View {
-        VStack(alignment: .leading, spacing: 16) {
-            HStack {
-                Image(systemName: "bolt.fill")
-                    .foregroundStyle(.accent)
-                
-                Text("What triggered your episode?")
-                    .font(.headline)
-                    .foregroundStyle(.primary)
-            }
-            
-            // Allow scrolling through trigger buttons for those using larger text sizes
-            ScrollView {
-                // Organize the list into a grid
-                LazyVGrid(columns: [GridItem(.adaptive(minimum: 120))], spacing: 12) {
-                    ForEach(allFoods, id: \.id) { food in
-                        Button {
-                            withAnimation(.easeInOut(duration: 0.1)) {
-                                // Toggle selection
-                                if input.foods.contains(where: { $0.id == food.id }) {
-                                    input.foods.removeAll { $0.id == food.id }
-                                } else {
-                                    input.foods.append(food)
-                                }
-                            }
-                        } label: {
-                            Text(food.name)
-                                .font(.subheadline)
-                                .fontWeight(.medium)
-                                .foregroundStyle(input.foods.contains(where: { $0.id == food.id }) ? .black : .primary)
-                                .padding(.vertical, 10)
-                                .frame(maxWidth: .infinity)
-                                .background(input.foods.contains(where: { $0.id == food.id }) ? Color.accentColor : Color.accentColor.opacity(0.15))
-                                .clipShape(RoundedRectangle(cornerRadius: 12))
-                        }
-                        // Use selection feedback to indicate to user that elements are being selected on screen
-                        .sensoryFeedback(.selection, trigger: input.foods.contains(where: { $0.id == food.id }))
-                    }
-                }
-            }
-        }
-        .padding()
-    }
-    
-    // Display a list of triggers for the user to pick for their episode
-    var stoolStep: some View {
-        VStack(alignment: .leading, spacing: 16) {
-            HStack {
-                Image(systemName: "toilet.fill")
-                    .foregroundStyle(.accent)
-                
-                Text("How would you describe your stool?")
-                    .font(.headline)
-                    .foregroundStyle(.primary)
-            }
-            
-            // Allow scrolling through stool buttons for those using larger text sizes
-            ScrollView {
-                // Organize the list into a grid
-                LazyVGrid(columns: [GridItem(.adaptive(minimum: 120))], spacing: 12) {
-                    ForEach(Stool.allCases, id: \.self) { stool in
-                        Button {
-                            withAnimation(.easeInOut(duration: 0.15)) {
-                                // Toggle selection
-                                if input.stools.contains(stool) {
-                                    input.stools.removeAll { $0 == stool }
-                                } else {
-                                    input.stools.append(stool)
-                                }
-                            }
-                        } label: {
-                            Text(stool.rawValue)
-                                .font(.subheadline)
-                                .fontWeight(.medium)
-                                .foregroundStyle(input.stools.contains(stool) ? .black : .primary)
-                                .padding(.vertical, 10)
-                                .frame(maxWidth: .infinity)
-                                .background(input.stools.contains(stool) ? Color.accentColor : Color.accentColor.opacity(0.2))
-                                .clipShape(RoundedRectangle(cornerRadius: 12))
-                        }
-                        // Use selection feedback to indicate to user that elements are being selected on screen
-                        .sensoryFeedback(.selection, trigger: input.stools.contains(stool))
-                    }
-                }
-            }
-        }
-        .padding()
-    }
-    
-    // Display the user a summary of the episode they entered
-    var summaryStep: some View {
-        VStack(alignment: .leading, spacing: 16) {
-            Text("Review your episode:")
-                .font(.headline)
-                .foregroundStyle(.primary)
-            
-            // Allow scrolling through summary view for those using larger text sizes
-            ScrollView {
-                // Reuse the episode card with the built episode passed in
-                EpisodeView(episodeToView: builtEpisode)
-            }
-        }
-        .padding()
     }
 }
