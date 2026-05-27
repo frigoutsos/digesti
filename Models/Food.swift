@@ -15,7 +15,7 @@ struct Food: Codable, Hashable, Identifiable {
 
 func getFoods() -> [Food] {
     guard let url = Bundle.main.url(forResource: "foods", withExtension: "json") else {
-        print("Error: foods.json not found! Check your Build Phases.")
+        print("Error: foods.json not found!.")
         return []
     }
     

@@ -14,6 +14,6 @@ struct MyApp: App {
             ContentView()
         }
         // Set up the SwiftData model container
-        .modelContainer(for: Episode.self)
+        .modelContainer(for: [Episode.self, Meal.self])
     }
 }

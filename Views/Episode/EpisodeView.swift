@@ -12,15 +12,28 @@ struct EpisodeView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
             
-            // Date info
+            // Onset info
             HStack(spacing: 8) {
-                Image(systemName: "calendar")
+                Image(systemName: "bolt.fill")
                     .foregroundStyle(.accent)
                 
-                Text("Date:")
+                Text("Onset:")
                     .fontWeight(.semibold)
                 
                 Text(episodeToView.onset.formatted(date: .abbreviated, time: .shortened))
+                    .foregroundStyle(.secondary)
+            }
+            .font(.subheadline)
+            
+            // Bowel movement info
+            HStack(spacing: 8) {
+                Image(systemName: "toilet.fill")
+                    .foregroundStyle(.accent)
+                
+                Text("Bowel movement:")
+                    .fontWeight(.semibold)
+                
+                Text(episodeToView.movement.formatted(date: .abbreviated, time: .shortened))
                     .foregroundStyle(.secondary)
             }
             .font(.subheadline)
@@ -37,25 +50,10 @@ struct EpisodeView: View {
                     .foregroundStyle(.secondary)
             }
             .font(.subheadline)
-
-            // Trigger(s) info
-            HStack(alignment: .top, spacing: 8) {
-                Image(systemName: "bolt.fill")
-                    .foregroundStyle(.accent)
-                    .padding(.top, 2)
-                
-                Text("Foods:")
-                    .fontWeight(.semibold)
-                
-                Text(episodeToView.foods.map { $0.name }.joined(separator: ", "))
-                    .fixedSize(horizontal: false, vertical: true)
-                    .foregroundStyle(.secondary)
-            }
-            .font(.subheadline)
             
             // Stool type(s) info
             HStack(alignment: .top, spacing: 8) {
-                Image(systemName: "toilet.fill")
+                Image(systemName: "list.bullet.clipboard")
                     .foregroundStyle(.accent)
 
                 Text("Stool types:")

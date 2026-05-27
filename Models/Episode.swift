@@ -1,5 +1,5 @@
 //
-//  EpisodeDataModel.swift
+//  Episode.swift
 //  ibsapp
 //
 //  This is the SwiftUI data model that represents all episode objects.
@@ -15,7 +15,6 @@ final class Episode {
     var intensity: Int
     var stress: Int
     var bloating: Bool
-    var foods: [Food]
     var stools: [Stool]
     
     // Assign data to each field in the initializer
@@ -25,7 +24,6 @@ final class Episode {
         intensity: Int,
         stress: Int,
         bloating: Bool,
-        foods: [Food],
         stools: [Stool]
     ) {
         self.onset = onset
@@ -33,7 +31,6 @@ final class Episode {
         self.intensity = intensity
         self.stress = stress
         self.bloating = bloating
-        self.foods = foods
         self.stools = stools
     }
 }

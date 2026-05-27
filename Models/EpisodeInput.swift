@@ -12,6 +12,5 @@ struct EpisodeInput {
     var intensity: Double = 5
     var stress: Double = 5
     var bloating: Bool = false
-    var foods: [Food] = []
     var stools: [Stool] = []
 }
