@@ -1,6 +1,6 @@
 //
 //  LifetimeCardView.swift
-//  ibs-app
+//  ibsapp
 //
 //  This view creates a card to display a summary of lifetime episodes.
 //
@@ -48,7 +48,7 @@ struct LifetimeCardView: View {
                 
                 // Most common stool type
                 HStack(spacing: 8) {
-                    Image(systemName: "toilet.fill")
+                    Image(systemName: "list.bullet.clipboard")
                         .foregroundStyle(.accent)
                     
                     Text("Most common stool type:")

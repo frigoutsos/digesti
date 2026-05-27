@@ -1,6 +1,6 @@
 //
 //  SummaryView.swift
-//  ibs-app
+//  ibsapp
 //
 //  Display the user a summary of the episode they entered
 //

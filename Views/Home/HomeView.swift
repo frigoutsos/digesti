@@ -1,6 +1,6 @@
 //
 //  HomeView.swift
-//  ibs-app
+//  ibsapp
 //
 //  This view holds the app's home screen.
 //

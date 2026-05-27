@@ -1,6 +1,6 @@
 //
 //  CategoryView.swift
-//  ibs-app
+//  ibsapp
 //
 //  This view displays all the foods with a given category.
 import SwiftUI

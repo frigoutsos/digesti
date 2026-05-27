@@ -1,6 +1,6 @@
 //
 //  StoolView.swift
-//  ibs-app
+//  ibsapp
 //
 //  Created by Franklin Rigoutsos on 5/2/26.
 //

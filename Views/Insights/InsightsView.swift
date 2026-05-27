@@ -1,6 +1,6 @@
 //
 //  InsightsView.swift
-//  ibs-app
+//  ibsapp
 //
 //  This view displays episode insights to the user.
 //
