@@ -1,6 +1,5 @@
 //
 //  MealInput.swift
-//  ibsapp
 //
 //  This is the SwiftUI data model that represents all meal objects.
 //

@@ -1,6 +1,5 @@
 //
 //  Food.swift
-//  ibsapp
 //
 //  This creates food objects based on the present JSON data.
 //
@@ -9,6 +8,7 @@ import Foundation
 struct Food: Codable, Hashable, Identifiable {
     let id: String
     let name: String
+    let searchMatches: [String]
     let category: [String]
     let highFodmap: Bool
 }

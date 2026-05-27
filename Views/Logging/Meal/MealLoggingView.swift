@@ -2,9 +2,8 @@
 //  FoodSelectionView.swift
 //  ibs-app
 //
-//  Created by Franklin Rigoutsos on 5/2/26.
+//  Contains the logic for selecting foods in the input page.
 //
-// Contains the logic for selecting foods in the input page.
 import SwiftUI
 import SwiftData
 
@@ -114,11 +113,20 @@ struct FoodLoggingView: View {
                     } else {
                         VStack(spacing: 20) {
                             Text("Search Results for \"\(searchText)\":").font(.subheadline).foregroundStyle(.secondary)
-                            
-                            // Filter and display results
-                            let results = allFoods.filter { food in
-                                food.name.localizedCaseInsensitiveContains(searchText)
-                            }
+
+                            // Scored search for foods
+                            let results = allFoods.map { food in
+                                    let fields = [food.name] + food.searchMatches + food.category
+                                    
+                                    let bestScore = fields.map { field in
+                                        score(searchText, field)
+                                    }.max() ?? 0
+                                    
+                                    return (food, bestScore)
+                                }
+                                .filter { $0.1 > 0 }
+                                .sorted { $0.1 > $1.1 }
+                                .map { $0.0 }
                             
                             if results.isEmpty {
                                 Text("No foods found matching '\(searchText)'").foregroundStyle(.secondary)

@@ -1,6 +1,5 @@
 //
 //  App.swift
-//  ibs-app
 //
 //  This contains the App's top level logic.
 //

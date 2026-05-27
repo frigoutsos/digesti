@@ -1,6 +1,5 @@
 //
 //  EpisodeInput.swift
-//  ibsapp
 //
 //  Contains a temporary object to hold user input, which will be turned into an Episode object.
 //

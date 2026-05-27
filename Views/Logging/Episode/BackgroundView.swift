@@ -1,6 +1,5 @@
 //
 //  BackgroundView.swift
-//  ibsapp
 //
 //  This view contains the background input steps
 //

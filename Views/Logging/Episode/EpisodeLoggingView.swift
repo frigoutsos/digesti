@@ -1,6 +1,5 @@
 //
 //  LoggingView.swift
-//  ibsapp
 //
 //  This view guides the user through logging episodes.
 //
