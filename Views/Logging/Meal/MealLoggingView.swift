@@ -98,7 +98,7 @@ struct FoodLoggingView: View {
                             }
                         }
                     } else {
-                        VStack(spacing: 20) {
+                        VStack(alignment: .leading, spacing: 20) {
                             Text("Search Results for \"\(searchText)\":").font(.subheadline).foregroundStyle(.secondary)
 
                             // Scored search for foods
@@ -118,16 +118,20 @@ struct FoodLoggingView: View {
                             if results.isEmpty {
                                 Text("No foods found matching '\(searchText)'").foregroundStyle(.secondary)
                             } else {
-                                ForEach(results) { food in
-                                    CustomButton(text: food.name, isSelected: input.foods.contains(where: { $0.id == food.id })) {
-                                        // Toggle selection logic
-                                        if input.foods.contains(where: { $0.id == food.id }) {
-                                            input.foods.removeAll(where: { $0.id == food.id })
-                                        } else {
-                                            input.foods.append(food)
+                                VStack(spacing: 10) {
+                                    ForEach(results) { food in
+                                        CustomButton(text: food.name, isSelected: input.foods.contains(where: { $0.id == food.id })) {
+                                            // Toggle selection logic
+                                            if input.foods.contains(where: { $0.id == food.id }) {
+                                                input.foods.removeAll(where: { $0.id == food.id })
+                                            } else {
+                                                input.foods.append(food)
+                                            }
                                         }
+                                        .sensoryFeedback(.selection, trigger: input.foods.contains(where: { $0.id == food.id }))
                                     }
                                 }
+                                .padding(.horizontal)
                             }
                         }
                     }
