@@ -10,7 +10,7 @@ struct LifetimeCardView: View {
     // Pass the calculated values to display, rather than the entire list of episodes
     let episodeCount: Int
     let mostCommonLifetimeFood: Food?
-    let mostCommonLifetimeStool: Stool?
+    //let mostCommonLifetimeStool: Stool?
     
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
@@ -54,8 +54,8 @@ struct LifetimeCardView: View {
                     Text("Most common stool type:")
                         .fontWeight(.semibold)
                     
-                    Text(mostCommonLifetimeStool?.rawValue ?? "Unknown")
-                        .foregroundStyle(.secondary)
+                    //Text(mostCommonLifetimeStool?.rawValue ?? "Unknown")
+                        //.foregroundStyle(.secondary)
                 }
                 .font(.subheadline)
             }

@@ -51,16 +51,41 @@ struct EpisodeView: View {
             }
             .font(.subheadline)
             
-            // Stool type(s) info
+            // Stool consistency info
             HStack(alignment: .top, spacing: 8) {
-                Image(systemName: "list.bullet.clipboard")
+                Image(systemName: "drop.fill")
                     .foregroundStyle(.accent)
 
-                Text("Stool types:")
+                Text("Stool consistency:")
                     .fontWeight(.semibold)
                 
-                Text(episodeToView.stools.map { $0.rawValue }.joined(separator: ", "))
-                    .fixedSize(horizontal: false, vertical: true)
+                Text("\(episodeToView.stool_consistency) / 10")
+                    .foregroundStyle(.secondary)
+            }
+            .font(.subheadline)
+            
+            // Stool urgency info
+            HStack(alignment: .top, spacing: 8) {
+                Image(systemName: "exclamationmark.circle")
+                    .foregroundStyle(.accent)
+
+                Text("Stool urgency:")
+                    .fontWeight(.semibold)
+                
+                Text("\(episodeToView.stool_urgency) / 10")
+                    .foregroundStyle(.secondary)
+            }
+            .font(.subheadline)
+            
+            // Stool effort info
+            HStack(alignment: .top, spacing: 8) {
+                Image(systemName: "figure.highintensity.intervaltraining")
+                    .foregroundStyle(.accent)
+
+                Text("Stool effort:")
+                    .fontWeight(.semibold)
+                
+                Text("\(episodeToView.stool_effort) / 10")
                     .foregroundStyle(.secondary)
             }
             .font(.subheadline)
