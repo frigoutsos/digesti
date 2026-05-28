@@ -34,6 +34,12 @@ struct ContentView: View {
                         InsightsView()
                     }
                 }
+                
+                Tab("Settings", systemImage: "gearshape.fill") {
+                    NavigationStack {
+                        SettingsView()
+                    }
+                }
             }
             .tint(.accent)
         }
