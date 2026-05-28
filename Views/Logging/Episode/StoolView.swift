@@ -76,7 +76,7 @@ struct StoolView: View {
                     Image(systemName: "toilet.fill")
                         .foregroundStyle(.accent)
                     
-                    Text("How hard was it to pass your bowel movement?")
+                    Text("How hard was it to pass your stool?")
                         .font(.headline)
                         .foregroundStyle(.primary)
                 }

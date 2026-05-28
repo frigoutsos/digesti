@@ -37,6 +37,7 @@ struct MonthlyCardView: View {
                 HStack(spacing: 8) {
                     Image(systemName: "fork.knife")
                         .foregroundStyle(.accent)
+                        .frame(width: 16, alignment: .center)
                     
                     Text("Most common food:")
                         .fontWeight(.semibold)
@@ -50,6 +51,7 @@ struct MonthlyCardView: View {
                 HStack(spacing: 8) {
                     Image(systemName: "list.bullet.clipboard")
                         .foregroundStyle(.accent)
+                        .frame(width: 16, alignment: .center)
                     
                     Text("Most common stool type:")
                         .fontWeight(.semibold)
