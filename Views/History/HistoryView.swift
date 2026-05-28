@@ -65,13 +65,13 @@ struct HistoryView: View {
                 .contains(query)
             
             // Search stool consistency
-            let stoolConsistencyMatch = "\(episode.stool_consistency)".contains(query)
+            let stoolConsistencyMatch = "\(episode.stoolConsistency)".contains(query)
             
             // Search stool urgency
-            let stoolUrgencyMatch = "\(episode.stool_urgency)".contains(query)
+            let stoolUrgencyMatch = "\(episode.stoolUrgency)".contains(query)
             
             // Search stool effort
-            let stoolEffortMatch = "\(episode.stool_effort)".contains(query)
+            let stoolEffortMatch = "\(episode.stoolEffort)".contains(query)
             
             return intensityMatch
             || stressMatch

@@ -15,9 +15,9 @@ final class Episode {
     var intensity: Int
     var stress: Int
     var bloating: Bool
-    var stool_consistency: Int
-    var stool_urgency: Int
-    var stool_effort: Int
+    var stoolConsistency: Int
+    var stoolUrgency: Int
+    var stoolEffort: Int
     
     // Assign data to each field in the initializer
     init(
@@ -26,17 +26,17 @@ final class Episode {
         intensity: Int,
         stress: Int,
         bloating: Bool,
-        stool_consistency: Int,
-        stool_urgency: Int,
-        stool_effort: Int
+        stoolConsistency: Int,
+        stoolUrgency: Int,
+        stoolEffort: Int
     ) {
         self.onset = onset
         self.movement = movement
         self.intensity = intensity
         self.stress = stress
         self.bloating = bloating
-        self.stool_consistency = stool_consistency
-        self.stool_urgency = stool_urgency
-        self.stool_effort = stool_effort
+        self.stoolConsistency = stoolConsistency
+        self.stoolUrgency = stoolUrgency
+        self.stoolEffort = stoolEffort
     }
 }

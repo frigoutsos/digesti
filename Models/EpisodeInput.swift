@@ -12,7 +12,7 @@ struct EpisodeInput {
     var intensity: Double = 5
     var stress: Double = 5
     var bloating: Bool = false
-    var stool_consistency: Double = 5
-    var stool_urgency: Double = 5
-    var stool_effort: Double = 5
+    var stoolConsistency: Double = 5
+    var stoolUrgency: Double = 5
+    var stoolEffort: Double = 5
 }

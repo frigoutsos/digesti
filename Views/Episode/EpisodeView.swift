@@ -63,7 +63,7 @@ struct EpisodeView: View {
                 Text("Stool consistency:")
                     .fontWeight(.semibold)
                 
-                Text("\(episodeToView.stool_consistency) / 10")
+                Text("\(episodeToView.stoolConsistency) / 10")
                     .foregroundStyle(.secondary)
             }
             .font(.subheadline)
@@ -77,7 +77,7 @@ struct EpisodeView: View {
                 Text("Stool urgency:")
                     .fontWeight(.semibold)
                 
-                Text("\(episodeToView.stool_urgency) / 10")
+                Text("\(episodeToView.stoolUrgency) / 10")
                     .foregroundStyle(.secondary)
             }
             .font(.subheadline)
@@ -91,7 +91,7 @@ struct EpisodeView: View {
                 Text("Stool effort:")
                     .fontWeight(.semibold)
                 
-                Text("\(episodeToView.stool_effort) / 10")
+                Text("\(episodeToView.stoolEffort) / 10")
                     .foregroundStyle(.secondary)
             }
             .font(.subheadline)
