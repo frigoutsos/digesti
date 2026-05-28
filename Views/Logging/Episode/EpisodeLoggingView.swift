@@ -57,9 +57,9 @@ struct EpisodeLoggingView: View {
             // Pass in the binding $input
             StoolView(
                 input: $input,
-                stool_consistency: $input.stoolConsistency,
-                stool_urgency: $input.stoolUrgency,
-                stool_effort: $input.stoolEffort
+                stoolConsistency: $input.stoolConsistency,
+                stoolUrgency: $input.stoolUrgency,
+                stoolEffort: $input.stoolEffort
             )
         case 3:
             SummaryView(builtEpisode: builtEpisode)
@@ -125,9 +125,9 @@ struct EpisodeLoggingView: View {
             intensity: Int(input.intensity),
             stress: Int(input.stress),
             bloating: input.bloating,
-            stool_consistency: Int(input.stoolConsistency),
-            stool_urgency: Int(input.stoolUrgency),
-            stool_effort: Int(input.stoolEffort)
+            stoolConsistency: Int(input.stoolConsistency),
+            stoolUrgency: Int(input.stoolUrgency),
+            stoolEffort: Int(input.stoolEffort)
         )
     }
     
