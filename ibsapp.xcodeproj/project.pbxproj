@@ -46,6 +46,16 @@
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		7D087D4F2FC7D24700BA513F /* Components */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Components;
+			sourceTree = "<group>";
+		};
+		7D087D532FC7D3C100BA513F /* Types */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Types;
+			sourceTree = "<group>";
+		};
 		7D84A7D12F8EA619008C8016 /* Models */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = Models;
@@ -53,9 +63,6 @@
 		};
 		7D84A7E22F8EA619008C8016 /* Views */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-				7D84A7F02F8EA619008C8016 /* Exceptions for "Views" folder in "ibsapp" target */,
-			);
 			path = Views;
 			sourceTree = "<group>";
 		};
@@ -80,6 +87,8 @@
 		7D84A78B2F8EA439008C8016 = {
 			isa = PBXGroup;
 			children = (
+				7D087D532FC7D3C100BA513F /* Types */,
+				7D087D4F2FC7D24700BA513F /* Components */,
 				7DD5EF212FA1262200D882EC /* Data */,
 				7D84A7D12F8EA619008C8016 /* Models */,
 				7D84A7E22F8EA619008C8016 /* Views */,
@@ -114,7 +123,10 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
+				7D087D4F2FC7D24700BA513F /* Components */,
+				7D087D532FC7D3C100BA513F /* Types */,
 				7D84A7D12F8EA619008C8016 /* Models */,
+				7D84A7E22F8EA619008C8016 /* Views */,
 				7DD5EF212FA1262200D882EC /* Data */,
 			);
 			name = ibsapp;
