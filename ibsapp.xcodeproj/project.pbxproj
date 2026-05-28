@@ -39,6 +39,7 @@
 				Logging/Episode/SummaryView.swift,
 				Logging/Meal/CategoryView.swift,
 				Logging/Meal/MealLoggingView.swift,
+				Logging/Meal/SearchHandler.swift,
 			);
 			target = 7D84A7932F8EA439008C8016 /* ibsapp */;
 		};

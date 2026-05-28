@@ -1,6 +1,5 @@
 //
 //  HistoryView.swift
-//  ibsapp
 //
 //  This view displays the user's episodes as a searchable scrollable list.
 //

@@ -1,140 +1,400 @@
 [
   {
     "id": "beans",
-    "name": "Beans (various types)",
+    "name": "Beans",
     "category": ["Legumes", "Cruciferous", "FODMAP"],
-    "highFodmap": true
+    "highFodmap": true,
+    "searchMatches": [
+      "Black Beans",
+      "Pinto Beans",
+      "Kidney Beans",
+      "Navy Beans",
+      "Cannellini Beans",
+      "Baked Beans",
+      "Refried Beans",
+      "Chickpeas",
+      "Hummus",
+      "Edamame",
+      "Soybeans",
+      "Split Peas",
+      "Bean Chili",
+      "Bean Soup"
+    ]
   },
   {
     "id": "lentils",
     "name": "Lentils",
     "category": ["Legumes", "Cruciferous", "FODMAP"],
-    "highFodmap": true
+    "highFodmap": true,
+    "searchMatches": [
+      "Red Lentils",
+      "Green Lentils",
+      "Brown Lentils",
+      "Yellow Lentils",
+      "Dal",
+      "Lentil Soup",
+      "Lentil Curry",
+      "Lentil Stew"
+    ]
   },
   {
     "id": "broccoli",
     "name": "Broccoli",
     "category": ["Cruciferous", "Vegetable"],
-    "highFodmap": true
+    "highFodmap": true,
+    "searchMatches": [
+      "Broccoli",
+      "Broccoli Florets",
+      "Broccoli Soup",
+      "Roasted Broccoli",
+      "Steamed Broccoli",
+      "Broccoli Salad"
+    ]
   },
   {
     "id": "cabbage",
     "name": "Cabbage",
     "category": ["Cruciferous", "Vegetable"],
-    "highFodmap": true
+    "highFodmap": true,
+    "searchMatches": [
+      "Green Cabbage",
+      "Red Cabbage",
+      "Purple Cabbage",
+      "Sauerkraut",
+      "Coleslaw",
+      "Kimchi",
+      "Cabbage Soup"
+    ]
   },
   {
     "id": "milk",
     "name": "Cow's Milk",
     "category": ["Dairy", "FODMAP"],
-    "highFodmap": true
+    "highFodmap": true,
+    "searchMatches": [
+      "Milk",
+      "Whole Milk",
+      "Skim Milk",
+      "2 Percent Milk",
+      "Chocolate Milk",
+      "Milkshake",
+      "Latte",
+      "Cream",
+      "Half and Half",
+      "Evaporated Milk",
+      "Condensed Milk"
+    ]
   },
   {
     "id": "soft_cheeses",
-    "name": "Soft Cheeses (Ricotta, Cottage)",
+    "name": "Soft Cheeses",
     "category": ["Dairy", "FODMAP"],
-    "highFodmap": true
+    "highFodmap": true,
+    "searchMatches": [
+      "Ricotta",
+      "Cottage Cheese",
+      "Cream Cheese",
+      "Brie",
+      "Camembert",
+      "Mascarpone",
+      "Queso Fresco",
+      "Soft Cheese",
+      "Cheesecake"
+    ]
   },
   {
     "id": "yogurt",
-    "name": "Yogurt (high lactose)",
+    "name": "Yogurt",
     "category": ["Dairy", "FODMAP"],
-    "highFodmap": true
+    "highFodmap": true,
+    "searchMatches": [
+      "Yogurt",
+      "Greek Yogurt",
+      "Regular Yogurt",
+      "Frozen Yogurt",
+      "Vanilla Yogurt",
+      "Fruit Yogurt",
+      "Kefir",
+      "Smoothie"
+    ]
   },
   {
     "id": "garlic",
     "name": "Garlic",
     "category": ["Aromatic", "FODMAP"],
-    "highFodmap": true
+    "highFodmap": true,
+    "searchMatches": [
+      "Garlic",
+      "Garlic Powder",
+      "Garlic Bread",
+      "Garlic Sauce",
+      "Garlic Butter",
+      "Aioli",
+      "Roasted Garlic",
+      "Garlic Dip"
+    ]
   },
   {
     "id": "onions",
     "name": "Onions",
     "category": ["Aromatic", "FODMAP"],
-    "highFodmap": true
+    "highFodmap": true,
+    "searchMatches": [
+      "Onion",
+      "Red Onion",
+      "White Onion",
+      "Yellow Onion",
+      "Green Onion",
+      "Scallions",
+      "Shallots",
+      "Caramelized Onion",
+      "Onion Rings",
+      "Onion Powder",
+      "French Onion Soup"
+    ]
   },
   {
     "id": "apples",
-    "name": "Apples (High FODMAP varieties)",
+    "name": "Apples",
     "category": ["Fruit", "FODMAP"],
-    "highFodmap": true
+    "highFodmap": true,
+    "searchMatches": [
+      "Apple",
+      "Green Apple",
+      "Red Apple",
+      "Apple Juice",
+      "Apple Sauce",
+      "Apple Pie",
+      "Dried Apples",
+      "Cider",
+      "Apple Crisp"
+    ]
   },
   {
     "id": "cherries",
     "name": "Cherries",
     "category": ["Fruit", "FODMAP"],
-    "highFodmap": true
+    "highFodmap": true,
+    "searchMatches": [
+      "Cherry",
+      "Sweet Cherries",
+      "Sour Cherries",
+      "Dried Cherries",
+      "Cherry Juice",
+      "Cherry Pie",
+      "Maraschino Cherries"
+    ]
   },
   {
     "id": "sparkling_water",
     "name": "Artificial Sparkling Water",
     "category": ["Beverage", "Carbonation", "FODMAP"],
-    "highFodmap": true
+    "highFodmap": true,
+    "searchMatches": [
+      "Sparkling Water",
+      "Seltzer",
+      "Club Soda",
+      "Flavored Sparkling Water",
+      "Carbonated Water",
+      "LaCroix",
+      "Bubly",
+      "Perrier"
+    ]
   },
   {
     "id": "soda",
     "name": "Sugar-Sweetened Soda",
     "category": ["Beverage", "Carbonation", "FODMAP"],
-    "highFodmap": true
+    "highFodmap": true,
+    "searchMatches": [
+      "Soda",
+      "Cola",
+      "Coke",
+      "Pepsi",
+      "Root Beer",
+      "Sprite",
+      "Mountain Dew",
+      "Orange Soda",
+      "Soft Drink",
+      "Energy Drink"
+    ]
   },
   {
     "id": "coffee",
-    "name": "Coffee (High Caffeine)",
+    "name": "Coffee",
     "category": ["Beverage", "Caffeine", "Stimulant"],
-    "highFodmap": false
+    "highFodmap": false,
+    "searchMatches": [
+      "Coffee",
+      "Espresso",
+      "Cold Brew",
+      "Iced Coffee",
+      "Latte",
+      "Cappuccino",
+      "Americano",
+      "Mocha",
+      "Energy Coffee"
+    ]
   },
   {
     "id": "alcohol",
-    "name": "Alcohol (Beer/Wine)",
+    "name": "Alcohol",
     "category": ["Beverage", "Alcohol", "Irritant"],
-    "highFodmap": true
+    "highFodmap": true,
+    "searchMatches": [
+      "Beer",
+      "Wine",
+      "Red Wine",
+      "White Wine",
+      "Champagne",
+      "Vodka",
+      "Gin",
+      "Rum",
+      "Whiskey",
+      "Tequila",
+      "Cocktail",
+      "Margarita",
+      "Hard Seltzer",
+      "Cider",
+      "IPA",
+      "Liquor"
+    ]
   },
   {
     "id": "tea",
     "name": "Black Tea",
     "category": ["Beverage", "Caffeine", "Stimulant"],
-    "highFodmap": false
+    "highFodmap": false,
+    "searchMatches": [
+      "Black Tea",
+      "Tea",
+      "Earl Grey",
+      "Chai",
+      "Iced Tea",
+      "Sweet Tea",
+      "Matcha",
+      "Green Tea"
+    ]
   },
   {
     "id": "bread",
     "name": "Wheat Bread",
     "category": ["Grain", "Gluten", "Wheat", "FODMAP"],
-    "highFodmap": true
+    "highFodmap": true,
+    "searchMatches": [
+      "Bread",
+      "White Bread",
+      "Whole Wheat Bread",
+      "Bagel",
+      "Toast",
+      "Roll",
+      "Bun",
+      "Croissant",
+      "Sandwich Bread",
+      "Garlic Bread",
+      "Sourdough"
+    ]
   },
   {
     "id": "pasta",
     "name": "Pasta",
     "category": ["Grain", "Gluten", "Wheat", "FODMAP"],
-    "highFodmap": true
+    "highFodmap": true,
+    "searchMatches": [
+      "Pasta",
+      "Spaghetti",
+      "Macaroni",
+      "Lasagna",
+      "Fettuccine",
+      "Ramen",
+      "Noodles",
+      "Mac and Cheese",
+      "Ravioli",
+      "Tortellini"
+    ]
   },
   {
     "id": "pizza",
-    "name": "High-Fat Pizza",
+    "name": "Pizza",
     "category": ["Processed", "Gluten", "Fat", "High-Fodmap"],
-    "highFodmap": true
+    "highFodmap": true,
+    "searchMatches": [
+      "Pizza",
+      "Pepperoni Pizza",
+      "Cheese Pizza",
+      "Deep Dish Pizza",
+      "Frozen Pizza",
+      "Pizza Slice",
+      "Stuffed Crust Pizza",
+      "Flatbread Pizza"
+    ]
   },
   {
     "id": "fried_snacks",
-    "name": "Fried Snacks (Chips, etc.)",
+    "name": "Fried Snacks",
     "category": ["Processed", "Fat", "Digestive"],
-    "highFodmap": false
+    "highFodmap": false,
+    "searchMatches": [
+      "Potato Chips",
+      "French Fries",
+      "Nachos",
+      "Onion Rings",
+      "Mozzarella Sticks",
+      "Fried Chicken",
+      "Corn Chips",
+      "Tortilla Chips",
+      "Snack Mix",
+      "Crackers"
+    ]
   },
   {
     "id": "burgers",
     "name": "Processed Burgers",
     "category": ["Processed", "Fat", "Digestive"],
-    "highFodmap": false
+    "highFodmap": false,
+    "searchMatches": [
+      "Burger",
+      "Cheeseburger",
+      "Hamburger",
+      "Fast Food Burger",
+      "Double Burger",
+      "Bacon Burger",
+      "Slider",
+      "Veggie Burger"
+    ]
   },
   {
     "id": "sugar_free_gum",
     "name": "Sugar-Free Gum/Candies",
     "category": ["Sweetener", "FODMAP"],
-    "highFodmap": true
+    "highFodmap": true,
+    "searchMatches": [
+      "Sugar Free Gum",
+      "Sugar Free Candy",
+      "Mints",
+      "Chewing Gum",
+      "Xylitol Gum",
+      "Sorbitol Candy",
+      "Diet Candy",
+      "Breath Mints"
+    ]
   },
   {
     "id": "artificial_sweets",
     "name": "Artificial Sweeteners",
     "category": ["Sweetener", "FODMAP"],
-    "highFodmap": true
+    "highFodmap": true,
+    "searchMatches": [
+      "Aspartame",
+      "Sucralose",
+      "Saccharin",
+      "Stevia",
+      "Splenda",
+      "Equal",
+      "Sweet'N Low",
+      "Sugar Substitute",
+      "Diet Soda",
+      "Sugar Free Syrup"
+    ]
   }
 ]

@@ -1,6 +1,5 @@
 //
 //  Episode.swift
-//  ibsapp
 //
 //  This is the SwiftUI data model that represents all episode objects.
 //
