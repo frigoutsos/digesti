@@ -1,6 +1,5 @@
 //
 //  StoolTypes.swift
-//  ibsapp
 //
 //  This is an enum to represent possible stool types.
 //

@@ -1,6 +1,5 @@
 //
 //  EpisodeView.swift
-//  ibs-app
 //
 //  This file creates a view that displays information of an episode.
 import SwiftUI

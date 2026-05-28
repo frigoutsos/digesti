@@ -1,6 +1,5 @@
 //
 //  InsightsView.swift
-//  ibsapp
 //
 //  This view displays episode insights to the user.
 //
@@ -105,8 +104,4 @@ struct InsightsView: View {
         }
         .navigationTitle("Insights")
     }
-}
-
-#Preview {
-    InsightsView()
 }

@@ -1,6 +1,5 @@
 //
 //  HomeView.swift
-//  ibsapp
 //
 //  This view holds the app's home screen.
 //
@@ -72,8 +71,4 @@ struct HomeView: View {
             .navigationTitle("Home")
         }
     }
-}
-
-#Preview {
-    HomeView()
 }
