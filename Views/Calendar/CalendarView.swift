@@ -1,6 +1,5 @@
 //
 //  CalendarView.swift
-//  ibsapp
 //
 //  This view displays episodes on a calendar of the current month.
 //
@@ -89,8 +88,4 @@ struct CalendarView: View {
             }
         }
     }
-}
-
-#Preview {
-    CalendarView()
 }

@@ -1,6 +1,5 @@
 //
 //  ContentView.swift
-//  ibs-app
 //
 //  This view structures the layout of the app.
 //
@@ -44,8 +43,4 @@ struct ContentView: View {
             .tint(.accent)
         }
     }
-}
-
-#Preview {
-    ContentView()
 }

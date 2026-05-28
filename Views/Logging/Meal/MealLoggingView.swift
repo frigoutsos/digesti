@@ -2,9 +2,8 @@
 //  FoodSelectionView.swift
 //  ibs-app
 //
-//  Created by Franklin Rigoutsos on 5/2/26.
+//  Contains the logic for selecting foods in the input page.
 //
-// Contains the logic for selecting foods in the input page.
 import SwiftUI
 import SwiftData
 
@@ -62,25 +61,12 @@ struct FoodLoggingView: View {
                     Image(systemName: "bolt.fill")
                         .foregroundStyle(.accent)
                     
-                    Text("What was your most recent meal?")
+                    Text("What was in your most recent meal?")
                         .font(.headline)
                         .foregroundStyle(.primary)
                 }
-                
-                // Search Bar
-                TextField("Search by food name...", text: $searchText)
-                    .padding(10)
-                    .background(Color(.systemGray6))
-                    .cornerRadius(8)
-                    .overlay(
-                        // Conditional clear button
-                        Group {
-                            Button("Clear Search", role: .cancel) {
-                                searchText = ""
-                            }
-                            .opacity(searchText.isEmpty ? 0 : 1)
-                        }
-                    )
+                .searchable(text: $searchText, placement: .navigationBarDrawer, prompt: "Search episodes…")
+                .autocorrectionDisabled()
                 
                 // Display all content, or just results if searching
                 ScrollView {
@@ -114,11 +100,20 @@ struct FoodLoggingView: View {
                     } else {
                         VStack(spacing: 20) {
                             Text("Search Results for \"\(searchText)\":").font(.subheadline).foregroundStyle(.secondary)
-                            
-                            // Filter and display results
-                            let results = allFoods.filter { food in
-                                food.name.localizedCaseInsensitiveContains(searchText)
-                            }
+
+                            // Scored search for foods
+                            let results = allFoods.map { food in
+                                    let fields = [food.name] + food.searchMatches + food.category
+                                    
+                                    let bestScore = fields.map { field in
+                                        score(searchText, field)
+                                    }.max() ?? 0
+                                    
+                                    return (food, bestScore)
+                                }
+                                .filter { $0.1 > 0 }
+                                .sorted { $0.1 > $1.1 }
+                                .map { $0.0 }
                             
                             if results.isEmpty {
                                 Text("No foods found matching '\(searchText)'").foregroundStyle(.secondary)

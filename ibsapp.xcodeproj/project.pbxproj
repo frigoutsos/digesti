@@ -19,6 +19,32 @@
 		7D84A7BB2F8EA453008C8016 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		7D84A7F02F8EA619008C8016 /* Exceptions for "Views" folder in "ibsapp" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Calendar/CalendarUIKitView.swift,
+				Calendar/CalendarView.swift,
+				Episode/EpisodeView.swift,
+				History/HistoryView.swift,
+				Home/HomeView.swift,
+				Insights/InsightsView.swift,
+				Insights/LifetimeCardView.swift,
+				Insights/MonthlyCardView.swift,
+				Insights/MostRecentEpisodeView.swift,
+				Logging/CustomButton.swift,
+				Logging/Episode/BackgroundView.swift,
+				Logging/Episode/EpisodeLoggingView.swift,
+				Logging/Episode/StoolView.swift,
+				Logging/Episode/SummaryView.swift,
+				Logging/Meal/CategoryView.swift,
+				Logging/Meal/MealLoggingView.swift,
+				Logging/Meal/SearchHandler.swift,
+			);
+			target = 7D84A7932F8EA439008C8016 /* ibsapp */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		7D087D4F2FC7D24700BA513F /* Components */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;

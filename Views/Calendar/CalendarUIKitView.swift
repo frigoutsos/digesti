@@ -1,6 +1,5 @@
 //
 //  CalendarUIKitView.swift
-//  ibsapp
 //
 //  UIKitView representation for the Calendar object, which allows for date-based decorations.
 //
