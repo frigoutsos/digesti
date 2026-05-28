@@ -57,7 +57,7 @@ struct FoodLoggingView: View {
             VStack(alignment: .leading, spacing: 24) {
                 // Title/Header
                 HStack {
-                    Image(systemName: "bolt.fill")
+                    Image(systemName: "fork.knife")
                         .foregroundStyle(.accent)
                     
                     Text("What was in your most recent meal?")
