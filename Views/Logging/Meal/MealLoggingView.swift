@@ -65,7 +65,7 @@ struct FoodLoggingView: View {
                         .font(.headline)
                         .foregroundStyle(.primary)
                 }
-                .searchable(text: $searchText, placement: .navigationBarDrawer, prompt: "Search episodes…")
+                .searchable(text: $searchText, prompt: "Search foods…")
                 .autocorrectionDisabled()
                 
                 // Display all content, or just results if searching
