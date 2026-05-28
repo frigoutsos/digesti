@@ -5,7 +5,10 @@
 //
 import SwiftUI
 
-struct ContentView: View {    
+struct ContentView: View {
+    // Get access to the model context to pass to the watch handler
+    @Environment(\.modelContext) private var modelContext
+
     var body: some View {
         VStack {
             // Set up the bottom TabView
@@ -41,6 +44,10 @@ struct ContentView: View {
                 }
             }
             .tint(.accent)
+            .task {
+                // Start WatchConnectivity handler
+                WatchConnectivityHandler.shared.start(with: modelContext)
+            }
         }
     }
 }

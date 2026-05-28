@@ -10,8 +10,10 @@ struct ContentView: View {
     var body: some View {
         VStack {
             WatchHomeView()
+                .task {
+                    WatchMessageManager.shared.start()
+                }
         }
-        .padding()
     }
 }
 
