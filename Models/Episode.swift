@@ -14,7 +14,9 @@ final class Episode {
     var intensity: Int
     var stress: Int
     var bloating: Bool
-    var stools: [Stool]
+    var stoolConsistency: Int
+    var stoolUrgency: Int
+    var stoolEffort: Int
     
     // Assign data to each field in the initializer
     init(
@@ -23,13 +25,17 @@ final class Episode {
         intensity: Int,
         stress: Int,
         bloating: Bool,
-        stools: [Stool]
+        stoolConsistency: Int,
+        stoolUrgency: Int,
+        stoolEffort: Int
     ) {
         self.onset = onset
         self.movement = movement
         self.intensity = intensity
         self.stress = stress
         self.bloating = bloating
-        self.stools = stools
+        self.stoolConsistency = stoolConsistency
+        self.stoolUrgency = stoolUrgency
+        self.stoolEffort = stoolEffort
     }
 }

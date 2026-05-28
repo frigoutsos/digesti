@@ -9,7 +9,7 @@ struct LifetimeCardView: View {
     // Pass the calculated values to display, rather than the entire list of episodes
     let episodeCount: Int
     let mostCommonLifetimeFood: Food?
-    let mostCommonLifetimeStool: Stool?
+    //let mostCommonLifetimeStool: Stool?
     
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
@@ -36,6 +36,7 @@ struct LifetimeCardView: View {
                 HStack(spacing: 8) {
                     Image(systemName: "fork.knife")
                         .foregroundStyle(.accent)
+                        .frame(width: 16, alignment: .center)
                     
                     Text("Most common food:")
                         .fontWeight(.semibold)
@@ -49,12 +50,13 @@ struct LifetimeCardView: View {
                 HStack(spacing: 8) {
                     Image(systemName: "list.bullet.clipboard")
                         .foregroundStyle(.accent)
+                        .frame(width: 16, alignment: .center)
                     
                     Text("Most common stool type:")
                         .fontWeight(.semibold)
                     
-                    Text(mostCommonLifetimeStool?.rawValue ?? "Unknown")
-                        .foregroundStyle(.secondary)
+                    //Text(mostCommonLifetimeStool?.rawValue ?? "Unknown")
+                        //.foregroundStyle(.secondary)
                 }
                 .font(.subheadline)
             }

@@ -9,7 +9,7 @@ struct MonthlyCardView: View {
     // Pass the calculated values to display, rather than the entire list of episodes
     let episodeCount: Int
     let mostCommonMonthFood: Food?
-    let mostCommonMonthStool: Stool?
+    //let mostCommonMonthStool: Stool?
     
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
@@ -36,6 +36,7 @@ struct MonthlyCardView: View {
                 HStack(spacing: 8) {
                     Image(systemName: "fork.knife")
                         .foregroundStyle(.accent)
+                        .frame(width: 16, alignment: .center)
                     
                     Text("Most common food:")
                         .fontWeight(.semibold)
@@ -49,12 +50,13 @@ struct MonthlyCardView: View {
                 HStack(spacing: 8) {
                     Image(systemName: "list.bullet.clipboard")
                         .foregroundStyle(.accent)
+                        .frame(width: 16, alignment: .center)
                     
                     Text("Most common stool type:")
                         .fontWeight(.semibold)
                     
-                    Text(mostCommonMonthStool?.rawValue ?? "Unknown")
-                        .foregroundStyle(.secondary)
+                    //Text(mostCommonMonthStool?.rawValue ?? "Unknown")
+                        //.foregroundStyle(.secondary)
                 }
                 .font(.subheadline)
             }

@@ -15,6 +15,7 @@ struct EpisodeView: View {
             HStack(spacing: 8) {
                 Image(systemName: "bolt.fill")
                     .foregroundStyle(.accent)
+                    .frame(width: 16, alignment: .center)
                 
                 Text("Onset:")
                     .fontWeight(.semibold)
@@ -28,6 +29,7 @@ struct EpisodeView: View {
             HStack(spacing: 8) {
                 Image(systemName: "toilet.fill")
                     .foregroundStyle(.accent)
+                    .frame(width: 16, alignment: .center)
                 
                 Text("Bowel movement:")
                     .fontWeight(.semibold)
@@ -41,6 +43,7 @@ struct EpisodeView: View {
             HStack(spacing: 8) {
                 Image(systemName: "speedometer")
                     .foregroundStyle(.accent)
+                    .frame(width: 16, alignment: .center)
                 
                 Text("Intensity:")
                     .fontWeight(.semibold)
@@ -50,16 +53,44 @@ struct EpisodeView: View {
             }
             .font(.subheadline)
             
-            // Stool type(s) info
+            // Stool consistency info
             HStack(alignment: .top, spacing: 8) {
-                Image(systemName: "list.bullet.clipboard")
+                Image(systemName: "drop.fill")
                     .foregroundStyle(.accent)
+                    .frame(width: 16, alignment: .center)
 
-                Text("Stool types:")
+                Text("Stool consistency:")
                     .fontWeight(.semibold)
                 
-                Text(episodeToView.stools.map { $0.rawValue }.joined(separator: ", "))
-                    .fixedSize(horizontal: false, vertical: true)
+                Text("\(episodeToView.stoolConsistency) / 10")
+                    .foregroundStyle(.secondary)
+            }
+            .font(.subheadline)
+            
+            // Stool urgency info
+            HStack(alignment: .top, spacing: 8) {
+                Image(systemName: "exclamationmark.circle")
+                    .foregroundStyle(.accent)
+                    .frame(width: 16, alignment: .center)
+
+                Text("Stool urgency:")
+                    .fontWeight(.semibold)
+                
+                Text("\(episodeToView.stoolUrgency) / 10")
+                    .foregroundStyle(.secondary)
+            }
+            .font(.subheadline)
+            
+            // Stool effort info
+            HStack(alignment: .top, spacing: 8) {
+                Image(systemName: "figure.highintensity.intervaltraining")
+                    .foregroundStyle(.accent)
+                    .frame(width: 16, alignment: .center)
+
+                Text("Stool effort:")
+                    .fontWeight(.semibold)
+                
+                Text("\(episodeToView.stoolEffort) / 10")
                     .foregroundStyle(.secondary)
             }
             .font(.subheadline)
@@ -68,6 +99,7 @@ struct EpisodeView: View {
             HStack(alignment: .top, spacing: 8) {
                 Image(systemName: "balloon.fill")
                     .foregroundStyle(.accent)
+                    .frame(width: 16, alignment: .center)
                 
                 Text("Bloating:")
                     .fontWeight(.semibold)
@@ -75,6 +107,7 @@ struct EpisodeView: View {
                 Text((episodeToView.bloating ? "Yes" : "No"))
                     .foregroundStyle(.secondary)
             }
+            .font(.subheadline)
         }
         .fixedSize(horizontal: false, vertical: false)
         .frame(maxWidth: .infinity, alignment: .leading)

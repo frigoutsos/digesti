@@ -40,6 +40,7 @@ struct InsightsView: View {
     }
 
     // Computed property for most common monthly stool type
+    /*
     private var mostCommonMonthStool: Stool? {
         // flatMap since the locations field contains an array of locations for each Episode object
         let stools = episodesLastMonth.flatMap { $0.stools }
@@ -49,7 +50,7 @@ struct InsightsView: View {
         }
         
         return counts.max(by: { $0.value < $1.value })?.key
-    }
+    }*/
     
     // Computed property for most common lifetime food
     private var mostCommonLifetimeFood: Food? {
@@ -66,6 +67,7 @@ struct InsightsView: View {
     }
     
     // Computed property for most common lifetime episode location
+    /*
     private var mostCommonLifetimeStool: Stool? {
         // flatMap since the locations field contains an array of locations for each episode object
         let stools = episodes.flatMap { $0.stools }
@@ -75,7 +77,7 @@ struct InsightsView: View {
         }
         
         return counts.max(by: { $0.value < $1.value })?.key
-    }
+    }*/
     
     var body: some View {
         // Make the view scrollable
@@ -90,13 +92,13 @@ struct InsightsView: View {
                  * triggers, and locations, we do it here and pass the 3 results into the views.
                  */
                 MonthlyCardView(episodeCount: episodesLastMonth.count,
-                                mostCommonMonthFood: mostCommonMonthFood,
-                                mostCommonMonthStool: mostCommonMonthStool)
+                                mostCommonMonthFood: mostCommonMonthFood)
+                                //mostCommonMonthStool: mostCommonMonthStool)
                     .frame(maxWidth: 400)
                 
                 LifetimeCardView(episodeCount: episodesLastMonth.count,
-                                 mostCommonLifetimeFood: mostCommonLifetimeFood,
-                                 mostCommonLifetimeStool: mostCommonLifetimeStool)
+                                 mostCommonLifetimeFood: mostCommonLifetimeFood)
+                                 //mostCommonLifetimeStool: mostCommonLifetimeStool)
                     .frame(maxWidth: 400)
             }
             .frame(maxWidth: .infinity)

@@ -63,19 +63,23 @@ struct HistoryView: View {
                 .lowercased()
                 .contains(query)
             
-            // Search stool entries
-            let stoolsMatch = episode.stools.contains(where: { stool in
-                stool.rawValue
-                    .lowercased()
-                    .contains(query)
-            })
+            // Search stool consistency
+            let stoolConsistencyMatch = "\(episode.stoolConsistency)".contains(query)
+            
+            // Search stool urgency
+            let stoolUrgencyMatch = "\(episode.stoolUrgency)".contains(query)
+            
+            // Search stool effort
+            let stoolEffortMatch = "\(episode.stoolEffort)".contains(query)
             
             return intensityMatch
             || stressMatch
             || bloatingMatch
             || onsetMatch
             || movementMatch
-            || stoolsMatch
+            || stoolConsistencyMatch
+            || stoolUrgencyMatch
+            || stoolEffortMatch
         }
     }
     
