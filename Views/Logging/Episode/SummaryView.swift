@@ -1,7 +1,7 @@
 //
 //  SummaryView.swift
 //
-//  Display the user a summary of the episode they entered
+//  Displays the user a summary of the episode they logged.
 //
 import SwiftUI
 

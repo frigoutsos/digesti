@@ -2,6 +2,7 @@
 //  CategoryView.swift
 //
 //  This view displays all the foods with a given category.
+//
 import SwiftUI
 
 struct CategoryView: View {

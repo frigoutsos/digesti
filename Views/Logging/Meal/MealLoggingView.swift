@@ -1,6 +1,5 @@
 //
 //  FoodSelectionView.swift
-//  ibs-app
 //
 //  Contains the logic for selecting foods in the input page.
 //
