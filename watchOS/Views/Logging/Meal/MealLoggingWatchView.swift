@@ -54,10 +54,11 @@ struct MealLoggingWatchView: View {
                     ToolbarItem(placement: .confirmationAction) {
                         Button {
                             saveMeal()
-                            dismiss()
                         } label: {
                             Image(systemName: "checkmark")
                         }
+                        // Provide user with a success haptic upon saving the episode
+                        .sensoryFeedback(.success, trigger: didSave)
                     }
                 }
             }
