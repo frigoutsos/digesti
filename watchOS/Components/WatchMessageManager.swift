@@ -1,6 +1,5 @@
 //
 //  WatchMessageManager.swift
-//  ibsapp
 //
 //  Watch-facing message state management.
 //
@@ -25,10 +24,15 @@ final class WatchMessageManager: NSObject, WCSessionDelegate {
         logger.info("WCSession activated on watch")
     }
 
-    // Send an immediate message when reachable; otherwise fall back to transferUserInfo.
-    // payload values must be property-list-safe, so send Data for binary payloads.
+    // Send data from a logged meal back to the phone
     func sendMealData(_ data: Data, completion: ((Result<Void, Error>) -> Void)? = nil) {
         let payload: [String: Any] = ["meal": data]
+        
+        guard session.activationState == .activated else {
+            queueEpisodeData(data, completion: completion)
+            return
+        }
+
         if session.isReachable {
             session.sendMessage(payload, replyHandler: { reply in
                 self.logger.info("sendMessage reply: \(reply)")
@@ -54,8 +58,44 @@ final class WatchMessageManager: NSObject, WCSessionDelegate {
         logger.info("transferUserInfo queued")
         completion?(.success(()))
     }
+    
+    // Send data from a logged episode back to the phone
+    func sendEpisodeData(_ data: Data, completion: ((Result<Void, Error>) -> Void)? = nil) {
+        let payload: [String: Any] = ["episode": data]
 
-    // MARK: - WCSessionDelegate minimal implementations
+        guard session.activationState == .activated else {
+            queueEpisodeData(data, completion: completion)
+            return
+        }
+
+        if session.isReachable {
+            session.sendMessage(payload, replyHandler: { reply in
+                self.logger.info("episode reply: \(reply)")
+                completion?(.success(()))
+            }, errorHandler: { error in
+                self.logger.error("episode sendMessage error: \(error.localizedDescription)")
+                self.queueEpisodeData(data, completion: completion)
+            })
+        } else {
+            queueEpisodeData(data, completion: completion)
+        }
+    }
+    
+    // Queue as userInfo for delivery when connectivity returns
+    private func queueEpisodeData(_ data: Data, completion: ((Result<Void, Error>) -> Void)? = nil) {
+        do {
+            try session.updateApplicationContext(["lastQueuedEpisodeDate": Date().timeIntervalSince1970])
+        } catch {
+            logger.error("updateApplicationContext error: \(error.localizedDescription)")
+        }
+
+        session.transferUserInfo(["episode": data])
+        logger.info("episode transferUserInfo queued")
+
+        completion?(.success(()))
+    }
+
+    // WCSessionDelegate minimal implementations
     func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
         if let e = error { logger.error("activation error: \(e.localizedDescription)") }
         logger.info("activationDidComplete state: \(activationState.rawValue)")

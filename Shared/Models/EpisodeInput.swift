@@ -5,7 +5,7 @@
 //
 import SwiftUI
 
-struct EpisodeInput {
+struct EpisodeInput: Codable {
     var onset: Date = Date()
     var movement: Date = Date()
     var intensity: Double = 5

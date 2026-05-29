@@ -22,40 +22,42 @@ struct MealLoggingWatchView: View {
     var body: some View {
         NavigationStack {
             ScrollView {
-                VStack(alignment: .leading) {
-                    // Display each food category
-                    ForEach(allFoods.sorted(by: { $0.name < $1.name }), id: \.id) { food in
-                        CustomButton(text: food.name, isSelected: input.foods.contains(where: { $0.id == food.id})) {
-                            // Toggle selection logic
-                            if input.foods.contains(where: { $0.id == food.id }) {
-                                input.foods.removeAll(where: { $0.id == food.id })
-                            } else {
-                                input.foods.append(food)
-                            }
+                // Display each food category
+                ForEach(allFoods.sorted(by: { $0.name < $1.name }), id: \.id) { food in
+                    
+                    let isSelected = input.foods.contains { $0.id == food.id}
+                    
+                    CustomButton(text: food.name, isSelected: isSelected) {
+                        // Toggle selection logic
+                        if (isSelected) {
+                            input.foods.removeAll(where: { $0.id == food.id })
+                        } else {
+                            input.foods.append(food)
                         }
-                        .sensoryFeedback(.selection, trigger: input.foods.contains(where: { $0.id == food.id }))
-                    }
-                    .padding(.horizontal)
-                }
-            }
-            .navigationTitle("Foods")
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .cancellationAction) {
-                    Button {
-                        dismiss()
-                    } label: {
-                        Image(systemName: "xmark")
                     }
                 }
-                
-                // Confirm (checkmark)
-                ToolbarItem(placement: .confirmationAction) {
-                    Button {
-                        saveMeal()
-                        dismiss()
-                    } label: {
-                        Image(systemName: "checkmark")
+                // UUID() should be able to trigger feedback
+                .padding()
+                .sensoryFeedback(.selection, trigger: UUID())
+                .navigationTitle("Foods")
+                .navigationBarTitleDisplayMode(.inline)
+                .toolbar {
+                    ToolbarItem(placement: .cancellationAction) {
+                        Button {
+                            dismiss()
+                        } label: {
+                            Image(systemName: "xmark")
+                        }
+                    }
+                    
+                    // Confirm (checkmark)
+                    ToolbarItem(placement: .confirmationAction) {
+                        Button {
+                            saveMeal()
+                            dismiss()
+                        } label: {
+                            Image(systemName: "checkmark")
+                        }
                     }
                 }
             }
@@ -76,7 +78,7 @@ struct MealLoggingWatchView: View {
         guard !didSave else { return }
         
         // Create data transfer object to send to iPhone
-        let dto = MealDTO(date: Date(), foods: input.foods)
+        let dto = MealInput(date: Date(), foods: input.foods)
         
         do {
             let data = try JSONEncoder().encode(dto)

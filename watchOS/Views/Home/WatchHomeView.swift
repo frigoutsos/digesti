@@ -13,13 +13,24 @@ struct WatchHomeView: View {
     @State private var showFoodLogger = false
     
     var body: some View {
-        Button {
-            showEpisodeLogger = true
-        } label: {
-            Label("Log Episode", systemImage: "bolt.fill")
-                .font(.headline)
-                .frame(maxWidth: .infinity)
-                .padding()
+        VStack(alignment: .leading, spacing: 12) {
+            Button {
+                showEpisodeLogger = true
+            } label: {
+                Label("Log Episode", systemImage: "bolt.fill")
+                    .font(.headline)
+                    .frame(maxWidth: .infinity)
+                    .padding()
+            }
+            
+            Button {
+                showFoodLogger = true
+            } label: {
+                Label("Log Meal", systemImage: "fork.knife")
+                    .font(.headline)
+                    .frame(maxWidth: .infinity)
+                    .padding()
+            }
         }
         .buttonStyle(.borderedProminent)
         .tint(.accent)
@@ -28,18 +39,6 @@ struct WatchHomeView: View {
         .sheet(isPresented: $showEpisodeLogger) {
             EpisodeLoggingWatchView()
         }
-        
-        Button {
-            showFoodLogger = true
-        } label: {
-            Label("Log Meal", systemImage: "fork.knife")
-                .font(.headline)
-                .frame(maxWidth: .infinity)
-                .padding()
-        }
-        .buttonStyle(.borderedProminent)
-        .tint(.accent)
-        .padding()
         // Direct the user to the logging view after clicking the log button
         .sheet(isPresented: $showFoodLogger) {
             MealLoggingWatchView()

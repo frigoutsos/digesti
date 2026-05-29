@@ -5,7 +5,7 @@
 //
 import SwiftUI
 
-struct MealInput {
+struct MealInput: Codable {
     var date: Date = Date()
     var foods: [Food] = []
 }

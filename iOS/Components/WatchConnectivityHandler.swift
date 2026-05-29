@@ -61,6 +61,11 @@ final class WatchConnectivityHandler: NSObject, ObservableObject, WCSessionDeleg
             logger.info("didReceiveMessage meal data size: \(data.count)")
             handleMealData(data)
         }
+        
+        if let data = message["episode"] as? Data {
+            logger.info("didReceiveMessage episode data size: \(data.count)")
+            handleEpisodeData(data)
+        }
         replyHandler(["status": "received"])
     }
 
@@ -71,6 +76,11 @@ final class WatchConnectivityHandler: NSObject, ObservableObject, WCSessionDeleg
             logger.info("didReceiveUserInfo meal data size: \(data.count)")
             handleMealData(data)
         }
+        
+        if let data = userInfo["episode"] as? Data {
+            logger.info("didReceiveUserInfo episode data size: \(data.count)")
+            handleEpisodeData(data)
+        }
     }
 
     // Reachability notifications
@@ -78,7 +88,7 @@ final class WatchConnectivityHandler: NSObject, ObservableObject, WCSessionDeleg
         logger.info("reachability changed: reachable=\(session.isReachable)")
     }
 
-    // Helper to decode & insert into SwiftData
+    // Helper to decode & insert meals into SwiftData
     private func handleMealData(_ data: Data) {
         guard let modelContext = modelContext else {
             logger.error("modelContext is nil; cannot insert meal")
@@ -86,10 +96,12 @@ final class WatchConnectivityHandler: NSObject, ObservableObject, WCSessionDeleg
         }
 
         do {
-            let dto = try JSONDecoder().decode(MealDTO.self, from: data)
+            let dto = try JSONDecoder().decode(MealInput.self, from: data)
             DispatchQueue.main.async {
                 self.logger.info("inserting meal date: \(dto.date.debugDescription)")
+                
                 let meal = Meal(date: dto.date, foods: dto.foods)
+                
                 modelContext.insert(meal)
                 do {
                     try modelContext.save()
@@ -100,6 +112,43 @@ final class WatchConnectivityHandler: NSObject, ObservableObject, WCSessionDeleg
             }
         } catch {
             logger.error("decode MealDTO error: \(error.localizedDescription)")
+        }
+    }
+    
+    // Helper to decode & insert episodes into SwiftData
+    private func handleEpisodeData(_ data: Data) {
+        guard let modelContext = modelContext else {
+            logger.error("modelContext is nil; cannot insert episode")
+            return
+        }
+
+        do {
+            let dto = try JSONDecoder().decode(EpisodeInput.self, from: data)
+            DispatchQueue.main.async {
+                self.logger.info("inserting episode date: \(dto.onset.debugDescription)")
+                let episode = Episode(
+                    onset: dto.onset,
+                    movement: dto.movement,
+                    intensity: Int(dto.intensity),
+                    stress: Int(dto.stress),
+                    bloating: dto.bloating,
+                    stoolConsistency: Int(dto.stoolConsistency),
+                    stoolUrgency: Int(dto.stoolUrgency),
+                    stoolEffort: Int(dto.stoolEffort)
+                )
+                
+                modelContext.insert(episode)
+
+                do {
+                    try modelContext.save()
+                    self.logger.info("saved episode")
+                } catch {
+                    self.logger.error("save episode error: \(error.localizedDescription)")
+                }
+            }
+
+        } catch {
+            logger.error("decode EpisodeInput error: \(error.localizedDescription)")
         }
     }
 }
