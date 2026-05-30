@@ -6,100 +6,108 @@
 import SwiftUI
 import SwiftData
 
-struct InsightsView: View {
-    // Get a list of episodes, reverse sorted by time
-    @Query(sort: \Episode.onset, order: .reverse) private var episodes: [Episode]
-    
-    // Get a list of meals, reverse sorted by time
-    @Query(sort: \Meal.date, order: .reverse) private var meals: [Meal]
-    
-    // Computed property to get episodes last month
-    private var episodesLastMonth: [Episode] {
-        let oneMonthAgo = Calendar.current.date(byAdding: .month, value: -1, to: Date()) ?? Date()
-        
-        return episodes.filter { $0.onset >= oneMonthAgo }
-    }
-    
-    // Computed property to get meals last month
-    private var mealsLastMonth: [Meal] {
-        let oneMonthAgo = Calendar.current.date(byAdding: .month, value: -1, to: Date()) ?? Date()
-        
-        return meals.filter { $0.date >= oneMonthAgo }
-    }
-    
-    // Computed property for most common monthly food
-    private var mostCommonMonthFood: Food? {
-        // flatMap since the triggers field contains an array of triggers for each Meal object
-        let foods = mealsLastMonth.flatMap { $0.foods }
-        
-        let counts = foods.reduce(into: [Food: Int]()) { counts, food in
-            counts[food, default: 0] += 1
+// Time range options for the insights page
+enum InsightsRange: String, CaseIterable, Identifiable {
+    case thirtyDays  = "30d"
+    case ninetyDays  = "90d"
+    case allTime     = "All Time"
+
+    var id: Self { self }
+
+    // How far back to look, nil means no limit (all time)
+    var cutoff: Date? {
+        switch self {
+        case .thirtyDays:  return Calendar.current.date(byAdding: .day,   value: -30, to: Date())
+        case .ninetyDays:  return Calendar.current.date(byAdding: .day,   value: -90, to: Date())
+        case .allTime:     return nil
         }
-        
-        return counts.max(by: { $0.value < $1.value })?.key
     }
 
-    // Computed property for most common monthly stool type
-    /*
-    private var mostCommonMonthStool: Stool? {
-        // flatMap since the locations field contains an array of locations for each Episode object
-        let stools = episodesLastMonth.flatMap { $0.stools }
-        
-        let counts = stools.reduce(into: [Stool: Int]()) { counts, stool in
-            counts[stool, default: 0] += 1
+    // The equivalent window before the current one, used for trend comparisons
+    var previousCutoff: Date? {
+        switch self {
+        case .thirtyDays:  return Calendar.current.date(byAdding: .day,   value: -60, to: Date())
+        case .ninetyDays:  return Calendar.current.date(byAdding: .day,   value: -180, to: Date())
+        case .allTime:     return nil
         }
-        
-        return counts.max(by: { $0.value < $1.value })?.key
-    }*/
-    
-    // Computed property for most common lifetime food
-    private var mostCommonLifetimeFood: Food? {
-        // flatMap since the triggers field contains an array of triggers for each Meal object
-        let foods = meals.flatMap { $0.foods }
-        
-        // Create dictionary of counts
-        let counts = foods.reduce(into: [Food: Int]()) { counts, food in
-            counts[food, default: 0] += 1
-        }
-        
-        // Find the key with the maximum count
-        return counts.max(by: { $0.value < $1.value })?.key
     }
-    
-    // Computed property for most common lifetime episode location
-    /*
-    private var mostCommonLifetimeStool: Stool? {
-        // flatMap since the locations field contains an array of locations for each episode object
-        let stools = episodes.flatMap { $0.stools }
-        
-        let counts = stools.reduce(into: [Stool: Int]()) { counts, stool in
-            counts[stool, default: 0] += 1
-        }
-        
-        return counts.max(by: { $0.value < $1.value })?.key
-    }*/
-    
+}
+
+struct InsightsView: View {
+    // Get all episodes and meals sorted newest first
+    @Query(sort: \Episode.onset, order: .reverse) private var allEpisodes: [Episode]
+    @Query(sort: \Meal.date,    order: .reverse) private var allMeals:    [Meal]
+
+    // Which time window the user has selected
+    @State private var selectedRange: InsightsRange = .thirtyDays
+
+    // Episodes that fall within the selected time window
+    private var episodesInRange: [Episode] {
+        guard let cutoff = selectedRange.cutoff else { return allEpisodes }
+        return allEpisodes.filter { $0.onset >= cutoff }
+    }
+
+    // Episodes in the previous equal window, used for trend arrows
+    private var episodesInPreviousRange: [Episode] {
+        guard let cutoff = selectedRange.cutoff,
+              let prevCutoff = selectedRange.previousCutoff else { return [] }
+        return allEpisodes.filter { $0.onset >= prevCutoff && $0.onset < cutoff }
+    }
+
+    // Meals that fall within the selected time window
+    private var mealsInRange: [Meal] {
+        guard let cutoff = selectedRange.cutoff else { return allMeals }
+        return allMeals.filter { $0.date >= cutoff }
+    }
+
     var body: some View {
-        // Make the view scrollable
         ScrollView {
             VStack(spacing: 20) {
-                // Display the card views for episode insights
-                MostRecentEpisodeView(mostRecentEpisode: episodes.first ?? nil)
+
+                // Time range picker
+                Picker("Range", selection: $selectedRange) {
+                    ForEach(InsightsRange.allCases) { range in
+                        Text(range.rawValue).tag(range)
+                    }
+                }
+                .pickerStyle(.segmented)
+                .padding(.horizontal)
+
+                if episodesInRange.isEmpty {
+                    ContentUnavailableView(
+                        "No Episodes",
+                        systemImage: "chart.bar.xaxis",
+                        description: Text("Log some episodes to see insights.")
+                    )
+                    .padding(.top, 40)
+                } else {
+
+                    // Trend averages card
+                    TrendCardView(
+                        currentEpisodes:  episodesInRange,
+                        previousEpisodes: episodesInPreviousRange,
+                        range:            selectedRange
+                    )
                     .frame(maxWidth: 400)
-                
-                /*
-                 * Rather than passing in the list of episodes to the card view to calculate frequencies,
-                 * triggers, and locations, we do it here and pass the 3 results into the views.
-                 */
-                MonthlyCardView(episodeCount: episodesLastMonth.count,
-                                mostCommonMonthFood: mostCommonMonthFood)
-                                //mostCommonMonthStool: mostCommonMonthStool)
+                    
+                    // Stress impact card
+                    StressCorrelationCardView(episodes: episodesInRange)
+                        .frame(maxWidth: 400)
+
+                    // Trigger foods ranked by composite impact
+                    TriggerFoodsCardView(
+                        episodes: episodesInRange,
+                        meals:    mealsInRange
+                    )
                     .frame(maxWidth: 400)
-                
-                LifetimeCardView(episodeCount: episodesLastMonth.count,
-                                 mostCommonLifetimeFood: mostCommonLifetimeFood)
-                                 //mostCommonLifetimeStool: mostCommonLifetimeStool)
+
+                    // Worst single offender per symptom
+                    WorstOffendersCardView(
+                        episodes: episodesInRange,
+                        meals:    mealsInRange
+                    )
                     .frame(maxWidth: 400)
+                }
             }
             .frame(maxWidth: .infinity)
             .padding()
