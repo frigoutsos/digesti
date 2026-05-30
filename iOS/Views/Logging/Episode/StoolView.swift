@@ -1,7 +1,7 @@
 //
 //  StoolView.swift
 //
-//  Created by Franklin Rigoutsos on 5/2/26.
+//  This view displays stool-related questions in the episode logging flow.
 //
 import SwiftUI
 

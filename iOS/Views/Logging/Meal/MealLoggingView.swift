@@ -1,6 +1,5 @@
 //
 //  FoodSelectionView.swift
-//  ibs-app
 //
 //  Contains the logic for selecting foods in the input page.
 //
@@ -58,14 +57,14 @@ struct FoodLoggingView: View {
             VStack(alignment: .leading, spacing: 24) {
                 // Title/Header
                 HStack {
-                    Image(systemName: "bolt.fill")
+                    Image(systemName: "fork.knife")
                         .foregroundStyle(.accent)
                     
                     Text("What was in your most recent meal?")
                         .font(.headline)
                         .foregroundStyle(.primary)
                 }
-                .searchable(text: $searchText, placement: .navigationBarDrawer, prompt: "Search episodes…")
+                .searchable(text: $searchText, prompt: "Search foods…")
                 .autocorrectionDisabled()
                 
                 // Display all content, or just results if searching
@@ -83,9 +82,12 @@ struct FoodLoggingView: View {
                                 // Display each food in that category
                                 VStack(spacing: 10) {
                                     ForEach(categorizedFoods[categoryName] ?? [], id: \.id) { food in
-                                        CustomButton(text: food.name, isSelected: input.foods.contains(where: { $0.id == food.id})) {
+                                        
+                                        let isSelected = input.foods.contains { $0.id == food.id}
+                                        
+                                        CustomButton(text: food.name, isSelected: isSelected) {
                                             // Toggle selection logic
-                                            if input.foods.contains(where: { $0.id == food.id }) {
+                                            if (isSelected) {
                                                 input.foods.removeAll(where: { $0.id == food.id })
                                             } else {
                                                 input.foods.append(food)
@@ -120,9 +122,12 @@ struct FoodLoggingView: View {
                             } else {
                                 VStack(spacing: 10) {
                                     ForEach(results) { food in
-                                        CustomButton(text: food.name, isSelected: input.foods.contains(where: { $0.id == food.id })) {
+                                        
+                                        let isSelected = input.foods.contains { $0.id == food.id}
+                                        
+                                        CustomButton(text: food.name, isSelected: isSelected) {
                                             // Toggle selection logic
-                                            if input.foods.contains(where: { $0.id == food.id }) {
+                                            if (isSelected) {
                                                 input.foods.removeAll(where: { $0.id == food.id })
                                             } else {
                                                 input.foods.append(food)

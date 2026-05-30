@@ -7,42 +7,65 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		7D84A7BD2F8EA453008C8016 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7D84A7BA2F8EA453008C8016 /* Assets.xcassets */; };
-		7D84A7C12F8EA453008C8016 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D84A7BB2F8EA453008C8016 /* ContentView.swift */; };
-		7D84A7CB2F8EA453008C8016 /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D84A7B92F8EA453008C8016 /* App.swift */; };
+		7DDD04A62FC8AB370075C184 /* ibsapp.watch.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 7DDD049C2FC8AB360075C184 /* ibsapp.watch.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		7DDD04A42FC8AB370075C184 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7D84A78C2F8EA439008C8016 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 7DDD049B2FC8AB360075C184;
+			remoteInfo = "ibsapp.watch Watch App";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		7DDD04942FC8AB0A0075C184 /* Embed Watch Content */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
+			dstSubfolderSpec = 16;
+			files = (
+				7DDD04A62FC8AB370075C184 /* ibsapp.watch.app in Embed Watch Content */,
+			);
+			name = "Embed Watch Content";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		7D84A7942F8EA439008C8016 /* ibsapp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ibsapp.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		7D84A7B92F8EA453008C8016 /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
-		7D84A7BA2F8EA453008C8016 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		7D84A7BB2F8EA453008C8016 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		7DDD049C2FC8AB360075C184 /* ibsapp.watch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ibsapp.watch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		7DD499A92FC8C19A0070B4F7 /* Exceptions for "iOS" folder in "ibsapp" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 7D84A7932F8EA439008C8016 /* ibsapp */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		7D087D4F2FC7D24700BA513F /* Components */ = {
+		7DD4995E2FC8C1620070B4F7 /* Shared */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = Components;
+			path = Shared;
 			sourceTree = "<group>";
 		};
-		7D087D532FC7D3C100BA513F /* Types */ = {
+		7DD4997B2FC8C1840070B4F7 /* iOS */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = Types;
+			exceptions = (
+				7DD499A92FC8C19A0070B4F7 /* Exceptions for "iOS" folder in "ibsapp" target */,
+			);
+			path = iOS;
 			sourceTree = "<group>";
 		};
-		7D84A7D12F8EA619008C8016 /* Models */ = {
+		7DDD049D2FC8AB360075C184 /* watchOS */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = Models;
-			sourceTree = "<group>";
-		};
-		7D84A7E22F8EA619008C8016 /* Views */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = Views;
-			sourceTree = "<group>";
-		};
-		7DD5EF212FA1262200D882EC /* Data */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = Data;
+			path = watchOS;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -55,20 +78,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		7DDD04992FC8AB360075C184 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
 		7D84A78B2F8EA439008C8016 = {
 			isa = PBXGroup;
 			children = (
-				7D087D532FC7D3C100BA513F /* Types */,
-				7D087D4F2FC7D24700BA513F /* Components */,
-				7DD5EF212FA1262200D882EC /* Data */,
-				7D84A7D12F8EA619008C8016 /* Models */,
-				7D84A7E22F8EA619008C8016 /* Views */,
-				7D84A7B92F8EA453008C8016 /* App.swift */,
-				7D84A7BA2F8EA453008C8016 /* Assets.xcassets */,
-				7D84A7BB2F8EA453008C8016 /* ContentView.swift */,
+				7DD4997B2FC8C1840070B4F7 /* iOS */,
+				7DD4995E2FC8C1620070B4F7 /* Shared */,
+				7DDD049D2FC8AB360075C184 /* watchOS */,
 				7D84A7952F8EA439008C8016 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -77,6 +102,7 @@
 			isa = PBXGroup;
 			children = (
 				7D84A7942F8EA439008C8016 /* ibsapp.app */,
+				7DDD049C2FC8AB360075C184 /* ibsapp.watch.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -91,23 +117,45 @@
 				7D84A7902F8EA439008C8016 /* Sources */,
 				7D84A7912F8EA439008C8016 /* Frameworks */,
 				7D84A7922F8EA439008C8016 /* Resources */,
+				7DDD04942FC8AB0A0075C184 /* Embed Watch Content */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				7DDD04A52FC8AB370075C184 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
-				7D087D4F2FC7D24700BA513F /* Components */,
-				7D087D532FC7D3C100BA513F /* Types */,
-				7D84A7D12F8EA619008C8016 /* Models */,
-				7D84A7E22F8EA619008C8016 /* Views */,
-				7DD5EF212FA1262200D882EC /* Data */,
+				7DD4995E2FC8C1620070B4F7 /* Shared */,
+				7DD4997B2FC8C1840070B4F7 /* iOS */,
 			);
 			name = ibsapp;
 			packageProductDependencies = (
 			);
 			productName = "ibs-app";
 			productReference = 7D84A7942F8EA439008C8016 /* ibsapp.app */;
+			productType = "com.apple.product-type.application";
+		};
+		7DDD049B2FC8AB360075C184 /* ibsapp.watch */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7DDD04A72FC8AB370075C184 /* Build configuration list for PBXNativeTarget "ibsapp.watch" */;
+			buildPhases = (
+				7DDD04982FC8AB360075C184 /* Sources */,
+				7DDD04992FC8AB360075C184 /* Frameworks */,
+				7DDD049A2FC8AB360075C184 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				7DD4995E2FC8C1620070B4F7 /* Shared */,
+				7DDD049D2FC8AB360075C184 /* watchOS */,
+			);
+			name = ibsapp.watch;
+			packageProductDependencies = (
+			);
+			productName = "ibsapp.watch Watch App";
+			productReference = 7DDD049C2FC8AB360075C184 /* ibsapp.watch.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -121,6 +169,9 @@
 				LastUpgradeCheck = 2630;
 				TargetAttributes = {
 					7D84A7932F8EA439008C8016 = {
+						CreatedOnToolsVersion = 26.3;
+					};
+					7DDD049B2FC8AB360075C184 = {
 						CreatedOnToolsVersion = 26.3;
 					};
 				};
@@ -140,6 +191,7 @@
 			projectRoot = "";
 			targets = (
 				7D84A7932F8EA439008C8016 /* ibsapp */,
+				7DDD049B2FC8AB360075C184 /* ibsapp.watch */,
 			);
 		};
 /* End PBXProject section */
@@ -149,7 +201,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7D84A7BD2F8EA453008C8016 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7DDD049A2FC8AB360075C184 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -160,12 +218,25 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7D84A7C12F8EA453008C8016 /* ContentView.swift in Sources */,
-				7D84A7CB2F8EA453008C8016 /* App.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7DDD04982FC8AB360075C184 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		7DDD04A52FC8AB370075C184 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 7DDD049B2FC8AB360075C184 /* ibsapp.watch */;
+			targetProxy = 7DDD04A42FC8AB370075C184 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		7D84A79F2F8EA43A008C8016 /* Debug */ = {
@@ -220,7 +291,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 26.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.6;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -277,7 +348,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 26.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.6;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
@@ -292,11 +363,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = iOS/ibsapp.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = RPCN3H3YK4;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = iOS/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.medical";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -330,11 +403,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = iOS/ibsapp.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = RPCN3H3YK4;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = iOS/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.medical";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -363,6 +438,72 @@
 			};
 			name = Release;
 		};
+		7DDD04A82FC8AB370075C184 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = RPCN3H3YK4;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = ibsapp;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = dev.ibsapp;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = dev.ibsapp.watchkitapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = NO;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 11.6;
+			};
+			name = Debug;
+		};
+		7DDD04A92FC8AB370075C184 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = RPCN3H3YK4;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = ibsapp;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = dev.ibsapp;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = dev.ibsapp.watchkitapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = NO;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 11.6;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -380,6 +521,15 @@
 			buildConfigurations = (
 				7D84A7A22F8EA43A008C8016 /* Debug */,
 				7D84A7A32F8EA43A008C8016 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		7DDD04A72FC8AB370075C184 /* Build configuration list for PBXNativeTarget "ibsapp.watch" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7DDD04A82FC8AB370075C184 /* Debug */,
+				7DDD04A92FC8AB370075C184 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
