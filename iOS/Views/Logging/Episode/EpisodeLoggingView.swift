@@ -88,14 +88,12 @@ struct EpisodeLoggingView: View {
     // Change the toolbar items based on the user's step
     @ToolbarContentBuilder
     private var toolbarContent: some ToolbarContent {
-        if step > 1 {
-            ToolbarItem(placement: .topBarLeading) {
+        ToolbarItem(placement: .topBarLeading) {
+            if step > 1 {
                 Button("Back") {
                     step -= 1
                 }
-            }
-        } else {
-            ToolbarItem(placement: .topBarLeading) {
+            } else {
                 Button("Cancel", role: .cancel) {
                     dismiss()
                 }
