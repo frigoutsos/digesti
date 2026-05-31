@@ -8,10 +8,10 @@ import SwiftUI
 struct WatchHomeView: View {
     // State to track if the user clicked the "Log Episode" button
     @State private var showEpisodeLogger = false
-    
-    // State to track if the user clicked the "Log Foods" button
-    @State private var showFoodLogger = false
-    
+        
+    // State to track if the user clicked the "Log Meal" button
+    @State private var showMealLogger = false
+
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
             Button {
@@ -24,7 +24,7 @@ struct WatchHomeView: View {
             }
             
             Button {
-                showFoodLogger = true
+                showMealLogger = true
             } label: {
                 Label("Log Meal", systemImage: "fork.knife")
                     .font(.headline)
@@ -35,17 +35,5 @@ struct WatchHomeView: View {
         .buttonStyle(.borderedProminent)
         .tint(.accent)
         .padding()
-        // Direct the user to the logging view after clicking the log button
-        .sheet(isPresented: $showEpisodeLogger) {
-            EpisodeLoggingWatchView()
-        }
-        // Direct the user to the logging view after clicking the log button
-        .sheet(isPresented: $showFoodLogger) {
-            MealLoggingWatchView()
-        }
     }
-}
-
-#Preview {
-    WatchHomeView()
 }

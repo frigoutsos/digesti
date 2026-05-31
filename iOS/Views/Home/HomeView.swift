@@ -6,11 +6,8 @@
 import SwiftUI
 
 struct HomeView: View {
-    // State to track if the user clicked the "Log Episode" button
-    @State private var showEpisodeLogger = false
-    
-    // State to track if the user clicked the "Log Foods" button
-    @State private var showFoodLogger = false
+    // Track our navigation manager component
+    @Bindable var navigationManager: NavigationManager
     
     var body: some View {
         NavigationStack {
@@ -35,7 +32,7 @@ struct HomeView: View {
                 }
                 
                 Button {
-                    showEpisodeLogger = true
+                    navigationManager.presentEpisodeLogger()
                 } label: {
                     Label("Log Episode", systemImage: "bolt.fill")
                         .font(.headline)
@@ -45,13 +42,9 @@ struct HomeView: View {
                 .buttonStyle(.borderedProminent)
                 .tint(.accent)
                 .padding(.horizontal, 48)
-                // Direct the user to the logging view after clicking the log button
-                .sheet(isPresented: $showEpisodeLogger) {
-                    EpisodeLoggingView()
-                }
                 
                 Button {
-                    showFoodLogger = true
+                    navigationManager.presentMealLogger()
                 } label: {
                     Label("Log Meal", systemImage: "fork.knife")
                         .font(.headline)
@@ -61,14 +54,19 @@ struct HomeView: View {
                 .buttonStyle(.borderedProminent)
                 .tint(.accent)
                 .padding(.horizontal, 48)
-                // Direct the user to the logging view after clicking the log button
-                .sheet(isPresented: $showFoodLogger) {
-                    FoodLoggingView()
-                }
                 
                 Spacer()
             }
             .navigationTitle("Home")
+            // Direct the user to the logging view after clicking the log button
+            .sheet(item: $navigationManager.activeSheet) { (sheetType: NavigationManager.SheetType) in
+                switch sheetType {
+                case .episode:
+                    EpisodeLoggingView()
+                case .meal:
+                    MealLoggingView()
+                }
+            }
         }
     }
 }

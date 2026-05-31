@@ -10,31 +10,15 @@ struct CalendarView: View {
     // Get a list of episodes, reverse sorted by time
     @Query(sort: \Episode.onset, order: .reverse) private var episodes: [Episode]
     
-    // State variables to handle showing episode info cards for selected dates
-    @State private var selectedDate = Date()
-    @State private var showInfo: Bool = false
-    
-    // Computed property to get set of Dates that had at least one episode logged on them
-    private var episodeDays: Set<Date> {
-        Set(episodes.map {
-            Calendar.current.startOfDay(for: $0.onset)
-        })
-    }
-    
-    // Computed property to get the list of episodes for the selected date
-    private var episodesForSelectedDay: [Episode] {
-        let day = Calendar.current.startOfDay(for: selectedDate)
-        return episodes.filter {
-            Calendar.current.isDate($0.onset, inSameDayAs: day)
-        }
-    }
+    // State to keep track of our ViewModel object
+    @State private var viewModel = CalendarViewModel()
     
     var body: some View {
         VStack(spacing: 0) {
             // Display our calendar
             CalendarUIKitView(
-                selectedDate: $selectedDate,
-                episodeDays: episodeDays,
+                selectedDate: $viewModel.selectedDate,
+                episodeDays: viewModel.episodeDays,
             )
             .fixedSize(horizontal: false, vertical: true)
             .foregroundStyle(.accent)
@@ -51,18 +35,22 @@ struct CalendarView: View {
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
         .navigationTitle("Calendar")
-        .onChange(of: selectedDate) {
-            if (episodeDays.contains(selectedDate)) {
-                showInfo = true
-            }
+        .onAppear{
+            viewModel.episodes = episodes
+        }
+        .onChange(of: episodes) {
+            viewModel.episodes = episodes
+        }
+        .onChange(of: viewModel.selectedDate) {
+            viewModel.updateSelectedDate(viewModel.selectedDate)
         }
         // If the user clicks on a date, pop up a sheet with an episode card
-        .sheet(isPresented: $showInfo) {
+        .sheet(isPresented: $viewModel.showInfo) {
             NavigationStack {
                 ScrollView {
                     VStack(spacing: 16) {
                         // Iterate through and display episodes for the selected day
-                        ForEach(episodesForSelectedDay) { episode in
+                        ForEach(viewModel.selectedDayEpisodes) { episode in
                             EpisodeView(episodeToView: episode)
                                 .padding()
                                 .frame(maxWidth: 400)
@@ -81,7 +69,7 @@ struct CalendarView: View {
                 .toolbar {
                     ToolbarItem(placement: .topBarTrailing) {
                         Button("Close") {
-                            showInfo = false
+                            viewModel.showInfo = false
                         }
                     }
                 }
