@@ -33,17 +33,20 @@ class NavigationManager {
     func viewEpisodeHistory() {
         selectedTab = .history
         activeHistory = .episode
+        activeSheet = nil
     }
     
     // Used by ViewMealHistoryIntent
     func viewMealHistory() {
         selectedTab = .history
         activeHistory = .meal
+        activeSheet = nil
     }
     
     // Used by ViewInsightsIntent
     func viewInsights() {
         selectedTab = .insights
+        activeSheet = nil
     }
     
     enum SheetType: Identifiable {
