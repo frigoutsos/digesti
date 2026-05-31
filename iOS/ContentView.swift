@@ -48,7 +48,7 @@ struct ContentView: View {
                         InsightsView()
                     }
                 } label: {
-                    Label(TabType.insights.id, systemImage: "lightbulb")
+                    Label(TabType.insights.id, systemImage: "lightbulb.fill")
                 }
                 
                 Tab(value: .settings) {
