@@ -8,12 +8,13 @@ import SwiftUI
 @Observable
 class NavigationManager {
     static let shared = NavigationManager()
-    
+    // Control which tab we are displaying
     var selectedTab: TabType = .home
     
     // Used to present logger sheet or choose picker
     var activeSheet: SheetType? = nil
     
+    // Control which history to display in the history tab
     var activeHistory: HistoryType? = .episode
     
     // Used by LogEpisodeIntent
@@ -38,6 +39,11 @@ class NavigationManager {
     func viewMealHistory() {
         selectedTab = .history
         activeHistory = .meal
+    }
+    
+    // Used by ViewInsightsIntent
+    func viewInsights() {
+        selectedTab = .insights
     }
     
     enum SheetType: Identifiable {

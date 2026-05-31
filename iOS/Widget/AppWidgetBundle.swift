@@ -13,5 +13,6 @@ struct AppWidgetBundle: WidgetBundle {
         LogMealControl()
         EpisodeHistoryControl()
         MealHistoryControl()
+        InsightsControl()
     }
 }
