@@ -77,6 +77,7 @@
 		7D311E8B2FCBA7D200E8C4B1 /* Exceptions for "iOS" folder in "WidgetExtension" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+				Assets.xcassets,
 				Components/NavigationManager.swift,
 				Components/TabType.swift,
 				Intents/Episode/LogEpisodeIntent.swift,
@@ -85,12 +86,16 @@
 				Intents/Meal/LogMealIntent.swift,
 				Intents/Meal/ViewMealHistoryIntent.swift,
 				Widget/AppWidgetBundle.swift,
-				Widget/Assets.xcassets,
-				Widget/Controls/EpisodeHistoryControl.swift,
-				Widget/Controls/InsightsControl.swift,
-				Widget/Controls/LogEpisodeControl.swift,
-				Widget/Controls/LogMealControl.swift,
-				Widget/Controls/MealHistoryControl.swift,
+				Widget/Controls/Logging/LogEpisodeControl.swift,
+				Widget/Controls/Logging/LogMealControl.swift,
+				Widget/Controls/Navigation/EpisodeHistoryControl.swift,
+				Widget/Controls/Navigation/InsightsControl.swift,
+				Widget/Controls/Navigation/MealHistoryControl.swift,
+				Widget/HomeScreen/Logging/LogEpisodeHomeScreen.swift,
+				Widget/HomeScreen/Logging/LogMealHomeScreen.swift,
+				Widget/HomeScreen/Navigation/EpisodeHistoryHomeScreen.swift,
+				Widget/HomeScreen/Navigation/InsightsHomeScreen.swift,
+				Widget/HomeScreen/Navigation/MealHistoryHomeScreen.swift,
 			);
 			target = 7D311E672FCBA7B000E8C4B1 /* WidgetExtension */;
 		};
@@ -99,12 +104,11 @@
 			membershipExceptions = (
 				Info.plist,
 				Widget/AppWidgetBundle.swift,
-				Widget/Assets.xcassets,
-				Widget/Controls/EpisodeHistoryControl.swift,
-				Widget/Controls/InsightsControl.swift,
-				Widget/Controls/LogEpisodeControl.swift,
-				Widget/Controls/LogMealControl.swift,
-				Widget/Controls/MealHistoryControl.swift,
+				Widget/Controls/Logging/LogEpisodeControl.swift,
+				Widget/Controls/Logging/LogMealControl.swift,
+				Widget/Controls/Navigation/EpisodeHistoryControl.swift,
+				Widget/Controls/Navigation/InsightsControl.swift,
+				Widget/Controls/Navigation/MealHistoryControl.swift,
 				Widget/Info.plist,
 			);
 			target = 7D84A7932F8EA439008C8016 /* ibsapp */;

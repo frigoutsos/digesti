@@ -14,5 +14,10 @@ struct AppWidgetBundle: WidgetBundle {
         EpisodeHistoryControl()
         MealHistoryControl()
         InsightsControl()
+        LogEpisodeHomeScreenWidget()
+        LogMealHomeScreenWidget()
+        EpisodeHistoryHomeScreenWidget()
+        MealHistoryHomeScreenWidget()
+        InsightsHomeScreenWidget()
     }
 }
