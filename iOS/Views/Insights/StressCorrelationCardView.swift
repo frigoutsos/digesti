@@ -147,6 +147,7 @@ struct StressCorrelationCardView: View {
                 .chartXAxisLabel("Stress (1–10)")
                 .chartYAxisLabel(selectedSymptom.rawValue)
                 .frame(height: 220)
+                .clipped()
 
                 // Correlation summary
                 if !correlationLabel.isEmpty {
