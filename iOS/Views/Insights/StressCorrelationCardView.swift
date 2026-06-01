@@ -129,13 +129,16 @@ struct StressCorrelationCardView: View {
 
                     // Trend line
                     if let trend = trendLine {
+                        let xMin = 1.0, xMax = 10.0
+                        let yMin = max(0.5, trend.slope * xMin + trend.intercept)
+                        let yMax = min(10.5, trend.slope * xMax + trend.intercept)
                         LineMark(
-                            x: .value("Stress", 1.0),
-                            y: .value(selectedSymptom.rawValue, trend.slope * 1 + trend.intercept)
+                            x: .value("Stress", xMin),
+                            y: .value(selectedSymptom.rawValue, yMin)
                         )
                         LineMark(
-                            x: .value("Stress", 10.0),
-                            y: .value(selectedSymptom.rawValue, trend.slope * 10 + trend.intercept)
+                            x: .value("Stress", xMax),
+                            y: .value(selectedSymptom.rawValue, yMax)
                         )
                     }
                 }
@@ -144,6 +147,7 @@ struct StressCorrelationCardView: View {
                 .chartXAxisLabel("Stress (1–10)")
                 .chartYAxisLabel(selectedSymptom.rawValue)
                 .frame(height: 220)
+                .clipped()
 
                 // Correlation summary
                 if !correlationLabel.isEmpty {
