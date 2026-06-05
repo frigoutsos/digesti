@@ -13,9 +13,6 @@ struct SettingsView: View {
     // Store the user's preferred theme in the app storage
     @AppStorage("appTheme") private var appThemeRawValue: String = AppTheme.system.rawValue
 
-    // State to keep track of if the user is about to delete all app data
-    @State private var showDeleteConfirmation = false
-
     // Binding to hold the selected theme
     private var selectedThemeBinding: Binding<AppTheme> {
         Binding(
@@ -23,7 +20,10 @@ struct SettingsView: View {
             set: { appThemeRawValue = $0.rawValue }
         )
     }
-
+    
+    // State to keep track of our ViewModel object
+    @State private var viewModel = SettingsViewModel()
+    
     var body: some View {
         NavigationStack {
             Form {
@@ -40,36 +40,22 @@ struct SettingsView: View {
                 // Data management button
                 Section("Data") {
                     Button(role: .destructive) {
-                        showDeleteConfirmation = true
+                        viewModel.showDeleteConfirmation = true
                     } label: {
                         Label("Clear All Data", systemImage: "trash.fill")
                     }
                 }
             }
             .navigationTitle("Settings")
-            .alert("Delete All Data?", isPresented: $showDeleteConfirmation) {
+            .alert("Delete All Data?", isPresented: $viewModel.showDeleteConfirmation) {
                 Button("Cancel", role: .cancel) { }
 
                 Button("Delete", role: .destructive) {
-                    clearAllData()
+                    viewModel.clearAllData(modelContext: modelContext)
                 }
             } message: {
                 Text("This will permanently delete all Episode and Meal data.")
             }
-        }
-    }
-
-    // Function to clear the app's data
-    private func clearAllData() {
-        do {
-            try modelContext.delete(model: Episode.self)
-            try modelContext.delete(model: Meal.self)
-
-            try modelContext.save()
-
-            print("All data cleared.")
-        } catch {
-            print("Failed to clear data: \(error)")
         }
     }
 }

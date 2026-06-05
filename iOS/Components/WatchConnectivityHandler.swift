@@ -1,6 +1,5 @@
 //
 //  WatchConnectivityHandler.swift
-//  ibsapp
 //
 //  Handles connectivity between the phone and companion watch app.
 //

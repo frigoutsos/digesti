@@ -23,7 +23,7 @@ struct CustomButton: View {
                 .foregroundStyle(isSelected ? .black : .primary)
                 .padding(.vertical, 10)
                 .frame(maxWidth: .infinity)
-                .background(isSelected ? Color.accentColor : Color.accentColor.opacity(0.2))
+                .background(isSelected ? .accent : .accent.opacity(0.2))
                 .clipShape(RoundedRectangle(cornerRadius: 12))
         }
         // Remove default button background

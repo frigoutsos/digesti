@@ -1,17 +1,17 @@
 //
-//  TrendCardView.swift
+//  TrendsCardView.swift
 //
 //  Displays average symptom scores for the selected time window, with
 //  trend arrows comparing to the previous equal window.
 //
 import SwiftUI
 
-struct TrendCardView: View {
-    let currentEpisodes:  [Episode]
+struct TrendsCardView: View {
+    let currentEpisodes: [Episode]
     let previousEpisodes: [Episode]
-    let range:            InsightsRange
+    let range: InsightsRange
 
-    private var current:  SymptomAverages? { computeAverages(for: currentEpisodes) }
+    private var current: SymptomAverages? { computeAverages(for: currentEpisodes) }
     private var previous: SymptomAverages? { computeAverages(for: previousEpisodes) }
 
     var body: some View {
@@ -34,33 +34,33 @@ struct TrendCardView: View {
             if let avg = current {
                 VStack(spacing: 10) {
                     metricRow(
-                        icon:    "speedometer",
-                        label:   "Avg intensity",
-                        value:   avg.intensity,
+                        icon: "speedometer",
+                        label: "Average intensity",
+                        value: avg.intensity,
                         prevVal: previous?.intensity
                     )
                     metricRow(
-                        icon:    "figure.mind.and.body",
-                        label:   "Avg stress",
-                        value:   avg.stress,
+                        icon: "figure.mind.and.body",
+                        label: "Average stress",
+                        value: avg.stress,
                         prevVal: previous?.stress
                     )
                     metricRow(
-                        icon:    "toilet.fill",
-                        label:   "Avg consistency",
-                        value:   avg.stoolConsistency,
+                        icon: "toilet.fill",
+                        label: "Average consistency",
+                        value: avg.stoolConsistency,
                         prevVal: previous?.stoolConsistency
                     )
                     metricRow(
-                        icon:    "toilet.fill",
-                        label:   "Avg urgency",
-                        value:   avg.stoolUrgency,
+                        icon: "toilet.fill",
+                        label: "Average urgency",
+                        value: avg.stoolUrgency,
                         prevVal: previous?.stoolUrgency
                     )
                     metricRow(
-                        icon:    "toilet.fill",
-                        label:   "Avg effort",
-                        value:   avg.stoolEffort,
+                        icon: "toilet.fill",
+                        label: "Average effort",
+                        value: avg.stoolEffort,
                         prevVal: previous?.stoolEffort
                     )
                     bloatingRow(rate: avg.bloatingRate, prevRate: previous?.bloatingRate)
@@ -72,14 +72,11 @@ struct TrendCardView: View {
         .clipShape(RoundedRectangle(cornerRadius: 16))
     }
 
-
-    // MARK: - Sub-views
-
     @ViewBuilder
     private func metricRow(
-        icon:    String,
-        label:   String,
-        value:   Double,
+        icon: String,
+        label: String,
+        value: Double,
         prevVal: Double?
     ) -> some View {
         HStack(spacing: 8) {
@@ -128,8 +125,8 @@ struct TrendCardView: View {
     // By default, lower is better for symptom scores.
     @ViewBuilder
     private func trendArrow(
-        current:       Double,
-        previous:      Double,
+        current: Double,
+        previous: Double,
         lowerIsBetter: Bool = true
     ) -> some View {
         let delta = current - previous

@@ -1,14 +1,14 @@
 //
-//  TriggerFoodsCardView.swift
+//  TriggersCardView.swift
 //
 //  Ranks foods by a composite symptom impact score, only counting meals
 //  eaten within 48 hours before each episode.
 //
 import SwiftUI
 
-struct TriggerFoodsCardView: View {
+struct TriggersCardView: View {
     let episodes: [Episode]
-    let meals:    [Meal]
+    let meals: [Meal]
 
     // Whether the detail rows are expanded
     @State private var expanded: Set<String> = []
@@ -48,9 +48,6 @@ struct TriggerFoodsCardView: View {
         .background(Color(.systemGray6))
         .clipShape(RoundedRectangle(cornerRadius: 16))
     }
-
-
-    // MARK: - Sub-views
 
     @ViewBuilder
     private func foodRow(impact: FoodImpact, rank: Int) -> some View {
@@ -106,10 +103,10 @@ struct TriggerFoodsCardView: View {
             // Expanded detail
             if isExpanded {
                 VStack(spacing: 4) {
-                    detailMetric(label: "Intensity",    value: impact.avgIntensity)
-                    detailMetric(label: "Consistency",  value: impact.avgConsistency)
-                    detailMetric(label: "Urgency",      value: impact.avgUrgency)
-                    detailMetric(label: "Effort",       value: impact.avgEffort)
+                    detailMetric(label: "Intensity", value: impact.avgIntensity)
+                    detailMetric(label: "Consistency", value: impact.avgConsistency)
+                    detailMetric(label: "Urgency", value: impact.avgUrgency)
+                    detailMetric(label: "Effort", value: impact.avgEffort)
 
                     HStack {
                         Text("Bloating rate")
@@ -143,9 +140,6 @@ struct TriggerFoodsCardView: View {
         }
         .font(.caption)
     }
-
-
-    // MARK: - Helpers
 
     private func rankColor(rank: Int) -> Color {
         switch rank {

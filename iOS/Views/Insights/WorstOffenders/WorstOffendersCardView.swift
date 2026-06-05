@@ -6,28 +6,29 @@
 //
 import SwiftUI
 
-// A single worst-offender result for one symptom
-private struct Offender {
-    let food:       Food
-    let value:      Double   // The average score for this symptom
-    let isRate:     Bool     // true if value is a 0–1 rate (bloating), false if 1–10
-}
-
 struct WorstOffendersCardView: View {
+    // Take in a list of episodes
     let episodes: [Episode]
-    let meals:    [Meal]
-
-    private var impacts: [FoodImpact] {
-        computeFoodImpacts(episodes: episodes, meals: meals)
-    }
+    
+    // Take in a list of meals
+    let meals: [Meal]
+    
+    // State to keep track of our ViewModel object
+    @State private var viewModel = WorstOffendersCardViewModel()
 
     // Worst food per symptom (nil if no data)
-    private var worstIntensity:    Offender? { worst(\.avgIntensity) }
-    private var worstConsistency:  Offender? { worst(\.avgConsistency) }
-    private var worstUrgency:      Offender? { worst(\.avgUrgency) }
-    private var worstEffort:       Offender? { worst(\.avgEffort) }
-    private var worstBloating:     Offender? { worstRate(\.bloatingRate) }
+    private var impacts: [FoodImpact] { viewModel.impacts(episodes: episodes, meals: meals) }
 
+    private var worstIntensity: Offender? { viewModel.worst(\.avgIntensity, from: impacts) }
+
+    private var worstConsistency: Offender? { viewModel.worst(\.avgConsistency, from: impacts) }
+
+    private var worstUrgency: Offender? { viewModel.worst(\.avgUrgency, from: impacts) }
+
+    private var worstEffort: Offender? { viewModel.worst(\.avgEffort, from: impacts) }
+
+    private var worstBloating: Offender? { viewModel.worstRate(\.bloatingRate, from: impacts) }
+    
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
 
@@ -82,9 +83,6 @@ struct WorstOffendersCardView: View {
         .clipShape(RoundedRectangle(cornerRadius: 16))
     }
 
-
-    // MARK: - Sub-views
-
     @ViewBuilder
     private func offenderRow(icon: String, symptom: String, offender: Offender?) -> some View {
         HStack(spacing: 8) {
@@ -115,23 +113,5 @@ struct WorstOffendersCardView: View {
             }
         }
         .font(.subheadline)
-    }
-
-
-    // MARK: - Helpers
-
-    // Returns the food with the highest average value for a numeric symptom
-    private func worst(_ keyPath: KeyPath<FoodImpact, Double>) -> Offender? {
-        guard let top = impacts.max(by: { $0[keyPath: keyPath] < $1[keyPath: keyPath] }) else {
-            return nil
-        }
-        return Offender(food: top.food, value: top[keyPath: keyPath], isRate: false)
-    }
-
-    // Returns the food with the highest bloating rate
-    private func worstRate(_ keyPath: KeyPath<FoodImpact, Double>) -> Offender? {
-        guard let top = impacts.max(by: { $0[keyPath: keyPath] < $1[keyPath: keyPath] }),
-              top[keyPath: keyPath] > 0 else { return nil }
-        return Offender(food: top.food, value: top[keyPath: keyPath], isRate: true)
     }
 }

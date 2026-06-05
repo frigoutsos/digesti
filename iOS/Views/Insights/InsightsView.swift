@@ -6,66 +6,22 @@
 import SwiftUI
 import SwiftData
 
-// Time range options for the insights page
-enum InsightsRange: String, CaseIterable, Identifiable {
-    case thirtyDays  = "30d"
-    case ninetyDays  = "90d"
-    case allTime     = "All Time"
-
-    var id: Self { self }
-
-    // How far back to look, nil means no limit (all time)
-    var cutoff: Date? {
-        switch self {
-        case .thirtyDays:  return Calendar.current.date(byAdding: .day,   value: -30, to: Date())
-        case .ninetyDays:  return Calendar.current.date(byAdding: .day,   value: -90, to: Date())
-        case .allTime:     return nil
-        }
-    }
-
-    // The equivalent window before the current one, used for trend comparisons
-    var previousCutoff: Date? {
-        switch self {
-        case .thirtyDays:  return Calendar.current.date(byAdding: .day,   value: -60, to: Date())
-        case .ninetyDays:  return Calendar.current.date(byAdding: .day,   value: -180, to: Date())
-        case .allTime:     return nil
-        }
-    }
-}
-
 struct InsightsView: View {
-    // Get all episodes and meals sorted newest first
-    @Query(sort: \Episode.onset, order: .reverse) private var allEpisodes: [Episode]
-    @Query(sort: \Meal.date,    order: .reverse) private var allMeals:    [Meal]
+    // Get a list of episodes, reverse sorted by time
+    @Query(sort: \Episode.onset, order: .reverse) private var episodes: [Episode]
+    
+    // Get a list of meals, reverse sorted by time
+    @Query(sort: \Meal.date, order: .reverse) private var meals: [Meal]
 
-    // Which time window the user has selected
-    @State private var selectedRange: InsightsRange = .thirtyDays
-
-    // Episodes that fall within the selected time window
-    private var episodesInRange: [Episode] {
-        guard let cutoff = selectedRange.cutoff else { return allEpisodes }
-        return allEpisodes.filter { $0.onset >= cutoff }
-    }
-
-    // Episodes in the previous equal window, used for trend arrows
-    private var episodesInPreviousRange: [Episode] {
-        guard let cutoff = selectedRange.cutoff,
-              let prevCutoff = selectedRange.previousCutoff else { return [] }
-        return allEpisodes.filter { $0.onset >= prevCutoff && $0.onset < cutoff }
-    }
-
-    // Meals that fall within the selected time window
-    private var mealsInRange: [Meal] {
-        guard let cutoff = selectedRange.cutoff else { return allMeals }
-        return allMeals.filter { $0.date >= cutoff }
-    }
-
+    // State to keep track of our ViewModel object
+    @State private var viewModel = InsightsViewModel()
+    
     var body: some View {
         ScrollView {
             VStack(spacing: 20) {
 
                 // Time range picker
-                Picker("Range", selection: $selectedRange) {
+                Picker("Range", selection: $viewModel.selectedRange) {
                     ForEach(InsightsRange.allCases) { range in
                         Text(range.rawValue).tag(range)
                     }
@@ -73,7 +29,7 @@ struct InsightsView: View {
                 .pickerStyle(.segmented)
                 .padding(.horizontal)
 
-                if episodesInRange.isEmpty {
+                if viewModel.episodesInRange(from: episodes).isEmpty {
                     ContentUnavailableView(
                         "No Episodes",
                         systemImage: "chart.bar.xaxis",
@@ -83,28 +39,28 @@ struct InsightsView: View {
                 } else {
 
                     // Trend averages card
-                    TrendCardView(
-                        currentEpisodes:  episodesInRange,
-                        previousEpisodes: episodesInPreviousRange,
-                        range:            selectedRange
+                    TrendsCardView(
+                        currentEpisodes: viewModel.episodesInRange(from: episodes),
+                        previousEpisodes: viewModel.episodesInPreviousRange(from: episodes),
+                        range: viewModel.selectedRange
                     )
                     .frame(maxWidth: 400)
                     
                     // Stress impact card
-                    StressCorrelationCardView(episodes: episodesInRange)
+                    StressCorrelationCardView(episodes: viewModel.episodesInRange(from: episodes))
                         .frame(maxWidth: 400)
 
                     // Trigger foods ranked by composite impact
-                    TriggerFoodsCardView(
-                        episodes: episodesInRange,
-                        meals:    mealsInRange
+                    TriggersCardView(
+                        episodes: viewModel.episodesInRange(from: episodes),
+                        meals: viewModel.mealsInRange(from: meals)
                     )
                     .frame(maxWidth: 400)
 
                     // Worst single offender per symptom
                     WorstOffendersCardView(
-                        episodes: episodesInRange,
-                        meals:    mealsInRange
+                        episodes: viewModel.episodesInRange(from: episodes),
+                        meals: viewModel.mealsInRange(from: meals)
                     )
                     .frame(maxWidth: 400)
                 }

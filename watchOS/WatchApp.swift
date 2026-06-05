@@ -1,5 +1,5 @@
 //
-//  ibsapp_watchApp.swift
+//  WatchApp.swift
 //
 //  This contains the watch app's top level logic.
 //

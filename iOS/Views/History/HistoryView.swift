@@ -17,126 +17,36 @@ struct HistoryView: View {
     // Get a list of meals, reverse sorted by time
     @Query(sort: \Meal.date, order: .reverse) private var meals: [Meal]
     
-    // Track currently selected episode
-    @State private var selectedEpisode: Episode? = nil
+    // State to keep track of our ViewModel object
+    @State private var viewModel = HistoryViewModel()
     
-    // enum for Episode or Meal history
-    enum HistoryType: String, CaseIterable, Identifiable {
-        case episodes = "Episodes"
-        case meals = "Meals"
-        
-        var id: Self { self }
-    }
-    
-    // State to track which type of history to display to the user
-    @State private var selectedView: HistoryType = .episodes
-    
-    // Search bar text
-    @State private var searchText = ""
-    
-    // Filter episodes based on search text (will not be filtered if search text is empty)
-    private var filteredEpisodes: [Episode] {
-        // Show all episodes if search is empty
-        if searchText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-            return episodes
-        }
-        
-        let query = searchText.lowercased()
-        
-        return episodes.filter { episode in
-            // Search intensity
-            let intensityMatch = "\(episode.intensity)".contains(query)
-            
-            // Search stress level
-            let stressMatch = "\(episode.stress)".contains(query)
-            
-            // Search bloating
-            let bloatingMatch = episode.bloating && "bloating".contains(query)
-            
-            // Search onset date
-            let onsetMatch = episode.onset.formatted(.dateTime.month(.wide).day())
-                .lowercased()
-                .contains(query)
-            
-            // Search movement date
-            let movementMatch = episode.movement.formatted(.dateTime.month(.wide).day())
-                .lowercased()
-                .contains(query)
-            
-            // Search stool consistency
-            let stoolConsistencyMatch = "\(episode.stoolConsistency)".contains(query)
-            
-            // Search stool urgency
-            let stoolUrgencyMatch = "\(episode.stoolUrgency)".contains(query)
-            
-            // Search stool effort
-            let stoolEffortMatch = "\(episode.stoolEffort)".contains(query)
-            
-            return intensityMatch
-            || stressMatch
-            || bloatingMatch
-            || onsetMatch
-            || movementMatch
-            || stoolConsistencyMatch
-            || stoolUrgencyMatch
-            || stoolEffortMatch
-        }
-    }
-    
-    // Filter meals based on search text (will not be filtered if search text is empty)
-    private var filteredMeals: [Meal] {
-        // Show all episodes if search is empty
-        if searchText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-            return meals
-        }
-        
-        let query = searchText.lowercased()
-        
-        return meals.filter { meal in
-            // Search meal date
-            let dateMatch = meal.date.formatted(.dateTime.month(.wide).day())
-                .lowercased()
-                .contains(query)
-                
-            // Search foods
-            let foodsMatch = meal.foods.contains { food in
-                food.name
-                    .lowercased()
-                    .contains(query)
-            }
-            
-            return dateMatch || foodsMatch
-        }
-    }
-    
-    
+    // Track our navigation manager component
+    @Bindable var navigationManager: NavigationManager
+
     var body: some View {
         NavigationStack {
             // Allow user to go between viewing episodes and meals
             VStack {
-                Picker("History Type", selection: $selectedView) {
-                    ForEach(HistoryType.allCases) { type in
+                Picker("History Type", selection: $navigationManager.activeHistory) {
+                    ForEach(NavigationManager.HistoryType.allCases) { type in
                         Text(type.rawValue).tag(type)
                     }
                 }
                 .pickerStyle(.segmented)
                 .padding(.horizontal)
                 
-                historyContent
+                // Choose which history to show depending on the user's selection
+                switch navigationManager.activeHistory {
+                case .episode:
+                    episodeView
+                case .meal:
+                    mealView
+                case .none:
+                    episodeView
+                }
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .navigationTitle("History")
-        }
-    }
-    
-    // Build the view depending on what the user has selected
-    @ViewBuilder
-    private var historyContent: some View {
-        switch selectedView {
-        case .episodes:
-            episodeView
-        case .meals:
-            mealView
         }
     }
     
@@ -145,12 +55,12 @@ struct HistoryView: View {
         List {
             if episodes.isEmpty {
                 ContentUnavailableView(
-                    searchText.isEmpty ? "No Episodes" : "No Results",
-                    systemImage: searchText.isEmpty
+                    viewModel.searchText.isEmpty ? "No Episodes" : "No Results",
+                    systemImage: viewModel.searchText.isEmpty
                     ? "clock.arrow.trianglehead.counterclockwise.rotate.90"
                     : "magnifyingglass",
                     description: Text(
-                        searchText.isEmpty
+                        viewModel.searchText.isEmpty
                         ? "No episodes to display."
                         : "No matching episodes found."
                     )
@@ -158,7 +68,7 @@ struct HistoryView: View {
                 .listRowBackground(Color.clear)
                 .foregroundStyle(.secondary)
             } else {
-                ForEach(filteredEpisodes) { episode in
+                ForEach(viewModel.filteredEpisodes(from: episodes)) { episode in
                     VStack(alignment: .leading, spacing: 4) {
                         Text(episode.onset.formatted(date: .long, time: .shortened))
                             .font(.headline)
@@ -182,16 +92,20 @@ struct HistoryView: View {
                     .contentShape(Rectangle())
                     // Set the selected episode state when clicking on it
                     .onTapGesture {
-                        selectedEpisode = episode
+                        viewModel.selectedEpisode = episode
                     }
                 }
-                .onDelete(perform: deleteEpisode)
-                .sheet(item: $selectedEpisode) { episode in
+                // Delete an episode from the app's data
+                .onDelete { indexSet in
+                    indexSet.map { viewModel.filteredEpisodes(from: episodes)[$0] }.forEach(modelContext.delete)
+                        try? modelContext.save()
+                }
+                .sheet(item: $viewModel.selectedEpisode) { episode in
                     episodeSheet(for: episode)
                 }
             }
         }
-        .searchable(text: $searchText, prompt: "Search episodes…")
+        .searchable(text: $viewModel.searchText, prompt: "Search episodes…")
         .autocorrectionDisabled()
     }
     
@@ -218,7 +132,7 @@ struct HistoryView: View {
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button("Close") {
-                        selectedEpisode = nil
+                        viewModel.selectedEpisode = nil
                     }
                 }
             }
@@ -230,12 +144,12 @@ struct HistoryView: View {
         List {
             if meals.isEmpty {
                 ContentUnavailableView(
-                    searchText.isEmpty ? "No Meals" : "No Results",
-                    systemImage: searchText.isEmpty
+                    viewModel.searchText.isEmpty ? "No Meals" : "No Results",
+                    systemImage: viewModel.searchText.isEmpty
                     ? "clock.arrow.trianglehead.counterclockwise.rotate.90"
                     : "magnifyingglass",
                     description: Text(
-                        searchText.isEmpty
+                        viewModel.searchText.isEmpty
                         ? "No meals to display."
                         : "No matching meals found."
                     )
@@ -243,7 +157,7 @@ struct HistoryView: View {
                 .listRowBackground(Color.clear)
                 .foregroundStyle(.secondary)
             } else {
-                ForEach(filteredMeals) { meal in
+                ForEach(viewModel.filteredMeals(from: meals)) { meal in
                     VStack(alignment: .leading, spacing: 4) {
                         Text(meal.date.formatted(date: .abbreviated, time: .omitted))
                             .font(.headline)
@@ -254,31 +168,14 @@ struct HistoryView: View {
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .contentShape(Rectangle())
                 }
-                .onDelete(perform: deleteMeal)
+                // Delete a meal from the app's data
+                .onDelete { indexSet in
+                    indexSet.map { viewModel.filteredMeals(from: meals)[$0] }.forEach(modelContext.delete)
+                        try? modelContext.save()
+                }
             }
         }
-        .searchable(text: $searchText, prompt: "Search meals…")
+        .searchable(text: $viewModel.searchText, prompt: "Search meals…")
         .autocorrectionDisabled()
     }
-    
-    // Delete an episode from the app's data
-    func deleteEpisode(at offsets: IndexSet) {
-        for index in offsets {
-            let item = filteredEpisodes[index]
-            modelContext.delete(item)
-        }
-        
-        try? modelContext.save()
-    }
-    
-    // Delete a meal from the app's data
-    func deleteMeal(at offsets: IndexSet) {
-        for index in offsets {
-            let item = filteredMeals[index]
-            modelContext.delete(item)
-        }
-        
-        try? modelContext.save()
-    }
-
 }
