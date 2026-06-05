@@ -11,14 +11,20 @@ struct HomeView: View {
     
     var body: some View {
         NavigationStack {
-            VStack(spacing: 32) {
-                Spacer()
-                
+            VStack(spacing: 24) {
                 // Homepage welcome
                 VStack(spacing: 12) {
-                    Image(systemName: "figure.mind.and.body")
-                        .font(.system(size: 48))
-                        .foregroundStyle(.accent)
+                    ZStack {
+                        HomeGraphicBack()
+                            .foregroundStyle(.homeGraphicBack)
+                        
+                        HomeGraphicMiddle()
+                            .foregroundStyle(.homeGraphicMiddle)
+                                             
+                        HomeGraphicFront()
+                            .foregroundStyle(.homeGraphicFront)
+                    }
+                    .aspectRatio(1, contentMode: .fit)
                     
                     Text("Track Meals and IBS Episodes")
                         .font(.title2)
