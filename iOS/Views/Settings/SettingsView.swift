@@ -20,7 +20,7 @@ struct SettingsView: View {
             set: { appThemeRawValue = $0.rawValue }
         )
     }
-    
+        
     // State to keep track of our ViewModel object
     @State private var viewModel = SettingsViewModel()
     
@@ -49,6 +49,7 @@ struct SettingsView: View {
             .navigationTitle("Settings")
             .alert("Delete All Data?", isPresented: $viewModel.showDeleteConfirmation) {
                 Button("Cancel", role: .cancel) { }
+                    .foregroundStyle(.primary)
 
                 Button("Delete", role: .destructive) {
                     viewModel.clearAllData(modelContext: modelContext)

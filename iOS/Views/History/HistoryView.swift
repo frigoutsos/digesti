@@ -69,9 +69,11 @@ struct HistoryView: View {
                 .foregroundStyle(.secondary)
             } else {
                 ForEach(viewModel.filteredEpisodes(from: episodes)) { episode in
-                    VStack(alignment: .leading, spacing: 4) {
+                    VStack(alignment: .leading, spacing: 6) {
                         Text(episode.onset.formatted(date: .long, time: .shortened))
                             .font(.headline)
+                        
+                        Divider()
                         
                         Text("Bowel movement: \(episode.movement.formatted(date: .long, time: .shortened))")
                             .font(.subheadline)
@@ -158,9 +160,11 @@ struct HistoryView: View {
                 .foregroundStyle(.secondary)
             } else {
                 ForEach(viewModel.filteredMeals(from: meals)) { meal in
-                    VStack(alignment: .leading, spacing: 4) {
+                    VStack(alignment: .leading, spacing: 6) {
                         Text(meal.date.formatted(date: .abbreviated, time: .omitted))
                             .font(.headline)
+                        
+                        Divider()
                         
                         Text("Foods: " + meal.foods.map { $0.name }.joined(separator: ", "))
                             .font(.subheadline)

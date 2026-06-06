@@ -62,11 +62,19 @@ struct MealLoggingView: View {
                         }
                     } else {
                         VStack(alignment: .leading, spacing: 20) {
-                            Text("Search Results for \"\(viewModel.searchText)\":").font(.subheadline).foregroundStyle(.secondary)
-                            
                             if viewModel.results.isEmpty {
-                                Text("No foods found matching '\(viewModel.searchText)'").foregroundStyle(.secondary)
+                                ContentUnavailableView(
+                                    "No Foods Found",
+                                    systemImage: "magnifyingglass",
+                                    description: Text("No foods matching \(viewModel.searchText) found. Try a different search term.")
+                                )                                
+                                .listRowBackground(Color.clear)
+                                .foregroundStyle(.secondary)
                             } else {
+                                Text("Search Results for \(viewModel.searchText): ")
+                                    .font(.subheadline)
+                                    .foregroundStyle(.secondary)
+                                
                                 VStack(spacing: 10) {
                                     ForEach(viewModel.results) { food in
                                         CustomButton(text: food.name, isSelected: viewModel.isSelected(food: food)) {
