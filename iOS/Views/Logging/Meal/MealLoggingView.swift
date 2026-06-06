@@ -66,12 +66,12 @@ struct MealLoggingView: View {
                                 ContentUnavailableView(
                                     "No Foods Found",
                                     systemImage: "magnifyingglass",
-                                    description: Text("No foods matching \(viewModel.searchText) found. Try a different search term.")
+                                    description: Text("No foods matching \(viewModel.searchText) found.")
                                 )                                
                                 .listRowBackground(Color.clear)
                                 .foregroundStyle(.secondary)
                             } else {
-                                Text("Search Results for \(viewModel.searchText): ")
+                                Text("Search results for \(viewModel.searchText): ")
                                     .font(.subheadline)
                                     .foregroundStyle(.secondary)
                                 

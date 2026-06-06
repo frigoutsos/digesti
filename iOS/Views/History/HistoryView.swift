@@ -53,21 +53,31 @@ struct HistoryView: View {
     // Display episodes if the user selected to view episodes
     private var episodeView: some View {
         List {
-            if episodes.isEmpty {
-                ContentUnavailableView(
-                    viewModel.searchText.isEmpty ? "No Episodes" : "No Results",
-                    systemImage: viewModel.searchText.isEmpty
-                    ? "clock.arrow.trianglehead.counterclockwise.rotate.90"
-                    : "magnifyingglass",
-                    description: Text(
-                        viewModel.searchText.isEmpty
-                        ? "No episodes to display."
-                        : "No matching episodes found."
-                    )
-                )
-                .listRowBackground(Color.clear)
-                .foregroundStyle(.secondary)
-            } else {
+            // If the list is empty, and the user is not searching, say there is nothing to display
+            if (episodes.isEmpty && viewModel.searchText.isEmpty) {
+                ContentUnavailableView("No Episodes",
+                                       systemImage: "clock.arrow.trianglehead.counterclockwise.rotate.90",
+                                       description: Text("No episodes to display."))
+                    .listRowBackground(Color.clear)
+                    .foregroundStyle(.secondary)
+            }
+            
+            // If the user is searching, and there are no hits, say that there were no hits
+            if (!viewModel.searchText.isEmpty && viewModel.filteredEpisodes(from: episodes).isEmpty) {
+                ContentUnavailableView("No Results",
+                                       systemImage: "magnifyingglass",
+                                       description: Text("No episodes matching \(viewModel.searchText) found."))
+                    .listRowBackground(Color.clear)
+                    .foregroundStyle(.secondary)
+            // Otherwise, if there are episodes, display them filtered (will display all if the user is not searching)
+            } else if (!episodes.isEmpty) {
+                // If the user is searching, tell them that we are displaying results
+                if (!viewModel.searchText.isEmpty) {
+                    Text("Search results for \(viewModel.searchText): ")
+                        .font(.subheadline)
+                        .foregroundStyle(.secondary)
+                }
+                
                 ForEach(viewModel.filteredEpisodes(from: episodes)) { episode in
                     VStack(alignment: .leading, spacing: 6) {
                         Text(episode.onset.formatted(date: .long, time: .shortened))
@@ -100,7 +110,7 @@ struct HistoryView: View {
                 // Delete an episode from the app's data
                 .onDelete { indexSet in
                     indexSet.map { viewModel.filteredEpisodes(from: episodes)[$0] }.forEach(modelContext.delete)
-                        try? modelContext.save()
+                    try? modelContext.save()
                 }
                 .sheet(item: $viewModel.selectedEpisode) { episode in
                     episodeSheet(for: episode)
@@ -144,21 +154,31 @@ struct HistoryView: View {
     // Display meals if the user selected to view meals
     private var mealView: some View {
         List {
-            if meals.isEmpty {
-                ContentUnavailableView(
-                    viewModel.searchText.isEmpty ? "No Meals" : "No Results",
-                    systemImage: viewModel.searchText.isEmpty
-                    ? "clock.arrow.trianglehead.counterclockwise.rotate.90"
-                    : "magnifyingglass",
-                    description: Text(
-                        viewModel.searchText.isEmpty
-                        ? "No meals to display."
-                        : "No matching meals found."
-                    )
-                )
-                .listRowBackground(Color.clear)
-                .foregroundStyle(.secondary)
-            } else {
+            // If the list is empty, and the user is not searching, say there is nothing to display
+            if (meals.isEmpty && viewModel.searchText.isEmpty) {
+                ContentUnavailableView("No Meals",
+                                       systemImage: "clock.arrow.trianglehead.counterclockwise.rotate.90",
+                                       description: Text("No meals to display."))
+                    .listRowBackground(Color.clear)
+                    .foregroundStyle(.secondary)
+            }
+            
+            // If the user is searching, and there are no hits, say that there were no hits
+            if (!viewModel.searchText.isEmpty && viewModel.filteredMeals(from: meals).isEmpty) {
+                ContentUnavailableView("No Results",
+                                       systemImage: "magnifyingglass",
+                                       description: Text("No meals matching \(viewModel.searchText) found."))
+                    .listRowBackground(Color.clear)
+                    .foregroundStyle(.secondary)
+            // Otherwise, if there are meals, display them filtered (will display all if the user is not searching)
+            } else if (!meals.isEmpty) {
+                // If the user is searching, tell them that we are displaying results
+                if (!viewModel.searchText.isEmpty) {
+                    Text("Search results for \(viewModel.searchText): ")
+                        .font(.subheadline)
+                        .foregroundStyle(.secondary)
+                }
+                
                 ForEach(viewModel.filteredMeals(from: meals)) { meal in
                     VStack(alignment: .leading, spacing: 6) {
                         Text(meal.date.formatted(date: .abbreviated, time: .omitted))
