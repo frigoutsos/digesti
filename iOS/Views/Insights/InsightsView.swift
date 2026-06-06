@@ -63,6 +63,18 @@ struct InsightsView: View {
                         meals: viewModel.mealsInRange(from: meals)
                     )
                     .frame(maxWidth: 400)
+                    
+                    SleepInsightCardView(episodes: viewModel.episodesInRange(from: episodes))
+                        .frame(maxWidth: 400)
+
+                    HRVInsightCardView(episodes: viewModel.episodesInRange(from: episodes))
+                        .frame(maxWidth: 400)
+
+                    ActivityInsightCardView(episodes: viewModel.episodesInRange(from: episodes))
+                        .frame(maxWidth: 400)
+
+                    DietaryInsightCardView(episodes: viewModel.episodesInRange(from: episodes))
+                        .frame(maxWidth: 400)
                 }
             }
             .frame(maxWidth: .infinity)

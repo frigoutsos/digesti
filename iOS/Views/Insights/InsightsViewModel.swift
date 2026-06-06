@@ -7,6 +7,13 @@ import SwiftUI
 
 @Observable
 class InsightsViewModel {
+    
+    let healthKit = HealthKitService.shared
+
+    func onAppear() async {
+        await healthKit.requestAuthorization()
+    }
+    
     // Which time window the user has selected
     var selectedRange: InsightsRange = .thirtyDays
     

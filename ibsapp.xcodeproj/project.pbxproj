@@ -113,6 +113,13 @@
 			);
 			target = 7D84A7932F8EA439008C8016 /* ibsapp */;
 		};
+		A56052932FD3C72A00E0722A /* Exceptions for "iOS" folder in "ibsapp.watch" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Views/Insights/HealthKit/HealthKitService.swift,
+			);
+			target = 7DDD049B2FC8AB360075C184 /* ibsapp.watch */;
+		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -125,6 +132,7 @@
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
 				7DD499A92FC8C19A0070B4F7 /* Exceptions for "iOS" folder in "ibsapp" target */,
+				A56052932FD3C72A00E0722A /* Exceptions for "iOS" folder in "ibsapp.watch" target */,
 				7D311E8B2FCBA7D200E8C4B1 /* Exceptions for "iOS" folder in "WidgetExtension" target */,
 			);
 			path = iOS;
