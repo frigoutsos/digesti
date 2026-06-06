@@ -6,6 +6,7 @@ import Charts
 
 struct DietaryInsightCardView: View {
     let episodes: [Episode]
+    let range: InsightsRange
     let healthKit = HealthKitService.shared
 
     enum DietaryMetric: String, CaseIterable, Identifiable {
@@ -121,13 +122,13 @@ struct DietaryInsightCardView: View {
             }
         }
         .task { await load() }
-        .onChange(of: selectedMetric) { _, _ in
-            // pairs recompute automatically via the value() closure
+        .onChange(of: range) { _, _ in
+            Task { await load() }
         }
     }
 
     private func load() async {
-        let start = Calendar.current.date(byAdding: .day, value: -90, to: Date())!
+        let start = range.cutoff ?? Calendar.current.date(byAdding: .year, value: -10, to: Date())!
         samples   = await healthKit.fetchDietary(from: start, to: Date())
         isLoading = false
     }

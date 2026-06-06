@@ -49,8 +49,11 @@ struct InsightsView: View {
                     .frame(maxWidth: 400)
                     
                     // Stress impact card
-                    StressCorrelationCardView(episodes: viewModel.episodesInRange(from: episodes))
-                        .frame(maxWidth: 400)
+                    StressCorrelationCardView(
+                        episodes: viewModel.episodesInRange(from: episodes),
+                        range: viewModel.selectedRange
+                    )
+                    .frame(maxWidth: 400)
                     
                     // Trigger foods ranked by composite impact
                     TriggersCardView(
@@ -65,33 +68,41 @@ struct InsightsView: View {
                         meals: viewModel.mealsInRange(from: meals)
                     )
                     .frame(maxWidth: 400)
-                    
-                    // If the user authorized health access, show them the insights
-                    if (healthService.isAuthorized) {
-                        SleepInsightCardView(episodes: viewModel.episodesInRange(from: episodes))
-                            .frame(maxWidth: 400)
-                        
-                        HRVInsightCardView(episodes: viewModel.episodesInRange(from: episodes))
-                            .frame(maxWidth: 400)
-                        
-                        ActivityInsightCardView(episodes: viewModel.episodesInRange(from: episodes))
-                            .frame(maxWidth: 400)
-                        
-                        DietaryInsightCardView(episodes: viewModel.episodesInRange(from: episodes))
-                            .frame(maxWidth: 400)
-                    } else {
-                        // If the user denied authorization, let them be
-                        if (!healthService.authorizationDenied) {
-                            Button("Connect to HealthKit") {
-                                // This button action triggers the async request
-                                Task {
-                                    await healthService.requestAuthorization()
-                                }
+
+                    // HealthKit cards — shown if authorized, connect button if not
+                    if healthService.isAuthorized {
+                        SleepInsightCardView(
+                            episodes: viewModel.episodesInRange(from: episodes),
+                            range: viewModel.selectedRange
+                        )
+                        .frame(maxWidth: 400)
+
+                        HRVInsightCardView(
+                            episodes: viewModel.episodesInRange(from: episodes),
+                            range: viewModel.selectedRange
+                        )
+                        .frame(maxWidth: 400)
+
+                        ActivityInsightCardView(
+                            episodes: viewModel.episodesInRange(from: episodes),
+                            range: viewModel.selectedRange
+                        )
+                        .frame(maxWidth: 400)
+
+                        DietaryInsightCardView(
+                            episodes: viewModel.episodesInRange(from: episodes),
+                            range: viewModel.selectedRange
+                        )
+                        .frame(maxWidth: 400)
+                    } else if !healthService.authorizationDenied {
+                        Button("Connect to HealthKit") {
+                            Task {
+                                await healthService.requestAuthorization()
                             }
-                            .buttonStyle(.borderedProminent)
-                            .tint(.accent)
-                            .padding(.horizontal, 48)
                         }
+                        .buttonStyle(.borderedProminent)
+                        .tint(.accent)
+                        .padding(.horizontal, 48)
                     }
                 }
             }

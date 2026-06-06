@@ -6,6 +6,7 @@ import Charts
 
 struct SleepInsightCardView: View {
     let episodes: [Episode]
+    let range: InsightsRange
     let healthKit = HealthKitService.shared
 
     @State private var samples:   [HealthKitService.SleepSample] = []
@@ -58,10 +59,13 @@ struct SleepInsightCardView: View {
             }
         }
         .task { await load() }
+        .onChange(of: range) { _, _ in
+            Task { await load() }
+        }
     }
 
     private func load() async {
-        let start = Calendar.current.date(byAdding: .day, value: -90, to: Date())!
+        let start = range.cutoff ?? Calendar.current.date(byAdding: .year, value: -10, to: Date())!
         samples   = await healthKit.fetchSleep(from: start, to: Date())
         isLoading = false
     }

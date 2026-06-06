@@ -9,6 +9,7 @@ import Charts
 struct StressCorrelationCardView: View {
     // Take in a list of episodes for which we display correlation statistics
     let episodes: [Episode]
+    let range: InsightsRange
 
     // State to keep track of our ViewModel object
     @State private var viewModel = StressCorrelationCardViewModel()
@@ -16,7 +17,7 @@ struct StressCorrelationCardView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
 
-            Label("Stress vs Symptoms", systemImage: "brain.head.profile")
+            Label("Stress vs Symptoms – \(range.rawValue)", systemImage: "brain.head.profile")
                 .font(.headline)
                 .foregroundStyle(.secondary)
 
