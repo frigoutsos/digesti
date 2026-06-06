@@ -54,7 +54,7 @@ struct StressCorrelationCardView: View {
                     }
 
                     // Trend line
-                    if let trend = viewModel.getTrendline() {
+                    if let trend = viewModel.getTrendline(from: viewModel.getPoints(from: episodes)) {
                         let xMin = 1.0, xMax = 10.0
                         let yMin = max(0.5, trend.slope * xMin + trend.intercept)
                         let yMax = min(10.5, trend.slope * xMax + trend.intercept)
@@ -75,8 +75,8 @@ struct StressCorrelationCardView: View {
                 .frame(height: 220)
 
                 // Correlation summary
-                if !viewModel.getCorrelationLabel().isEmpty {
-                    Text(viewModel.getCorrelationLabel())
+                if !viewModel.getCorrelationLabel(from: viewModel.getPoints(from: episodes)).isEmpty {
+                    Text(viewModel.getCorrelationLabel(from: viewModel.getPoints(from: episodes)))
                         .font(.caption)
                         .foregroundStyle(.secondary)
                         .frame(maxWidth: .infinity, alignment: .center)
