@@ -16,10 +16,13 @@ struct InsightsView: View {
     // State to keep track of our ViewModel object
     @State private var viewModel = InsightsViewModel()
     
+    // State to keep track of our HealthKit service object
+    @ObservedObject var healthService = HealthKitService.shared
+    
     var body: some View {
         ScrollView {
             VStack(spacing: 20) {
-
+                
                 // Time range picker
                 Picker("Range", selection: $viewModel.selectedRange) {
                     ForEach(InsightsRange.allCases) { range in
@@ -28,7 +31,7 @@ struct InsightsView: View {
                 }
                 .pickerStyle(.segmented)
                 .padding(.horizontal)
-
+                
                 if viewModel.episodesInRange(from: episodes).isEmpty {
                     ContentUnavailableView(
                         "No Episodes",
@@ -37,7 +40,6 @@ struct InsightsView: View {
                     )
                     .padding(.top, 40)
                 } else {
-
                     // Trend averages card
                     TrendsCardView(
                         currentEpisodes: viewModel.episodesInRange(from: episodes),
@@ -49,14 +51,14 @@ struct InsightsView: View {
                     // Stress impact card
                     StressCorrelationCardView(episodes: viewModel.episodesInRange(from: episodes))
                         .frame(maxWidth: 400)
-
+                    
                     // Trigger foods ranked by composite impact
                     TriggersCardView(
                         episodes: viewModel.episodesInRange(from: episodes),
                         meals: viewModel.mealsInRange(from: meals)
                     )
                     .frame(maxWidth: 400)
-
+                    
                     // Worst single offender per symptom
                     WorstOffendersCardView(
                         episodes: viewModel.episodesInRange(from: episodes),
@@ -64,17 +66,33 @@ struct InsightsView: View {
                     )
                     .frame(maxWidth: 400)
                     
-                    SleepInsightCardView(episodes: viewModel.episodesInRange(from: episodes))
-                        .frame(maxWidth: 400)
-
-                    HRVInsightCardView(episodes: viewModel.episodesInRange(from: episodes))
-                        .frame(maxWidth: 400)
-
-                    ActivityInsightCardView(episodes: viewModel.episodesInRange(from: episodes))
-                        .frame(maxWidth: 400)
-
-                    DietaryInsightCardView(episodes: viewModel.episodesInRange(from: episodes))
-                        .frame(maxWidth: 400)
+                    // If the user authorized health access, show them the insights
+                    if (healthService.isAuthorized) {
+                        SleepInsightCardView(episodes: viewModel.episodesInRange(from: episodes))
+                            .frame(maxWidth: 400)
+                        
+                        HRVInsightCardView(episodes: viewModel.episodesInRange(from: episodes))
+                            .frame(maxWidth: 400)
+                        
+                        ActivityInsightCardView(episodes: viewModel.episodesInRange(from: episodes))
+                            .frame(maxWidth: 400)
+                        
+                        DietaryInsightCardView(episodes: viewModel.episodesInRange(from: episodes))
+                            .frame(maxWidth: 400)
+                    } else {
+                        // If the user denied authorization, let them be
+                        if (!healthService.authorizationDenied) {
+                            Button("Connect to HealthKit") {
+                                // This button action triggers the async request
+                                Task {
+                                    await healthService.requestAuthorization()
+                                }
+                            }
+                            .buttonStyle(.borderedProminent)
+                            .tint(.accent)
+                            .padding(.horizontal, 48)
+                        }
+                    }
                 }
             }
             .frame(maxWidth: .infinity)

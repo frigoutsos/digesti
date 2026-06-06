@@ -11,6 +11,9 @@ struct ContentView: View {
 
     // Load our navigation manager
     @State private var navigationManager = NavigationManager.shared
+    
+    // Load our health service
+    @State private var healthService = HealthKitService.shared
   
     var body: some View {
         @Bindable var navigationManager = navigationManager
@@ -66,5 +69,10 @@ struct ContentView: View {
             }
         }
         .environment(navigationManager)
+        .onAppear {
+            Task {
+                await healthService.requestAuthorization()
+            }
+        }
     }
 }

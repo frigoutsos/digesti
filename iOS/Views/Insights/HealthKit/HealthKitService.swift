@@ -4,17 +4,18 @@
 //  Central service for requesting permissions and fetching
 //  sleep, HRV, dietary, and activity data from HealthKit.
 //
-import HealthKit
+import HealthKitUI
+import SwiftUI
+import Combine
 
-@Observable
-class HealthKitService {
+final class HealthKitService: ObservableObject {
     static let shared = HealthKitService()
-
+    
     private let store = HKHealthStore()
 
     // Authorization state
-    var isAuthorized = false
-    var authorizationDenied = false
+    @Published var isAuthorized = false
+    @Published var authorizationDenied = false
 
     // The full set of types we want to read
     private var readTypes: Set<HKObjectType> {
@@ -40,18 +41,22 @@ class HealthKitService {
         return types
     }
 
+    // Update authorization on the main actor
+    @MainActor
     func requestAuthorization() async {
         guard HKHealthStore.isHealthDataAvailable() else { return }
         do {
             try await store.requestAuthorization(toShare: [], read: readTypes)
             isAuthorized = true
+            authorizationDenied = false
         } catch {
             authorizationDenied = true
+            isAuthorized = false
         }
     }
 
-    // MARK: - Sleep
-
+    
+    // Sleep
     struct SleepSample {
         let date: Date        // Night of sleep (start of the window)
         let hours: Double     // Total asleep hours
@@ -94,8 +99,7 @@ class HealthKitService {
         }
     }
 
-    // MARK: - HRV
-
+    // HRV
     struct HRVSample {
         let date: Date
         let sdnn: Double   // milliseconds
@@ -107,8 +111,7 @@ class HealthKitService {
             .map { HRVSample(date: $0.date, sdnn: $0.value) }
     }
 
-    // MARK: - Activity
-
+    // Activity
     struct ActivitySample {
         let date: Date
         let activeCalories: Double
@@ -147,8 +150,7 @@ class HealthKitService {
         }.sorted { $0.date < $1.date }
     }
 
-    // MARK: - Dietary
-
+    // Dietary
     struct DietarySample {
         let date: Date
         let calories: Double
@@ -189,8 +191,7 @@ class HealthKitService {
         }.sorted { $0.date < $1.date }
     }
 
-    // MARK: - Private helpers
-
+    // Private helpers
     private struct DailyValue {
         let date: Date
         let value: Double
