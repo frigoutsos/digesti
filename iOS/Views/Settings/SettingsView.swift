@@ -13,6 +13,9 @@ struct SettingsView: View {
     // Store the user's preferred theme in the app storage
     @AppStorage("appTheme") private var appThemeRawValue: String = AppTheme.system.rawValue
 
+    // Store state of HealthKit service for re-authoriztaion
+    @State private var healthService = HealthKitService.shared
+    
     // Binding to hold the selected theme
     private var selectedThemeBinding: Binding<AppTheme> {
         Binding(
@@ -48,7 +51,8 @@ struct SettingsView: View {
             }
             .navigationTitle("Settings")
             .alert("Delete All Data?", isPresented: $viewModel.showDeleteConfirmation) {
-                Button("Cancel", role: .cancel) { }
+                Button("Cancel", role: .cancel) {}
+                    .foregroundStyle(.primary)
 
                 Button("Delete", role: .destructive) {
                     viewModel.clearAllData(modelContext: modelContext)

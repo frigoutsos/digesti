@@ -15,16 +15,11 @@ struct StressCorrelationCardView: View {
     @State private var viewModel = StressCorrelationCardViewModel()
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 12) {
-
-            Label("Stress vs Symptoms – \(range.rawValue)", systemImage: "brain.head.profile")
-                .font(.headline)
-                .foregroundStyle(.secondary)
-
-            Text("Each dot is one episode. The trend line shows the overall relationship.")
-                .font(.caption)
-                .foregroundStyle(.secondary)
-
+        insightCard(
+            title: "Stress vs Symptoms (\(range.rawValue))",
+            icon: "brain.head.profile",
+            caption: "Each dot is one episode. The trend line shows the overall relationship."
+        ) {
             // Symptom picker
             Picker("Symptom", selection: $viewModel.selectedSymptom) {
                 ForEach(StressSymptom.allCases) { s in
@@ -33,14 +28,8 @@ struct StressCorrelationCardView: View {
             }
             .pickerStyle(.segmented)
 
-            Divider()
-
             if episodes.count < 3 {
-                Text("Log at least 3 episodes to see the stress correlation chart.")
-                    .font(.subheadline)
-                    .foregroundStyle(.secondary)
-                    .frame(maxWidth: .infinity, alignment: .center)
-                    .padding(.vertical, 8)
+                emptyState("Log at least 3 episodes to see the stress correlation chart.")
             } else {
                 Chart {
                     // Scatter points
@@ -83,8 +72,5 @@ struct StressCorrelationCardView: View {
                 }
             }
         }
-        .padding()
-        .background(Color(.systemGray6))
-        .clipShape(RoundedRectangle(cornerRadius: 16))
     }
 }

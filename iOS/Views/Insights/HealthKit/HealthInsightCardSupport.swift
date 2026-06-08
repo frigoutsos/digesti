@@ -3,39 +3,6 @@
 //
 import SwiftUI
 
-// Shared card wrapper matching your existing card style
-@ViewBuilder
-func insightCard<Content: View>(
-    title:   String,
-    icon:    String,
-    caption: String,
-    @ViewBuilder content: () -> Content
-) -> some View {
-    VStack(alignment: .leading, spacing: 12) {
-        Label(title, systemImage: icon)
-            .font(.headline)
-            .foregroundStyle(.secondary)
-        Text(caption)
-            .font(.caption)
-            .foregroundStyle(.secondary)
-        Divider()
-        content()
-    }
-    .padding()
-    .background(Color(.systemGray6))
-    .clipShape(RoundedRectangle(cornerRadius: 16))
-}
-
-@ViewBuilder
-func emptyState(_ message: String) -> some View {
-    Text(message)
-        .font(.subheadline)
-        .foregroundStyle(.secondary)
-        .multilineTextAlignment(.center)
-        .frame(maxWidth: .infinity, alignment: .center)
-        .padding(.vertical, 8)
-}
-
 // Least-squares trend line endpoints for a set of HealthEpisodePairs
 struct TrendLineInfo {
     let xMin: Double

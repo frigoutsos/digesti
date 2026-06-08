@@ -85,7 +85,7 @@ struct StoolView: View {
                     .tint(.accent)
                 
                 HStack {
-                    Text("Effort / Constipation")
+                    Text("Constipation")
                         .font(.subheadline)
                         .foregroundStyle(.secondary)
                     

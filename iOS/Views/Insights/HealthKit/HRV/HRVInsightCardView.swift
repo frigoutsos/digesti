@@ -9,7 +9,7 @@ struct HRVInsightCardView: View {
     let range: InsightsRange
     let healthKit = HealthKitService.shared
 
-    @State private var samples:   [HealthKitService.HRVSample] = []
+    @State private var samples: [HealthKitService.HRVSample] = []
     @State private var isLoading = true
 
     private var pairs: [HealthEpisodePair] {
@@ -21,14 +21,14 @@ struct HRVInsightCardView: View {
 
     var body: some View {
         insightCard(
-            title:   "HRV & Episodes",
-            icon:    "waveform.path.ecg",
+            title: "HRV & Episodes",
+            icon: "waveform.path.ecg",
             caption: "Heart rate variability (SDNN) on episode days. Lower HRV often reflects stress."
         ) {
             if isLoading {
                 ProgressView().frame(maxWidth: .infinity)
             } else if pairs.isEmpty {
-                emptyState("No overlapping HRV data found.")
+                emptyState("No overlapping HRV data found. Verify that Health access is granted in Settings.")
             } else {
                 Chart {
                     ForEach(Array(pairs.enumerated()), id: \.offset) { _, p in

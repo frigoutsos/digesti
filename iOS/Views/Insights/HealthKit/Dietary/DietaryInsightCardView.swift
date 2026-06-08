@@ -91,7 +91,7 @@ struct DietaryInsightCardView: View {
             if isLoading {
                 ProgressView().frame(maxWidth: .infinity)
             } else if pairs.isEmpty {
-                emptyState("No overlapping dietary data found.\nMake sure you're logging food in Apple Health or a connected app.")
+                emptyState("No overlapping dietary data found. Verify that Health access is granted in Settings.")
             } else {
                 Chart {
                     ForEach(Array(pairs.enumerated()), id: \.offset) { _, p in

@@ -13,10 +13,6 @@ final class HealthKitService: ObservableObject {
     
     private let store = HKHealthStore()
 
-    // Authorization state
-    @Published var isAuthorized = false
-    @Published var authorizationDenied = false
-
     // The full set of types we want to read
     private var readTypes: Set<HKObjectType> {
         var types: Set<HKObjectType> = [
@@ -47,11 +43,8 @@ final class HealthKitService: ObservableObject {
         guard HKHealthStore.isHealthDataAvailable() else { return }
         do {
             try await store.requestAuthorization(toShare: [], read: readTypes)
-            isAuthorized = true
-            authorizationDenied = false
         } catch {
-            authorizationDenied = true
-            isAuthorized = false
+            print("An unexpected error occurred while requesting authorization: \(error.localizedDescription)")
         }
     }
 

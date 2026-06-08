@@ -28,7 +28,7 @@ struct ActivityInsightCardView: View {
             if isLoading {
                 ProgressView().frame(maxWidth: .infinity)
             } else if caloriePairs.isEmpty {
-                emptyState("No overlapping activity data found.")
+                emptyState("No overlapping activity data found. Verify that Health access is granted in Settings.")
             } else {
                 Chart {
                     ForEach(Array(caloriePairs.enumerated()), id: \.offset) { _, p in

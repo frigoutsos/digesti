@@ -28,7 +28,7 @@ struct SleepInsightCardView: View {
             if isLoading {
                 ProgressView().frame(maxWidth: .infinity)
             } else if pairs.isEmpty {
-                emptyState("No overlapping sleep data found.")
+                emptyState("No overlapping sleep data found. Verify that Health access is granted in Settings.")
             } else {
                 Chart {
                     ForEach(Array(pairs.enumerated()), id: \.offset) { _, p in
