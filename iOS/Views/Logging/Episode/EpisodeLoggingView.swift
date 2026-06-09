@@ -104,7 +104,3 @@ struct EpisodeLoggingView: View {
         }
     }
 }
-
-#Preview {
-    EpisodeLoggingView()
-}

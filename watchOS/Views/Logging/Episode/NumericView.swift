@@ -27,7 +27,7 @@ struct NumericView: View {
                 .font(.headline)
                 .foregroundStyle(.primary)
 
-            Text("\(Int(value)) / 10")
+            Text("\(Int(value)) / \(maxValue)")
                 .font(.title2)
                 .fontWeight(.semibold)
             
