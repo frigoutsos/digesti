@@ -74,33 +74,45 @@ struct EpisodeLoggingView: View {
     private var toolbarContent: some ToolbarContent {
         ToolbarItem(placement: .topBarLeading) {
             if viewModel.step > 1 {
-                Button("Back") {
+                Button {
                     viewModel.step -= 1
+                } label: {
+                    Image(systemName: "chevron.backward")
                 }
             } else {
-                Button("Cancel", role: .cancel) {
+                Button(role: .cancel) {
                     dismiss()
+                } label: {
+                    Image(systemName: "xmark")
                 }
             }
         }
         
         ToolbarItem(placement: .topBarTrailing) {
             if viewModel.step < 3 {
-                Button("Next") {
+                Button {
                     viewModel.step += 1
+                } label: {
+                    Image(systemName: "chevron.forward")
                 }
             } else {
-                Button("Done") {
+                Button() {
                     do {
                         try viewModel.saveEpisode(modelContext: modelContext)
                         dismiss()
                     } catch {
                         print("Failed to save episode: ", error)
                     }
+                } label: {
+                    Image(systemName: "checkmark")
                 }
                 // Provide user with a success haptic upon saving the episode
                 .sensoryFeedback(.success, trigger: viewModel.didSave)
             }
         }
     }
+}
+
+#Preview {
+    EpisodeLoggingView()
 }

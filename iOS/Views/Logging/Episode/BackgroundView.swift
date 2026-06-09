@@ -20,7 +20,7 @@ struct BackgroundView: View {
                     Image(systemName: "calendar")
                         .foregroundStyle(.accent)
                     
-                    Text("When did your episode start?")
+                    Text("Symptom Onset:")
                         .font(.headline)
                         .foregroundStyle(.primary)
                 }
@@ -38,7 +38,7 @@ struct BackgroundView: View {
                     Image(systemName: "clock")
                         .foregroundStyle(.accent)
                     
-                    Text("When was your last bowel movement?")
+                    Text("Last Bowel Movement:")
                         .font(.headline)
                         .foregroundStyle(.primary)
                 }
@@ -56,13 +56,16 @@ struct BackgroundView: View {
                     Image(systemName: "speedometer")
                         .foregroundStyle(.accent)
                     
-                    Text("How intense is your episode?")
+                    Text("Intensity")
                         .font(.headline)
                         .foregroundStyle(.primary)
                 }
                 
-                Slider(value: $intensity, in: 1...10, step: 0.15)
-                    .tint(.accent)
+                Slider(value: $intensity, in: 1...10, step: 0.1)
+                    .tint(getColor(for: intensity))
+                    .onChange(of: intensity) {
+                        print(intensity)
+                    }
                 
                 HStack {
                     Text("Intensity")
@@ -75,6 +78,7 @@ struct BackgroundView: View {
                         .font(.title3)
                         .fontWeight(.semibold)
                         .foregroundStyle(.primary)
+
                 }
             }
             
@@ -83,13 +87,13 @@ struct BackgroundView: View {
                     Image(systemName: "figure.mind.and.body")
                         .foregroundStyle(.accent)
                     
-                    Text("How stressed are you?")
+                    Text("Stress Level:")
                         .font(.headline)
                         .foregroundStyle(.primary)
                 }
                 
-                Slider(value: $stress, in: 1...10, step: 0.15)
-                    .tint(.accent)
+                Slider(value: $stress, in: 1...10, step: 0.1)
+                    .tint(getColor(for: stress))
                 
                 HStack {
                     Text("Stress")
@@ -110,7 +114,7 @@ struct BackgroundView: View {
                     Image(systemName: "balloon.fill")
                         .foregroundStyle(.accent)
                     
-                    Toggle("Are you experiencing bloating?", isOn: $bloating)
+                    Toggle("Bloating?", isOn: $bloating)
                         .font(.headline)
                         .foregroundStyle(.primary)
                 }

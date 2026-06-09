@@ -30,7 +30,7 @@ struct EpisodeSymptomsCard: View {
             
             ProgressView(value: (Double(episodeToView.intensity) / 10.0))
                 .padding(.horizontal)
-                .tint(getColor(for: episodeToView.intensity))
+                .tint(getColor(for: Double(episodeToView.intensity)))
             
             // Intensity info
             HStack(spacing: 8) {
@@ -48,7 +48,7 @@ struct EpisodeSymptomsCard: View {
             
             ProgressView(value: (Double(episodeToView.stress) / 10.0))
                 .padding(.horizontal)
-                .tint(getColor(for: episodeToView.stress))
+                .tint(getColor(for: Double(episodeToView.stress)))
             
             // Bloating status
             HStack(alignment: .top, spacing: 8) {

@@ -17,7 +17,7 @@ struct StoolView: View {
     
     // State to keep track if the user wants the Bristol stool reference sheet
     @State private var presentStoolSheet: Bool = false
-
+    
     var body: some View {
         VStack(alignment: .leading, spacing: 32) {
             VStack(alignment: .leading, spacing: 16) {
@@ -25,7 +25,7 @@ struct StoolView: View {
                     Image(systemName: "toilet.fill")
                         .foregroundStyle(.accent)
                     
-                    Text("How solid was your stool?")
+                    Text("Stool Type:")
                         .font(.headline)
                         .foregroundStyle(.primary)
                     
@@ -37,15 +37,29 @@ struct StoolView: View {
                         Image(systemName: "info.circle")
                     }
                     .sheet(isPresented: $presentStoolSheet) {
-                        BristolScaleListView()
+                        NavigationStack {
+                            VStack {
+                                BristolScaleListView()
+                                    .navigationBarTitleDisplayMode(.inline)
+                                    .toolbar {
+                                        ToolbarItem(placement: .topBarTrailing) {
+                                            Button {
+                                                presentStoolSheet = false
+                                            } label: {
+                                                Image(systemName: "xmark")
+                                            }
+                                        }
+                                    }
+                            }
+                        }
                     }
                 }
                 
                 Slider(value: $stoolConsistency, in: 1...7, step: 1)
-                    .tint(.accent)
+                    .tint(.secondary)
                 
                 HStack {
-                    Text("Consistency")
+                    Text("Bristol Type")
                         .font(.subheadline)
                         .foregroundStyle(.secondary)
                     
@@ -63,13 +77,13 @@ struct StoolView: View {
                     Image(systemName: "toilet.fill")
                         .foregroundStyle(.accent)
                     
-                    Text("How urgent was your bowel movement?")
+                    Text("Stool Urgency:")
                         .font(.headline)
                         .foregroundStyle(.primary)
                 }
                 
-                Slider(value: $stoolUrgency, in: 1...10, step: 0.15)
-                    .tint(.accent)
+                Slider(value: $stoolUrgency, in: 1...10, step: 0.1)
+                    .tint(getColor(for: stoolUrgency))
                 
                 HStack {
                     Text("Urgency")
@@ -90,16 +104,16 @@ struct StoolView: View {
                     Image(systemName: "toilet.fill")
                         .foregroundStyle(.accent)
                     
-                    Text("How hard was it to pass your stool?")
+                    Text("Constipation:")
                         .font(.headline)
                         .foregroundStyle(.primary)
                 }
                 
-                Slider(value: $stoolEffort, in: 1...10, step: 0.15)
-                    .tint(.accent)
+                Slider(value: $stoolEffort, in: 1...10, step: 0.1)
+                    .tint(getColor(for: stoolEffort))
                 
                 HStack {
-                    Text("Effort / Constipation")
+                    Text("Constipation")
                         .font(.subheadline)
                         .foregroundStyle(.secondary)
                     

@@ -20,15 +20,10 @@ struct EpisodeStoolCard: View {
                     .foregroundStyle(.secondary)
                     .frame(width: 16, alignment: .center)
                 
-                Text("Consistency:")
+                Text("Bristol Type:")
                     .fontWeight(.semibold)
                 
-                Text("\(episodeToView.stoolConsistency) / 10")
-                    .foregroundStyle(.secondary)
-                
-                Spacer()
-                
-                Text("\(episodeToView.bristolType.description)")
+                Text("\(episodeToView.stoolConsistency) (\(episodeToView.bristolType.description))")
                     .foregroundStyle(.secondary)
             }
             .font(.subheadline)
@@ -49,7 +44,7 @@ struct EpisodeStoolCard: View {
             
             ProgressView(value: (Double(episodeToView.stoolUrgency) / 10.0))
                 .padding(.horizontal)
-                .tint(getColor(for: episodeToView.stoolUrgency))
+                .tint(getColor(for: Double(episodeToView.stoolUrgency)))
             
             // Stool effort info
             HStack(alignment: .top, spacing: 8) {
@@ -67,7 +62,7 @@ struct EpisodeStoolCard: View {
             
             ProgressView(value: (Double(episodeToView.stoolEffort) / 10.0))
                 .padding(.horizontal)
-                .tint(getColor(for: episodeToView.stoolEffort))
+                .tint(getColor(for: Double(episodeToView.stoolEffort)))
         }
         .padding()
         .frame(maxWidth: .infinity, alignment: .leading)

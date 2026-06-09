@@ -13,6 +13,9 @@ struct CalendarView: View {
     // State to keep track of our ViewModel object
     @State private var viewModel = CalendarViewModel()
     
+    // State to keep track of index for days with potentially multiple episodes
+    @State private var currentIndex = 0
+    
     var body: some View {
         VStack(spacing: 0) {
             // Display our calendar
@@ -47,33 +50,53 @@ struct CalendarView: View {
         // If the user clicks on a date, pop up a sheet with an episode card
         .sheet(isPresented: $viewModel.showInfo) {
             NavigationStack {
-                ScrollView {
-                    VStack(spacing: 16) {
-                        // Iterate through and display episodes for the selected day
-                        ForEach(viewModel.selectedDayEpisodes) { episode in
-                            EpisodeView(episodeToView: episode)
-                                .padding()
-                                .frame(maxWidth: 400)
-                                .background(
-                                    RoundedRectangle(cornerRadius: 16)
-                                        .fill(Color(.secondarySystemGroupedBackground))
-                                        .shadow(color: .black.opacity(0.08), radius: 8, y: 4)
-                                )
+                VStack {
+                    ScrollView {
+                        EpisodeView(
+                            episodeToView: viewModel.selectedDayEpisodes[currentIndex]
+                        )
+                    }
+                    
+                    // Navigation butons to navigate multiple episodes on a day
+                    if (viewModel.selectedDayEpisodes.count > 1) {
+                        HStack {
+                            Button {
+                                currentIndex -= 1
+                            } label: {
+                                Image(systemName: "chevron.backward")
+                            }
+                            .padding(.horizontal)
+                            .buttonStyle(.bordered)
+                            .disabled(currentIndex == 0)
+                            
+                            Spacer()
+                            
+                            Button {
+                                currentIndex += 1
+                            } label: {
+                                Image(systemName: "chevron.forward")
+                            }
+                            .padding(.horizontal)
+                            .buttonStyle(.bordered)
+                            .disabled(currentIndex == viewModel.selectedDayEpisodes.count - 1)
                         }
                     }
-                    .padding()
                 }
-                .background(Color(.systemGroupedBackground))
-                .navigationTitle("Episodes")
+                .padding(.vertical)
+                .navigationTitle("Episodes for \(viewModel.selectedDate.formatted(.dateTime.day().month()))")
                 .navigationBarTitleDisplayMode(.inline)
                 .toolbar {
                     ToolbarItem(placement: .topBarTrailing) {
-                        Button("Close") {
+                        Button {
                             viewModel.showInfo = false
+                            currentIndex = 0
+                        } label: {
+                            Image(systemName: "xmark")
                         }
                     }
                 }
             }
         }
+        .background(Color(.systemGroupedBackground))
     }
 }

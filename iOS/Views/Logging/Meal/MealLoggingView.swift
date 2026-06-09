@@ -100,19 +100,23 @@ struct MealLoggingView: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
-                    Button("Cancel", role: .cancel) {
+                    Button(role: .cancel) {
                         dismiss()
+                    } label: {
+                        Image(systemName: "xmark")
                     }
                 }
                 
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button("Done") {
+                    Button {
                         do {
                             try viewModel.saveMeal(modelContext: modelContext)
                             dismiss()
                         } catch {
                             print("Failed to save episode: ", error)
                         }
+                    } label: {
+                        Image(systemName: "checkmark")
                     }
                     // Provide user with a success haptic upon saving the episode
                     .sensoryFeedback(.success, trigger: viewModel.didSave)

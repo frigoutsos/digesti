@@ -15,6 +15,9 @@ struct SettingsView: View {
 
     // State to keep track if the user wants the Bristol stool reference sheet
     @State private var presentStoolSheet: Bool = false
+    
+    // Allow the user to click cancel and dismiss the Bristol Stool chart
+    @Environment(\.dismiss) private var dismiss
 
     // Binding to hold the selected theme
     private var selectedThemeBinding: Binding<AppTheme> {
@@ -38,7 +41,21 @@ struct SettingsView: View {
                         Label("Bristol Stool Scale Reference Sheet", systemImage: "book.fill")
                     }
                     .sheet(isPresented: $presentStoolSheet) {
-                        BristolScaleListView()
+                        NavigationStack {
+                            VStack {
+                                BristolScaleListView()
+                                    .navigationBarTitleDisplayMode(.inline)
+                                    .toolbar {
+                                        ToolbarItem(placement: .topBarTrailing) {
+                                            Button {
+                                                presentStoolSheet = false
+                                            } label: {
+                                                Image(systemName: "xmark")
+                                            }
+                                        }
+                                    }
+                            }
+                        }
                     }
                 }
                 .foregroundStyle(.primary)
@@ -68,7 +85,7 @@ struct SettingsView: View {
             }
             .navigationTitle("Settings")
             .alert("Delete All Data?", isPresented: $viewModel.showDeleteConfirmation) {
-                Button("Cancel", role: .cancel) { }
+                Button("Cancel") { }
                     .foregroundStyle(.primary)
 
                 Button("Delete", role: .destructive) {

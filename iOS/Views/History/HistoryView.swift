@@ -126,29 +126,21 @@ struct HistoryView: View {
         NavigationStack {
             // Allow scrolling through summary view for those using larger text sizes
             ScrollView {
-                VStack(spacing: 16) {
-                    EpisodeView(episodeToView: episode)
-                        .padding()
-                        .frame(maxWidth: 400)
-                        .background(
-                            RoundedRectangle(cornerRadius: 16)
-                                .fill(Color(.secondarySystemGroupedBackground))
-                                .shadow(color: .black.opacity(0.08), radius: 8, y: 4)
-                        )
-                }
-                .padding()
+                EpisodeView(episodeToView: episode)
             }
-            .background(Color(.systemGroupedBackground))
             .navigationTitle("Episode Summary")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button("Close") {
+                    Button {
                         viewModel.selectedEpisode = nil
+                    } label: {
+                        Image(systemName: "xmark")
                     }
                 }
             }
         }
+        .background(Color(.systemGroupedBackground))
     }
     
     // Display meals if the user selected to view meals
