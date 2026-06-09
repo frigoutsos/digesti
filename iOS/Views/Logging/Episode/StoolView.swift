@@ -14,6 +14,9 @@ struct StoolView: View {
     @Binding var stoolConsistency: Double
     @Binding var stoolUrgency: Double
     @Binding var stoolEffort: Double
+    
+    // State to keep track if the user wants the Bristol stool reference sheet
+    @State private var presentStoolSheet: Bool = false
 
     var body: some View {
         VStack(alignment: .leading, spacing: 32) {
@@ -25,9 +28,20 @@ struct StoolView: View {
                     Text("How solid was your stool?")
                         .font(.headline)
                         .foregroundStyle(.primary)
+                    
+                    Spacer()
+                    
+                    Button {
+                        presentStoolSheet = true
+                    } label: {
+                        Image(systemName: "info.circle")
+                    }
+                    .sheet(isPresented: $presentStoolSheet) {
+                        BristolScaleListView()
+                    }
                 }
                 
-                Slider(value: $stoolConsistency, in: 1...10, step: 0.15)
+                Slider(value: $stoolConsistency, in: 1...7, step: 1)
                     .tint(.accent)
                 
                 HStack {
@@ -37,7 +51,7 @@ struct StoolView: View {
                     
                     Spacer()
                     
-                    Text("\(stoolConsistency, specifier: "%.0f") / 10")
+                    Text("\(stoolConsistency, specifier: "%.0f") / 7")
                         .font(.title3)
                         .fontWeight(.semibold)
                         .foregroundStyle(.primary)

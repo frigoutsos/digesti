@@ -13,6 +13,9 @@ struct SettingsView: View {
     // Store the user's preferred theme in the app storage
     @AppStorage("appTheme") private var appThemeRawValue: String = AppTheme.system.rawValue
 
+    // State to keep track if the user wants the Bristol stool reference sheet
+    @State private var presentStoolSheet: Bool = false
+
     // Binding to hold the selected theme
     private var selectedThemeBinding: Binding<AppTheme> {
         Binding(
@@ -27,14 +30,30 @@ struct SettingsView: View {
     var body: some View {
         NavigationStack {
             Form {
-                // Theme selection buttom
+                //
+                Section("Information") {
+                    Button {
+                        presentStoolSheet = true
+                    } label: {
+                        Label("Bristol Stool Scale Reference Sheet", systemImage: "book.fill")
+                    }
+                    .sheet(isPresented: $presentStoolSheet) {
+                        BristolScaleListView()
+                    }
+                }
+                .foregroundStyle(.primary)
+                
+                // Theme selection button
                 Section("Appearance") {
-                    Picker("Theme", selection: selectedThemeBinding) {
+                    Picker(selection: selectedThemeBinding) {
                         ForEach(AppTheme.allCases) { theme in
                             Text(theme.displayName)
                                 .tag(theme)
                         }
+                    } label: {
+                        Label("Theme", systemImage: "moon.fill")
                     }
+                    .foregroundStyle(.primary)
                 }
 
                 // Data management button
@@ -44,6 +63,7 @@ struct SettingsView: View {
                     } label: {
                         Label("Clear All Data", systemImage: "trash.fill")
                     }
+                    .foregroundStyle(.primary)
                 }
             }
             .navigationTitle("Settings")

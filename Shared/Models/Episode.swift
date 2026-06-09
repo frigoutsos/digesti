@@ -38,4 +38,9 @@ final class Episode {
         self.stoolUrgency = stoolUrgency
         self.stoolEffort = stoolEffort
     }
+    
+    // Extend episode using Bristol Stool Types
+    var bristolType: BristolStoolType {
+        .from(consistency: Double(stoolConsistency))
+    }
 }

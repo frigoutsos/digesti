@@ -56,7 +56,7 @@ struct EpisodeLoggingView: View {
                 stoolEffort: $viewModel.input.stoolEffort
             )
         case 3:
-            SummaryView(builtEpisode: viewModel.builtEpisode)
+            EpisodeView(episodeToView: viewModel.builtEpisode)
         default:
             // Pass in the current View's input state
             BackgroundView(
@@ -103,4 +103,8 @@ struct EpisodeLoggingView: View {
             }
         }
     }
+}
+
+#Preview {
+    EpisodeLoggingView()
 }

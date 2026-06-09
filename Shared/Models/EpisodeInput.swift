@@ -11,7 +11,7 @@ struct EpisodeInput: Codable {
     var intensity: Double = 5
     var stress: Double = 5
     var bloating: Bool = false
-    var stoolConsistency: Double = 5
+    var stoolConsistency: Double = 4
     var stoolUrgency: Double = 5
     var stoolEffort: Double = 5
 }
