@@ -17,6 +17,8 @@ struct NumericView: View {
     
     // State to store focus on the slider
     @FocusState private var isFocused: Bool
+    
+    let maxValue: Int
 
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
@@ -29,12 +31,13 @@ struct NumericView: View {
                 .font(.title2)
                 .fontWeight(.semibold)
             
-            Slider(value: Binding(get: { value }, set: { newValue in value = min(max(newValue, 1), 10) }), in: 1...10, step: 1) .labelsHidden()
+            Slider(value: Binding(get: { value }, set: { newValue in value = min(max(newValue, 1), Double(maxValue)) }),
+                   in: 1...Double(maxValue), step: 1) .labelsHidden()
         }
         .focusable(true)
         .focused($isFocused)
         .digitalCrownRotation($crownValue,
-            from: 1, through: 10, by: 1,
+            from: 1, through: Double(maxValue), by: 1,
             sensitivity: .medium,
             isContinuous: false,
             isHapticFeedbackEnabled: true
