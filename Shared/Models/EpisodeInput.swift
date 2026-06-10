@@ -8,10 +8,10 @@ import SwiftUI
 struct EpisodeInput: Codable {
     var onset: Date = Date()
     var movement: Date = Date()
-    var intensity: Double = 5
-    var stress: Double = 5
+    var intensity: Int = 3
+    var stress: Int = 3
     var bloating: Bool = false
-    var stoolConsistency: Double = 4
-    var stoolUrgency: Double = 5
-    var stoolEffort: Double = 5
+    var stoolConsistency: Int = 4
+    var stoolUrgency: Int = 3
+    var stoolEffort: Int = 3
 }

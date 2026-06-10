@@ -16,11 +16,11 @@ struct EpisodeStoolCard: View {
             
             // Stool consistency info
             HStack(alignment: .top, spacing: 8) {
-                Image(systemName: "drop.fill")
+                Image(systemName: "toilet.fill")
                     .foregroundStyle(.secondary)
                     .frame(width: 16, alignment: .center)
                 
-                Text("Bristol Type:")
+                Text("Bristol Stool Type:")
                     .fontWeight(.semibold)
                 
                 Text("\(episodeToView.stoolConsistency) (\(episodeToView.bristolType.description))")
@@ -37,32 +37,46 @@ struct EpisodeStoolCard: View {
                 Text("Urgency:")
                     .fontWeight(.semibold)
                 
-                Text("\(episodeToView.stoolUrgency) / 10")
+                Text(getEmoji(for: episodeToView.stoolUrgency))
+            }
+            .font(.subheadline)
+            
+            HStack(spacing: 8) {
+                ProgressView(value: (Double(episodeToView.stoolUrgency) / 5.0))
+                    .padding(.horizontal)
+                    .tint(getColor(for: episodeToView.stoolUrgency))
+                
+                Spacer()
+                
+                Text("\(episodeToView.stoolUrgency)/5")
                     .foregroundStyle(.secondary)
             }
             .font(.subheadline)
             
-            ProgressView(value: (Double(episodeToView.stoolUrgency) / 10.0))
-                .padding(.horizontal)
-                .tint(getColor(for: Double(episodeToView.stoolUrgency)))
-            
             // Stool effort info
             HStack(alignment: .top, spacing: 8) {
-                Image(systemName: "figure.highintensity.intervaltraining")
+                Image(systemName: "figure.run")
                     .foregroundStyle(.secondary)
                     .frame(width: 16, alignment: .center)
                 
                 Text("Constipation:")
                     .fontWeight(.semibold)
                 
-                Text("\(episodeToView.stoolEffort) / 10")
-                    .foregroundStyle(.secondary)
+                Text(getEmoji(for: episodeToView.stoolEffort))
             }
             .font(.subheadline)
             
-            ProgressView(value: (Double(episodeToView.stoolEffort) / 10.0))
-                .padding(.horizontal)
-                .tint(getColor(for: Double(episodeToView.stoolEffort)))
+            HStack(spacing: 8) {
+                ProgressView(value: (Double(episodeToView.stoolEffort) / 5.0))
+                    .padding(.horizontal)
+                    .tint(getColor(for: episodeToView.stoolEffort))
+                
+                Spacer()
+                
+                Text("\(episodeToView.stoolEffort)/5")
+                    .foregroundStyle(.secondary)
+            }
+            .font(.subheadline)
         }
         .padding()
         .frame(maxWidth: .infinity, alignment: .leading)

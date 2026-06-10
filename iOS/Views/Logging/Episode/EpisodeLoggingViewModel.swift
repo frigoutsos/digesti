@@ -9,7 +9,7 @@ import SwiftData
 @Observable
 class EpisodeLoggingViewModel {
     // Track which step the user is on
-    var step: Int = 1
+    var step: LoggingStep = .onset
     
     // Track the user's input as they go through the screen
     var input: EpisodeInput = EpisodeInput()
@@ -17,30 +17,25 @@ class EpisodeLoggingViewModel {
     // Track if we saved a user's episode yet
     var didSave: Bool = false
     
+    // Keep track of if we have selected bloating
+    var hasSelectedBloating: Bool? = nil
+    
+    // Keep track if the user wants the Bristol stool reference sheet
+    var presentStoolSheet: Bool = false
+    
     // Computed property to build the episode on-the-fly
     var builtEpisode: Episode {
         Episode(
             onset: input.onset,
             movement: input.movement,
-            intensity: Int(input.intensity),
-            stress: Int(input.stress),
+            intensity: input.intensity,
+            stress: input.stress,
             bloating: input.bloating,
             stoolConsistency: Int(input.stoolConsistency),
-            stoolUrgency: Int(input.stoolUrgency),
-            stoolEffort: Int(input.stoolEffort)
+            stoolUrgency: input.stoolUrgency,
+            stoolEffort: input.stoolEffort
         )
     }
-    
-    // Computed property to change the title based on the user's step
-    var navigationTitle: String {
-        switch step {
-        case 1: return "Background"
-        case 2: return "Recent Stool"
-        case 3: return "Summary"
-        default: return ""
-        }
-    }
-    
     
     // Function to save a episode when the user is done with the input flow
     func saveEpisode(modelContext: ModelContext) throws {
@@ -49,5 +44,25 @@ class EpisodeLoggingViewModel {
         modelContext.insert(builtEpisode)
         try modelContext.save()
         didSave = true
+    }
+}
+
+enum LoggingStep: Int, CaseIterable {
+    case onset
+    case movement
+    case intensity
+    case stress
+    case bloating
+    case stoolType
+    case urgency
+    case effort
+    case summary
+    
+    var next: LoggingStep? {
+        LoggingStep(rawValue: rawValue + 1)
+    }
+    
+    var prev: LoggingStep? {
+        LoggingStep(rawValue: rawValue - 1)
     }
 }

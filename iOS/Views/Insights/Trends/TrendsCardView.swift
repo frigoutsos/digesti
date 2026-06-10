@@ -35,31 +35,31 @@ struct TrendsCardView: View {
                 VStack(spacing: 10) {
                     metricRow(
                         icon: "speedometer",
-                        label: "Average intensity",
+                        label: "Average Intensity",
                         value: avg.intensity,
                         prevVal: previous?.intensity
                     )
                     metricRow(
                         icon: "figure.mind.and.body",
-                        label: "Average stress",
+                        label: "Average Stress",
                         value: avg.stress,
                         prevVal: previous?.stress
                     )
                     metricRow(
                         icon: "toilet.fill",
-                        label: "Average consistency",
+                        label: "Average Stool Type",
                         value: avg.stoolConsistency,
                         prevVal: previous?.stoolConsistency
                     )
                     metricRow(
-                        icon: "toilet.fill",
-                        label: "Average urgency",
+                        icon: "exclamationmark.circle",
+                        label: "Average Urgency",
                         value: avg.stoolUrgency,
                         prevVal: previous?.stoolUrgency
                     )
                     metricRow(
-                        icon: "toilet.fill",
-                        label: "Average effort",
+                        icon: "figure.run",
+                        label: "Average Effort",
                         value: avg.stoolEffort,
                         prevVal: previous?.stoolEffort
                     )

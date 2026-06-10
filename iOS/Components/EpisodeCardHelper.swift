@@ -6,14 +6,20 @@
 import SwiftUI
 
 // Get color ranks low values as good (since the metrics we track are mostly negative)
-func getColor(for value: Double, reversed: Bool = false) -> Color {
-    guard value >= 0 && value <= 10 else { return Color.primary }
+func getColor(for value: Int, reversed: Bool = false) -> Color {
+    guard value >= 1 && value <= 5 else { return Color.primary }
     
-    if (value.rounded() <= 3) {
+    if (value < 2) {
         return reversed ? Color.red : Color.green
-    } else if (value.rounded() < 8) {
+    } else if (value < 5) {
         return Color.yellow
     } else {
         return reversed ? Color.green : Color.red
     }
+}
+
+func getEmoji(for value: Int) -> String {
+    guard value >= 1 && value <= 5 else { return "" }
+    
+    return EmojiType.allCases[value - 1].rawValue
 }

@@ -15,8 +15,8 @@ struct EpisodeTimingCard: View {
                 .fontWeight(.semibold)
             
             // Onset info
-            HStack(spacing: 8) {
-                Image(systemName: "bolt.fill")
+            HStack(alignment: .top, spacing: 8) {
+                Image(systemName: "calendar")
                     .foregroundStyle(.secondary)
                     .frame(width: 16, alignment: .center)
                 
@@ -29,8 +29,8 @@ struct EpisodeTimingCard: View {
             .font(.subheadline)
             
             // Bowel movement info
-            HStack(spacing: 8) {
-                Image(systemName: "toilet.fill")
+            HStack(alignment: .top, spacing: 8) {
+                Image(systemName: "clock")
                     .foregroundStyle(.secondary)
                     .frame(width: 16, alignment: .center)
                 

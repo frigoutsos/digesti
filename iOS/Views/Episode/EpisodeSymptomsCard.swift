@@ -15,7 +15,7 @@ struct EpisodeSymptomsCard: View {
                 .fontWeight(.semibold)
             
             // Intensity info
-            HStack(spacing: 8) {
+            HStack(alignment: .top, spacing: 8) {
                 Image(systemName: "speedometer")
                     .foregroundStyle(.secondary)
                     .frame(width: 16, alignment: .center)
@@ -23,17 +23,24 @@ struct EpisodeSymptomsCard: View {
                 Text("Intensity:")
                     .fontWeight(.semibold)
                 
-                Text("\(episodeToView.intensity) / 10")
+                Text(getEmoji(for: episodeToView.intensity))
+            }
+            .font(.subheadline)
+            
+            HStack(spacing: 8) {
+                ProgressView(value: (Double(episodeToView.intensity) / 5.0))
+                    .padding(.horizontal)
+                    .tint(getColor(for: episodeToView.intensity))
+                
+                Spacer()
+                
+                Text("\(episodeToView.intensity)/5")
                     .foregroundStyle(.secondary)
             }
             .font(.subheadline)
             
-            ProgressView(value: (Double(episodeToView.intensity) / 10.0))
-                .padding(.horizontal)
-                .tint(getColor(for: Double(episodeToView.intensity)))
-            
             // Intensity info
-            HStack(spacing: 8) {
+            HStack(alignment: .top, spacing: 8) {
                 Image(systemName: "figure.mind.and.body")
                     .foregroundStyle(.secondary)
                     .frame(width: 16, alignment: .center)
@@ -41,14 +48,21 @@ struct EpisodeSymptomsCard: View {
                 Text("Stress:")
                     .fontWeight(.semibold)
                 
-                Text("\(episodeToView.stress) / 10")
-                    .foregroundStyle(.secondary)
+                Text(getEmoji(for: episodeToView.stress))
             }
             .font(.subheadline)
             
-            ProgressView(value: (Double(episodeToView.stress) / 10.0))
-                .padding(.horizontal)
-                .tint(getColor(for: Double(episodeToView.stress)))
+            HStack(spacing: 8) {
+                ProgressView(value: (Double(episodeToView.stress) / 5.0))
+                    .padding(.horizontal)
+                    .tint(getColor(for: episodeToView.stress))
+
+                Spacer()
+                
+                Text("\(episodeToView.stress)/5")
+                    .foregroundStyle(.secondary)
+            }
+            .font(.subheadline)
             
             // Bloating status
             HStack(alignment: .top, spacing: 8) {

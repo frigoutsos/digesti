@@ -48,7 +48,7 @@ struct EpisodeLoggingWatchView: View {
             .sheet(isPresented: $presentStoolSheet) {
                 BristolScaleListView()
             }
-            NumericView(value: $viewModel.input.stoolConsistency, label: "Stool Consistency", maxValue: 7)
+//            NumericView(value: $viewModel.input.stoolConsistency, label: "Stool Consistency", maxValue: 7)
         }
         case 7: NumericView(value: $viewModel.input.stoolUrgency, label: "Stool Urgency", maxValue: 10)
         case 8: NumericView(value: $viewModel.input.stoolEffort, label: "Stool Effort", maxValue: 10)
