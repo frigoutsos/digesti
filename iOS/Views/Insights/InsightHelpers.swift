@@ -5,8 +5,46 @@
 //    - Pairing meals to episodes within a 48-hour pre-episode window
 //    - Computing per-food symptom impact scores
 //
-
+import SwiftUI
 import Foundation
+
+// Shared card wrapper for insights
+@ViewBuilder
+func insightCard<Content: View>(
+    title:   String,
+    icon:    String,
+    caption: String,
+    @ViewBuilder content: () -> Content
+) -> some View {
+    VStack(alignment: .leading, spacing: 12) {
+        Label(title, systemImage: icon)
+            .font(.headline)
+            .foregroundStyle(.secondary)
+        
+        Text(caption)
+            .font(.caption)
+            .foregroundStyle(.secondary)
+        
+        Divider()
+        
+        content()
+    }
+    .padding()
+    .background(Color(.systemGray6))
+    .clipShape(RoundedRectangle(cornerRadius: 16))
+}
+
+@ViewBuilder
+func emptyState(_ message: String) -> some View {
+    Text(message)
+        .font(.subheadline)
+        .foregroundStyle(.secondary)
+        .multilineTextAlignment(.leading)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding(.vertical, 8)
+        .padding(.horizontal, 16)
+}
+
 
 // How far before an episode onset a meal can be to be considered a potential trigger
 let kTriggerWindowSeconds: TimeInterval = 48 * 60 * 60  // 48 hours

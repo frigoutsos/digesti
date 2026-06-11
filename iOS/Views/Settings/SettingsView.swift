@@ -13,12 +13,18 @@ struct SettingsView: View {
     // Store the user's preferred theme in the app storage
     @AppStorage("appTheme") private var appThemeRawValue: String = AppTheme.system.rawValue
 
+<<<<<<< HEAD
     // State to keep track if the user wants the Bristol stool reference sheet
     @State private var presentStoolSheet: Bool = false
     
     // Allow the user to click cancel and dismiss the Bristol Stool chart
     @Environment(\.dismiss) private var dismiss
 
+=======
+    // Store state of HealthKit service for re-authoriztaion
+    @State private var healthService = HealthKitService.shared
+    
+>>>>>>> 78facee6d0b29d312e54692836f547b0daadc33f
     // Binding to hold the selected theme
     private var selectedThemeBinding: Binding<AppTheme> {
         Binding(
@@ -85,7 +91,11 @@ struct SettingsView: View {
             }
             .navigationTitle("Settings")
             .alert("Delete All Data?", isPresented: $viewModel.showDeleteConfirmation) {
+<<<<<<< HEAD
                 Button("Cancel") { }
+=======
+                Button("Cancel", role: .cancel) {}
+>>>>>>> 78facee6d0b29d312e54692836f547b0daadc33f
                     .foregroundStyle(.primary)
 
                 Button("Delete", role: .destructive) {

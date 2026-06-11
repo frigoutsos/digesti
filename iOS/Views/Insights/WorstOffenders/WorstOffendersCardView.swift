@@ -30,24 +30,13 @@ struct WorstOffendersCardView: View {
     private var worstBloating: Offender? { viewModel.worstRate(\.bloatingRate, from: impacts) }
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 12) {
-
-            Label("Worst Offenders", systemImage: "exclamationmark.triangle.fill")
-                .font(.headline)
-                .foregroundStyle(.secondary)
-
-            Text("The food most associated with each symptom, based on meals within 48h before episodes.")
-                .font(.caption)
-                .foregroundStyle(.secondary)
-
-            Divider()
-
+        insightCard(
+            title: "Worst Offenders",
+            icon: "exclamationmark.triangle.fill",
+            caption: "The food most associated with each symptom, based on meals within 48 hours before episodes."
+        ) {
             if impacts.isEmpty {
-                Text("Not enough data yet.")
-                    .font(.subheadline)
-                    .foregroundStyle(.secondary)
-                    .frame(maxWidth: .infinity, alignment: .center)
-                    .padding(.vertical, 8)
+                emptyState("Not enough data yet. Verify that Health access is granted in Settings.")
             } else {
                 VStack(spacing: 10) {
                     offenderRow(
@@ -78,9 +67,6 @@ struct WorstOffendersCardView: View {
                 }
             }
         }
-        .padding()
-        .background(Color(.systemGray6))
-        .clipShape(RoundedRectangle(cornerRadius: 16))
     }
 
     @ViewBuilder

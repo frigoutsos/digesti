@@ -16,8 +16,7 @@ struct TrendsCardView: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
-
-            Label("Averages – \(range.rawValue)", systemImage: "chart.line.uptrend.xyaxis")
+            Label("Averages (\(range.rawValue))", systemImage: "chart.line.uptrend.xyaxis")
                 .font(.headline)
                 .foregroundStyle(.secondary)
 
@@ -35,31 +34,31 @@ struct TrendsCardView: View {
                 VStack(spacing: 10) {
                     metricRow(
                         icon: "speedometer",
-                        label: "Average Intensity",
+                        label: "Intensity",
                         value: avg.intensity,
                         prevVal: previous?.intensity
                     )
                     metricRow(
                         icon: "figure.mind.and.body",
-                        label: "Average Stress",
+                        label: "Stress",
                         value: avg.stress,
                         prevVal: previous?.stress
                     )
                     metricRow(
                         icon: "toilet.fill",
-                        label: "Average Stool Type",
+                        label: "Consistency",
                         value: avg.stoolConsistency,
                         prevVal: previous?.stoolConsistency
                     )
                     metricRow(
                         icon: "exclamationmark.circle",
-                        label: "Average Urgency",
+                        label: "Urgency",
                         value: avg.stoolUrgency,
                         prevVal: previous?.stoolUrgency
                     )
                     metricRow(
-                        icon: "figure.run",
-                        label: "Average Effort",
+                        icon: "toilet.fill",
+                        label: "Constipation",
                         value: avg.stoolEffort,
                         prevVal: previous?.stoolEffort
                     )
