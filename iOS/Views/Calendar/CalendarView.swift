@@ -94,11 +94,11 @@ struct CalendarView: View {
                         Button {
                             viewModel.showInfo = false
                             currentIndex = 0
-                        } label: {
-                            Image(systemName: "xmark")
                             // Just have the view model store a really really old date that hopefully no one will ever need to press
                             viewModel.selectedDate = Date(timeIntervalSince1970: 0)
                             calendarID = UUID()
+                        } label: {
+                            Image(systemName: "xmark")
                         }
                     }
                 }

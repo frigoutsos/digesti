@@ -59,7 +59,7 @@ struct EpisodeStoolCard: View {
                     .foregroundStyle(.secondary)
                     .frame(width: 16, alignment: .center)
                 
-                Text("Constipation:")
+                Text("Effort:")
                     .fontWeight(.semibold)
                 
                 Text(getEmoji(for: episodeToView.stoolEffort))
