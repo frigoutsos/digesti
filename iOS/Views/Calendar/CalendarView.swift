@@ -13,6 +13,9 @@ struct CalendarView: View {
     // State to keep track of our ViewModel object
     @State private var viewModel = CalendarViewModel()
     
+    // Hacky state to allow re-selecting the current date
+    @State private var calendarID = UUID()
+    
     var body: some View {
         VStack(spacing: 0) {
             // Display our calendar
@@ -20,6 +23,7 @@ struct CalendarView: View {
                 selectedDate: $viewModel.selectedDate,
                 episodeDays: viewModel.episodeDays,
             )
+            .id(calendarID)
             .fixedSize(horizontal: false, vertical: true)
             .foregroundStyle(.accent)
             .frame(maxWidth: 325)
@@ -70,6 +74,9 @@ struct CalendarView: View {
                     ToolbarItem(placement: .topBarTrailing) {
                         Button("Close") {
                             viewModel.showInfo = false
+                            // Just have the view model store a really really old date that hopefully no one will ever need to press
+                            viewModel.selectedDate = Date(timeIntervalSince1970: 0)
+                            calendarID = UUID()
                         }
                     }
                 }

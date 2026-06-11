@@ -10,16 +10,13 @@ class StressCorrelationCardViewModel {
     // Store the selected symptom we are looking at
     var selectedSymptom: StressSymptom = .intensity
     
-    // Store the points
-    var points: [(stress: Double, symptom: Double)] = []
-    
+    // Get the points from the data
     func getPoints(from episodes: [Episode]) -> [(stress: Double, symptom: Double)] {
-        points = episodes.map { (Double($0.stress), selectedSymptom.value(for: $0)) }
-        return points
+        return episodes.map { (Double($0.stress), selectedSymptom.value(for: $0)) }
     }
 
     // Least-squares slope and intercept
-    func getTrendline() -> (slope: Double, intercept: Double)? {
+    func getTrendline(from points: [(stress: Double, symptom: Double)]) -> (slope: Double, intercept: Double)? {
         let n = Double(points.count)
         guard n >= 2 else { return nil }
         let sx = points.map(\.stress).reduce(0, +)
@@ -33,7 +30,7 @@ class StressCorrelationCardViewModel {
     }
 
     // Pearson r
-    func calcPearsonR() -> Double? {
+    func calcPearsonR(from points: [(stress: Double, symptom: Double)]) -> Double? {
         let n = Double(points.count)
         guard n >= 2 else { return nil }
         let mx = points.map(\.stress).reduce(0, +) / n
@@ -48,8 +45,8 @@ class StressCorrelationCardViewModel {
         return denom == 0 ? nil : num / denom
     }
 
-    func getCorrelationLabel() -> String {
-        guard let r = calcPearsonR() else { return "" }
+    func getCorrelationLabel(from points: [(stress: Double, symptom: Double)]) -> String {
+        guard let r = calcPearsonR(from: points) else { return "" }
         let symptom = selectedSymptom.rawValue.lowercased()
         let abs = Swift.abs(r)
 

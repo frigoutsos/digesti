@@ -9,21 +9,17 @@ import Charts
 struct StressCorrelationCardView: View {
     // Take in a list of episodes for which we display correlation statistics
     let episodes: [Episode]
+    let range: InsightsRange
 
     // State to keep track of our ViewModel object
     @State private var viewModel = StressCorrelationCardViewModel()
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 12) {
-
-            Label("Stress vs Symptoms", systemImage: "brain.head.profile")
-                .font(.headline)
-                .foregroundStyle(.secondary)
-
-            Text("Each dot is one episode. The trend line shows the overall relationship.")
-                .font(.caption)
-                .foregroundStyle(.secondary)
-
+        insightCard(
+            title: "Stress vs Symptoms (\(range.rawValue))",
+            icon: "brain.head.profile",
+            caption: "Each dot is one episode. The trend line shows the overall relationship."
+        ) {
             // Symptom picker
             Picker("Symptom", selection: $viewModel.selectedSymptom) {
                 ForEach(StressSymptom.allCases) { s in
@@ -32,14 +28,8 @@ struct StressCorrelationCardView: View {
             }
             .pickerStyle(.segmented)
 
-            Divider()
-
             if episodes.count < 3 {
-                Text("Log at least 3 episodes to see the stress correlation chart.")
-                    .font(.subheadline)
-                    .foregroundStyle(.secondary)
-                    .frame(maxWidth: .infinity, alignment: .center)
-                    .padding(.vertical, 8)
+                emptyState("Log at least 3 episodes to see the stress correlation chart.")
             } else {
                 Chart {
                     // Scatter points
@@ -53,7 +43,7 @@ struct StressCorrelationCardView: View {
                     }
 
                     // Trend line
-                    if let trend = viewModel.getTrendline() {
+                    if let trend = viewModel.getTrendline(from: viewModel.getPoints(from: episodes)) {
                         let xMin = 1.0, xMax = 10.0
                         let yMin = max(0.5, trend.slope * xMin + trend.intercept)
                         let yMax = min(10.5, trend.slope * xMax + trend.intercept)
@@ -74,16 +64,13 @@ struct StressCorrelationCardView: View {
                 .frame(height: 220)
 
                 // Correlation summary
-                if !viewModel.getCorrelationLabel().isEmpty {
-                    Text(viewModel.getCorrelationLabel())
+                if !viewModel.getCorrelationLabel(from: viewModel.getPoints(from: episodes)).isEmpty {
+                    Text(viewModel.getCorrelationLabel(from: viewModel.getPoints(from: episodes)))
                         .font(.caption)
                         .foregroundStyle(.secondary)
                         .frame(maxWidth: .infinity, alignment: .center)
                 }
             }
         }
-        .padding()
-        .background(Color(.systemGray6))
-        .clipShape(RoundedRectangle(cornerRadius: 16))
     }
 }

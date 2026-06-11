@@ -16,10 +16,17 @@ struct InsightsView: View {
     // State to keep track of our ViewModel object
     @State private var viewModel = InsightsViewModel()
     
+    // State to keep track of our HealthKit service object
+    @ObservedObject var healthService = HealthKitService.shared
+    
+    // Store these as computed properties to avoid recalculating
+    var filteredEpisodes: [Episode] { viewModel.episodesInRange(from: episodes) }
+    var filteredMeals: [Meal] { viewModel.mealsInRange(from: meals) }
+    
     var body: some View {
         ScrollView {
             VStack(spacing: 20) {
-
+                
                 // Time range picker
                 Picker("Range", selection: $viewModel.selectedRange) {
                     ForEach(InsightsRange.allCases) { range in
@@ -28,7 +35,7 @@ struct InsightsView: View {
                 }
                 .pickerStyle(.segmented)
                 .padding(.horizontal)
-
+                
                 if viewModel.episodesInRange(from: episodes).isEmpty {
                     ContentUnavailableView(
                         "No Episodes",
@@ -37,32 +44,43 @@ struct InsightsView: View {
                     )
                     .padding(.top, 40)
                 } else {
-
                     // Trend averages card
                     TrendsCardView(
-                        currentEpisodes: viewModel.episodesInRange(from: episodes),
+                        currentEpisodes: filteredEpisodes,
                         previousEpisodes: viewModel.episodesInPreviousRange(from: episodes),
+                        range: viewModel.selectedRange)
+                        .frame(maxWidth: 400)
+                    
+                    // Stress impact card
+                    StressCorrelationCardView(
+                        episodes: filteredEpisodes,
                         range: viewModel.selectedRange
                     )
                     .frame(maxWidth: 400)
-                    
-                    // Stress impact card
-                    StressCorrelationCardView(episodes: viewModel.episodesInRange(from: episodes))
-                        .frame(maxWidth: 400)
 
                     // Trigger foods ranked by composite impact
-                    TriggersCardView(
-                        episodes: viewModel.episodesInRange(from: episodes),
-                        meals: viewModel.mealsInRange(from: meals)
-                    )
-                    .frame(maxWidth: 400)
-
+                    TriggersCardView(episodes: filteredEpisodes, meals: filteredMeals)
+                        .frame(maxWidth: 400)
+                    
                     // Worst single offender per symptom
-                    WorstOffendersCardView(
-                        episodes: viewModel.episodesInRange(from: episodes),
-                        meals: viewModel.mealsInRange(from: meals)
-                    )
-                    .frame(maxWidth: 400)
+                    WorstOffendersCardView(episodes: filteredEpisodes, meals: filteredMeals)
+                        .frame(maxWidth: 400)
+                    
+                    // Sleep insights
+                    SleepInsightCardView(episodes: filteredEpisodes, range: viewModel.selectedRange)
+                        .frame(maxWidth: 400)
+                    
+                    // Heart rate variability insights
+                    HRVInsightCardView(episodes: filteredEpisodes, range: viewModel.selectedRange)
+                        .frame(maxWidth: 400)
+                    
+                    // Activity insights
+                    ActivityInsightCardView(episodes: filteredEpisodes, range: viewModel.selectedRange)
+                        .frame(maxWidth: 400)
+                    
+                    // Dietary insights
+                    DietaryInsightCardView(episodes: filteredEpisodes, range: viewModel.selectedRange)
+                        .frame(maxWidth: 400)
                 }
             }
             .frame(maxWidth: .infinity)
