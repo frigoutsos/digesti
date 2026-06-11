@@ -18,24 +18,13 @@ struct TriggersCardView: View {
     }
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 12) {
-
-            Label("Trigger Foods", systemImage: "fork.knife.circle.fill")
-                .font(.headline)
-                .foregroundStyle(.secondary)
-
-            Text("Foods eaten within 48h before an episode, ranked by symptom impact.")
-                .font(.caption)
-                .foregroundStyle(.secondary)
-
-            Divider()
-
+        insightCard(
+            title: "Trigger foods",
+            icon: "fork.knife.circle.fill",
+            caption: "Foods eaten within 48h before an episode, ranked by symptom impact."
+        ) {
             if impacts.isEmpty {
-                Text("Not enough data yet. Log meals before episodes to see trigger analysis.")
-                    .font(.subheadline)
-                    .foregroundStyle(.secondary)
-                    .frame(maxWidth: .infinity, alignment: .center)
-                    .padding(.vertical, 8)
+                emptyState("Not enough data yet. Log meals before episodes to see trigger analysis.")
             } else {
                 VStack(spacing: 8) {
                     ForEach(Array(impacts.enumerated()), id: \.element.id) { index, impact in
@@ -44,9 +33,6 @@ struct TriggersCardView: View {
                 }
             }
         }
-        .padding()
-        .background(Color(.systemGray6))
-        .clipShape(RoundedRectangle(cornerRadius: 16))
     }
 
     @ViewBuilder

@@ -16,8 +16,7 @@ struct TrendsCardView: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
-
-            Label("Averages – \(range.rawValue)", systemImage: "chart.line.uptrend.xyaxis")
+            Label("Averages (\(range.rawValue))", systemImage: "chart.line.uptrend.xyaxis")
                 .font(.headline)
                 .foregroundStyle(.secondary)
 
@@ -35,31 +34,52 @@ struct TrendsCardView: View {
                 VStack(spacing: 10) {
                     metricRow(
                         icon: "speedometer",
+<<<<<<< Updated upstream
                         label: "Average intensity",
+=======
+                        label: "Intensity",
+>>>>>>> Stashed changes
                         value: avg.intensity,
                         prevVal: previous?.intensity
                     )
                     metricRow(
                         icon: "figure.mind.and.body",
+<<<<<<< Updated upstream
                         label: "Average stress",
+=======
+                        label: "Stress",
+>>>>>>> Stashed changes
                         value: avg.stress,
                         prevVal: previous?.stress
                     )
                     metricRow(
                         icon: "toilet.fill",
+<<<<<<< Updated upstream
                         label: "Average consistency",
+=======
+                        label: "Consistency",
+>>>>>>> Stashed changes
                         value: avg.stoolConsistency,
                         prevVal: previous?.stoolConsistency
                     )
                     metricRow(
+<<<<<<< Updated upstream
                         icon: "toilet.fill",
                         label: "Average urgency",
+=======
+                        icon: "exclamationmark.circle",
+                        label: "Urgency",
+>>>>>>> Stashed changes
                         value: avg.stoolUrgency,
                         prevVal: previous?.stoolUrgency
                     )
                     metricRow(
                         icon: "toilet.fill",
+<<<<<<< Updated upstream
                         label: "Average effort",
+=======
+                        label: "Constipation",
+>>>>>>> Stashed changes
                         value: avg.stoolEffort,
                         prevVal: previous?.stoolEffort
                     )
