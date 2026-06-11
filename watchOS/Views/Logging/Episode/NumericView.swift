@@ -7,16 +7,22 @@ import SwiftUI
 
 struct NumericView: View {
     // Track the current value of the slider
-    @Binding var value: Double
+    @Binding var value: Int
     
     // Take in a reusable label to tell the user what they are logging
     let label: String
 
-    // use a local binding with bounds to attach to digital crown
-    @State private var crownValue: Double = 5
-    
     // State to store focus on the slider
     @FocusState private var isFocused: Bool
+    
+    private var doubleValue: Binding<Double> {
+        Binding(
+            get: { Double(value) },
+            set: { value = Int($0.rounded()) }
+        )
+    }
+    
+    let maxValue: Int
 
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
@@ -25,29 +31,23 @@ struct NumericView: View {
                 .font(.headline)
                 .foregroundStyle(.primary)
 
-            Text("\(Int(value)) / 10")
+            Text("\(Int(value)) / \(maxValue)")
                 .font(.title2)
                 .fontWeight(.semibold)
             
-            Slider(value: Binding(get: { value }, set: { newValue in value = min(max(newValue, 1), 10) }), in: 1...10, step: 1) .labelsHidden()
+            Slider(value: doubleValue, in: 1...Double(maxValue), step: 1)
+                .labelsHidden()
         }
         .focusable(true)
         .focused($isFocused)
-        .digitalCrownRotation($crownValue,
-            from: 1, through: 10, by: 1,
+        .digitalCrownRotation(doubleValue,
+            from: 1, through: Double(maxValue), by: 1,
             sensitivity: .medium,
             isContinuous: false,
             isHapticFeedbackEnabled: true
         )
         .onAppear {
-            crownValue = value
             isFocused = true
-        }
-        .onChange(of: crownValue) { _, newValue in
-            value = newValue
-        }
-        .onChange(of: value) { _, newValue in
-            crownValue = newValue
         }
     }
 }

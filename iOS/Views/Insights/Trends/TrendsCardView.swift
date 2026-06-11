@@ -51,7 +51,7 @@ struct TrendsCardView: View {
                         prevVal: previous?.stoolConsistency
                     )
                     metricRow(
-                        icon: "toilet.fill",
+                        icon: "exclamationmark.circle",
                         label: "Urgency",
                         value: avg.stoolUrgency,
                         prevVal: previous?.stoolUrgency

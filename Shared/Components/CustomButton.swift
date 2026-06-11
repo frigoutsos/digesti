@@ -19,7 +19,7 @@ struct CustomButton: View {
         Button(action: action) {
             Text(text)
                 .font(.subheadline)
-                .fontWeight(.medium)
+                .fontWeight(isSelected ? .bold : .medium)
                 .foregroundStyle(isSelected ? .black : .primary)
                 .padding(.vertical, 10)
                 .frame(maxWidth: .infinity)

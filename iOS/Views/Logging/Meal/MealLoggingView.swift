@@ -62,11 +62,19 @@ struct MealLoggingView: View {
                         }
                     } else {
                         VStack(alignment: .leading, spacing: 20) {
-                            Text("Search Results for \"\(viewModel.searchText)\":").font(.subheadline).foregroundStyle(.secondary)
-                            
                             if viewModel.results.isEmpty {
-                                Text("No foods found matching '\(viewModel.searchText)'").foregroundStyle(.secondary)
+                                ContentUnavailableView(
+                                    "No Foods Found",
+                                    systemImage: "magnifyingglass",
+                                    description: Text("No foods matching \(viewModel.searchText) found.")
+                                )                                
+                                .listRowBackground(Color.clear)
+                                .foregroundStyle(.secondary)
                             } else {
+                                Text("Search results for \(viewModel.searchText): ")
+                                    .font(.subheadline)
+                                    .foregroundStyle(.secondary)
+                                
                                 VStack(spacing: 10) {
                                     ForEach(viewModel.results) { food in
                                         CustomButton(text: food.name, isSelected: viewModel.isSelected(food: food)) {
@@ -92,19 +100,23 @@ struct MealLoggingView: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
-                    Button("Cancel", role: .cancel) {
+                    Button(role: .cancel) {
                         dismiss()
+                    } label: {
+                        Image(systemName: "xmark")
                     }
                 }
                 
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button("Done") {
+                    Button {
                         do {
                             try viewModel.saveMeal(modelContext: modelContext)
                             dismiss()
                         } catch {
                             print("Failed to save episode: ", error)
                         }
+                    } label: {
+                        Image(systemName: "checkmark")
                     }
                     // Provide user with a success haptic upon saving the episode
                     .sensoryFeedback(.success, trigger: viewModel.didSave)

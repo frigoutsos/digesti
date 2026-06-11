@@ -12,6 +12,9 @@ struct EpisodeLoggingWatchView: View {
     // State to keep track of our ViewModel object
     @State private var viewModel = EpisodeLoggingWatchViewModel()
 
+    // State to keep track if the user wants the Bristol stool reference sheet
+    @State private var presentStoolSheet: Bool = false
+
     var body: some View {
         NavigationStack {
             VStack {
@@ -33,12 +36,22 @@ struct EpisodeLoggingWatchView: View {
         switch viewModel.step {
         case 1: OnsetView(onset: $viewModel.input.onset)
         case 2: MovementView(movement: $viewModel.input.movement)
-        case 3: NumericView(value: $viewModel.input.intensity, label: "Intensity")
-        case 4: NumericView(value: $viewModel.input.stress, label: "Stress")
+        case 3: NumericView(value: $viewModel.input.intensity, label: "Intensity", maxValue: 10)
+        case 4: NumericView(value: $viewModel.input.stress, label: "Stress", maxValue: 10)
         case 5: BloatingView(bloating: $viewModel.input.bloating)
-        case 6: NumericView(value: $viewModel.input.stoolConsistency, label: "Stool Consistency")
-        case 7: NumericView(value: $viewModel.input.stoolUrgency, label: "Stool Urgency")
-        case 8: NumericView(value: $viewModel.input.stoolEffort, label: "Stool Effort")
+        case 6: VStack{
+            Button {
+                presentStoolSheet = true
+            } label: {
+                Image(systemName: "info.circle")
+            }
+            .sheet(isPresented: $presentStoolSheet) {
+                BristolScaleListView()
+            }
+//            NumericView(value: $viewModel.input.stoolConsistency, label: "Stool Consistency", maxValue: 7)
+        }
+        case 7: NumericView(value: $viewModel.input.stoolUrgency, label: "Stool Urgency", maxValue: 10)
+        case 8: NumericView(value: $viewModel.input.stoolEffort, label: "Stool Effort", maxValue: 10)
         default: OnsetView(onset: $viewModel.input.onset)
         }
     }
