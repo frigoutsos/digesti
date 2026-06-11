@@ -88,7 +88,7 @@ struct TrendsCardView: View {
 
             Spacer()
 
-            Text(String(format: "%.1f / 10", value))
+            Text(String(format: "%.1f/5", value))
                 .foregroundStyle(.secondary)
 
             if let prev = prevVal {
