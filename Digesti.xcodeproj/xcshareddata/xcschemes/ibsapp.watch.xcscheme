@@ -15,18 +15,32 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
+               BlueprintIdentifier = "7DDD049B2FC8AB360075C184"
+               BuildableName = "Digest.Watch.app"
+               BlueprintName = "Digest.Watch"
+               ReferencedContainer = "container:Digesti.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
                BlueprintIdentifier = "7D84A7932F8EA439008C8016"
-               BuildableName = "ibsapp.app"
-               BlueprintName = "ibsapp"
-               ReferencedContainer = "container:ibsapp.xcodeproj">
+               BuildableName = "Digesti.app"
+               BlueprintName = "Digesti"
+               ReferencedContainer = "container:Digesti.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction
       buildConfiguration = "Debug"
-      selectedDebuggerIdentifier = ""
-      selectedLauncherIdentifier = "Xcode.IDEFoundation.Launcher.PosixSpawn"
+      selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
+      selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES"
       shouldAutocreateTestPlan = "YES">
    </TestAction>
@@ -44,10 +58,10 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "7D84A7932F8EA439008C8016"
-            BuildableName = "ibsapp.app"
-            BlueprintName = "ibsapp"
-            ReferencedContainer = "container:ibsapp.xcodeproj">
+            BlueprintIdentifier = "7DDD049B2FC8AB360075C184"
+            BuildableName = "Digest.Watch.app"
+            BlueprintName = "Digest.Watch"
+            ReferencedContainer = "container:Digesti.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -61,10 +75,10 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "7D84A7932F8EA439008C8016"
-            BuildableName = "ibsapp.app"
-            BlueprintName = "ibsapp"
-            ReferencedContainer = "container:ibsapp.xcodeproj">
+            BlueprintIdentifier = "7DDD049B2FC8AB360075C184"
+            BuildableName = "Digest.Watch.app"
+            BlueprintName = "Digest.Watch"
+            ReferencedContainer = "container:Digesti.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
@@ -73,7 +87,6 @@
    </AnalyzeAction>
    <ArchiveAction
       buildConfiguration = "Release"
-      customArchiveName = "ibsapp"
       revealArchiveInOrganizer = "YES">
    </ArchiveAction>
 </Scheme>

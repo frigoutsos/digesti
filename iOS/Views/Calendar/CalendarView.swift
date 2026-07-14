@@ -84,6 +84,7 @@ struct CalendarView: View {
                             .buttonStyle(.bordered)
                             .disabled(currentIndex == viewModel.selectedDayEpisodes.count - 1)
                         }
+                        .padding(.horizontal)
                     }
                 }
                 .padding(.vertical)
