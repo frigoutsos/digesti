@@ -53,7 +53,7 @@ struct LogMealHomeScreenEntryView: View {
 }
 
 struct LogMealHomeScreenWidget: Widget {
-    let kind: String = "LogMealHomeScreenWidget"
+    let kind: String = "dev.daemon.digesti.LogMealHomeScreenWidget"
     
     var body: some WidgetConfiguration {
         StaticConfiguration(kind: kind, provider: LogMealHomeScreenProvider()) { entry in

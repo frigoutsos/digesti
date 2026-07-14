@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "2630"
+   LastUpgradeVersion = "2660"
    version = "1.7">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -16,8 +16,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "7DDD049B2FC8AB360075C184"
-               BuildableName = "Digest.Watch.app"
-               BlueprintName = "Digest.Watch"
+               BuildableName = "Digesti Watch.app"
+               BlueprintName = "Digesti Watch"
                ReferencedContainer = "container:Digesti.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -59,8 +59,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "7DDD049B2FC8AB360075C184"
-            BuildableName = "Digest.Watch.app"
-            BlueprintName = "Digest.Watch"
+            BuildableName = "Digesti Watch.app"
+            BlueprintName = "Digesti Watch"
             ReferencedContainer = "container:Digesti.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -76,8 +76,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "7DDD049B2FC8AB360075C184"
-            BuildableName = "Digest.Watch.app"
-            BlueprintName = "Digest.Watch"
+            BuildableName = "Digesti Watch.app"
+            BlueprintName = "Digesti Watch"
             ReferencedContainer = "container:Digesti.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>

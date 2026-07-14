@@ -1,6 +1,5 @@
 //
 //  EmojiButton.swift
-//  ibsapp
 //
 //  Created by Franklin Rigoutsos on 6/9/26.
 //

@@ -53,7 +53,7 @@ struct MealHistoryHomeScreenEntryView: View {
 }
 
 struct MealHistoryHomeScreenWidget: Widget {
-    let kind: String = "MealHistoryHomeScreenWidget"
+    let kind: String = "dev.daemon.digesti.MealHistoryHomeScreenWidget"
     
     var body: some WidgetConfiguration {
         StaticConfiguration(kind: kind, provider: MealHistoryHomeScreenProvider()) { entry in

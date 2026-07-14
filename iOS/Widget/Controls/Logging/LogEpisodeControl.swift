@@ -9,7 +9,7 @@ import WidgetKit
 
 struct LogEpisodeControl: ControlWidget {
     var body: some ControlWidgetConfiguration {
-        StaticControlConfiguration(kind: "dev.ibsapp.LogEpisodeControl") {
+        StaticControlConfiguration(kind: "dev.daemon.digesti.LogEpisodeControl") {
             ControlWidgetButton(action: LogEpisodeIntent()) {
                 Label("Log Episode", systemImage: "bolt.fill")
             }

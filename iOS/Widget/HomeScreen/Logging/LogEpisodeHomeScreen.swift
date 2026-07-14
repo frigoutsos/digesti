@@ -53,7 +53,7 @@ struct LogEpisodeHomeScreenEntryView: View {
 }
 
 struct LogEpisodeHomeScreenWidget: Widget {
-    let kind: String = "LogEpisodeHomeScreenWidget"
+    let kind: String = "dev.daemon.digesti.LogEpisodeHomeScreenWidget"
     
     var body: some WidgetConfiguration {
         StaticConfiguration(kind: kind, provider: LogEpisodeHomeScreenProvider()) { entry in

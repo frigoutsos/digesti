@@ -9,7 +9,7 @@ import WidgetKit
 
 struct InsightsControl: ControlWidget {
     var body: some ControlWidgetConfiguration {
-        StaticControlConfiguration(kind: "dev.ibsapp.InsightsControl") {
+        StaticControlConfiguration(kind: "dev.daemon.digesti.InsightsControl") {
             ControlWidgetButton(action: ViewInsightsIntent()) {
                 Label("Insights", systemImage: "lightbulb.fill")
             }

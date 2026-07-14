@@ -9,7 +9,7 @@ import WidgetKit
 
 struct MealHistoryControl: ControlWidget {
     var body: some ControlWidgetConfiguration {
-        StaticControlConfiguration(kind: "dev.ibsapp.MealHHistoryControl") {
+        StaticControlConfiguration(kind: "dev.daemon.digesti.MealHHistoryControl") {
             ControlWidgetButton(action: ViewMealHistoryIntent()) {
                 Label("Meal History", systemImage: "checkmark.arrow.trianglehead.counterclockwise")
             }

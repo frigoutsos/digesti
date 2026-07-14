@@ -53,7 +53,7 @@ struct InsightsHomeScreenEntryView: View {
 }
 
 struct InsightsHomeScreenWidget: Widget {
-    let kind: String = "InsightsHomeScreenWidget"
+    let kind: String = "dev.daemon.digesti.InsightsHomeScreenWidget"
     
     var body: some WidgetConfiguration {
         StaticConfiguration(kind: kind, provider: InsightsHomeScreenProvider()) { entry in

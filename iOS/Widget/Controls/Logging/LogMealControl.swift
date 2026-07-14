@@ -9,7 +9,7 @@ import WidgetKit
 
 struct LogMealControl: ControlWidget {
     var body: some ControlWidgetConfiguration {
-        StaticControlConfiguration(kind: "dev.ibsapp.LogMealControl") {
+        StaticControlConfiguration(kind: "dev.daemon.digesti.LogMealControl") {
             ControlWidgetButton(action: LogMealIntent()) {
                 Label("Log Meal", systemImage: "fork.knife")
             }

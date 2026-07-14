@@ -9,7 +9,7 @@ import WidgetKit
 
 struct EpisodeHistoryControl: ControlWidget {
     var body: some ControlWidgetConfiguration {
-        StaticControlConfiguration(kind: "dev.ibsapp.EpisodeHistoryControl") {
+        StaticControlConfiguration(kind: "dev.daemon.digesti.EpisodeHistoryControl") {
             ControlWidgetButton(action: ViewEpisodeHistoryIntent()) {
                 Label("Episode History", systemImage: "exclamationmark.arrow.trianglehead.counterclockwise.rotate.90")
             }
