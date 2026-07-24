@@ -18,7 +18,7 @@ struct MealLoggingWatchView: View {
             ScrollView {
                 // Display each food category
                 ForEach(viewModel.allFoods.sorted(by: { $0.name < $1.name }), id: \.id) { food in
-                    CustomButton(text: food.name, isSelected: viewModel.isSelected(food: food)) {
+                    ToggleButton(text: food.name, isSelected: viewModel.isSelected(food: food)) {
                         // Toggle selection logic
                         if (viewModel.isSelected(food: food)) {
                             viewModel.input.foods.removeAll(where: { $0.id == food.id })

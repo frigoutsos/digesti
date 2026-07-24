@@ -1,4 +1,4 @@
-//
+
 //  HealthKitInsightHelpers.swift
 //
 //  Pairs HealthKit daily samples to episodes and computes

@@ -1,8 +1,8 @@
-//
-//  EpisodeLoggingWatchView.swift
-//
-//  This view guides the user through logging episodes on their watch.
-//
+
+  EpisodeLoggingWatchView.swift
+
+  This view guides the user through logging episodes on their watch.
+
 import SwiftUI
 
 struct EpisodeLoggingWatchView: View {

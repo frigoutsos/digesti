@@ -125,17 +125,11 @@ final class WatchConnectivityHandler: NSObject, ObservableObject, WCSessionDeleg
             let dto = try JSONDecoder().decode(EpisodeInput.self, from: data)
             DispatchQueue.main.async {
                 self.logger.info("inserting episode date: \(dto.onset.debugDescription)")
-                let episode = Episode(
-                    onset: dto.onset,
-                    movement: dto.movement,
-                    intensity: Int(dto.intensity),
-                    stress: Int(dto.stress),
-                    bloating: dto.bloating,
-                    stoolConsistency: Int(dto.stoolConsistency),
-                    stoolUrgency: Int(dto.stoolUrgency),
-                    stoolEffort: Int(dto.stoolEffort)
+                let episode = EpisodeBuilder.build(
+                    from: dto,
+                    type: dto.type
                 )
-                
+
                 modelContext.insert(episode)
 
                 do {

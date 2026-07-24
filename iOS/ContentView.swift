@@ -4,6 +4,7 @@
 //  This view structures the layout of the app.
 //
 import SwiftUI
+import SwiftData
 
 struct ContentView: View {
     // Get access to the model context to pass to the watch handler

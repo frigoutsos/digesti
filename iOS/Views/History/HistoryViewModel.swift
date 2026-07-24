@@ -16,52 +16,50 @@ class HistoryViewModel {
     // Store if we are presenting the user with an episode
     var selectedEpisode: Episode? = nil
     
+    // Store if we are filtering the list of episodes or not, and based on what filter
+    var filter: EpisodeFilter = .all
+    
     // Filter episodes based on search text (will not be filtered if search text is empty)
     func filteredEpisodes(from episodes: [Episode]) -> [Episode] {
+        let typeFiltered = filterEpisodesByType(episodes)
+        
         // Show all episodes if search is empty
-        if searchText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-            return episodes
+        guard !searchText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else { return typeFiltered }
+        
+        return typeFiltered.filter {
+            $0.searchableText.lowercased().contains(searchText.lowercased())
         }
-        
-        let query = searchText.lowercased()
-        
-        return episodes.filter { episode in
-            // Search intensity
-            let intensityMatch = "\(episode.intensity)".contains(query)
-            
-            // Search stress level
-            let stressMatch = "\(episode.stress)".contains(query)
-            
-            // Search bloating
-            let bloatingMatch = episode.bloating && "bloating".contains(query)
-            
-            // Search onset date
-            let onsetMatch = episode.onset.formatted(.dateTime.month(.wide).day())
-                .lowercased()
-                .contains(query)
-            
-            // Search movement date
-            let movementMatch = episode.movement.formatted(.dateTime.month(.wide).day())
-                .lowercased()
-                .contains(query)
-            
-            // Search stool consistency
-            let stoolConsistencyMatch = "\(episode.stoolConsistency)".contains(query)
-            
-            // Search stool urgency
-            let stoolUrgencyMatch = "\(episode.stoolUrgency)".contains(query)
-            
-            // Search stool effort
-            let stoolEffortMatch = "\(episode.stoolEffort)".contains(query)
-            
-            return intensityMatch
-            || stressMatch
-            || bloatingMatch
-            || onsetMatch
-            || movementMatch
-            || stoolConsistencyMatch
-            || stoolUrgencyMatch
-            || stoolEffortMatch
+    }
+    
+    func filterEpisodesByType(_ episodes: [Episode]) -> [Episode] {
+        switch filter {
+        case .all:
+            return episodes
+        case .bloating:
+            return episodes.filter {
+                if case .bloating = $0 {
+                    return true
+                }
+                
+                return false
+            }
+        case .constipation:
+            return episodes.filter {
+                if case .constipation = $0 {
+                    return true
+                }
+                
+                return false
+            }
+        case .stool:
+            return episodes.filter {
+                if case .stool = $0 {
+                    return true
+                }
+                
+                return false
+            }
+
         }
     }
     

@@ -1,45 +1,55 @@
 //
-//  EpisodeSymptomsCard.swift
+//  ConstipationEpisodeView.swift
 //
 //  Card to group all the miscellaneous metrics entered by the user.
 //
 import SwiftUI
 
-struct EpisodeSymptomsCard: View {
-    let episodeToView: Episode
+struct ConstipationEpisodeView: View {
+    let episodeToView: ConstipationEpisode
     
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
-            Text("Symptoms")
-                .font(.title2)
-                .fontWeight(.semibold)
-            
-            // Intensity info
+            // MARK: - Onset info
             HStack(alignment: .top, spacing: 8) {
-                Image(systemName: "speedometer")
+                Image(systemName: "calendar")
                     .foregroundStyle(.secondary)
                     .frame(width: 16, alignment: .center)
                 
-                Text("Intensity:")
+                Text("Last Bowel Movement:")
                     .fontWeight(.semibold)
                 
-                Text(getEmoji(for: episodeToView.intensity))
+                Text(episodeToView.onset.formatted(date: .abbreviated, time: .shortened))
+                    .foregroundStyle(.secondary)
+            }
+            .font(.subheadline)
+            
+            // MARK: - Stool effort info
+            HStack(alignment: .top, spacing: 8) {
+                Image(systemName: "figure.run")
+                    .foregroundStyle(.secondary)
+                    .frame(width: 16, alignment: .center)
+                
+                Text("Effort:")
+                    .fontWeight(.semibold)
+                
+                Text(getEmoji(for: episodeToView.stoolEffort))
             }
             .font(.subheadline)
             
             HStack(spacing: 8) {
-                ProgressView(value: (Double(episodeToView.intensity) / 5.0))
+                ProgressView(value: (Double(episodeToView.stoolEffort) / 5.0))
                     .padding(.horizontal)
-                    .tint(getColor(for: episodeToView.intensity))
+                    .tint(getColor(for: episodeToView.stoolEffort))
                 
                 Spacer()
                 
-                Text("\(episodeToView.intensity)/5")
+                Text("\(episodeToView.stoolEffort)/5")
                     .foregroundStyle(.secondary)
             }
             .font(.subheadline)
             
-            // Intensity info
+            // MARK: - Stress info
             HStack(alignment: .top, spacing: 8) {
                 Image(systemName: "figure.mind.and.body")
                     .foregroundStyle(.secondary)
@@ -60,20 +70,6 @@ struct EpisodeSymptomsCard: View {
                 Spacer()
                 
                 Text("\(episodeToView.stress)/5")
-                    .foregroundStyle(.secondary)
-            }
-            .font(.subheadline)
-            
-            // Bloating status
-            HStack(alignment: .top, spacing: 8) {
-                Image(systemName: "balloon.fill")
-                    .foregroundStyle(.secondary)
-                    .frame(width: 16, alignment: .center)
-                
-                Text("Bloating:")
-                    .fontWeight(.semibold)
-                
-                Text((episodeToView.bloating ? "Yes" : "No"))
                     .foregroundStyle(.secondary)
             }
             .font(.subheadline)

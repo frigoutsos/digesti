@@ -1,34 +1,30 @@
 //
-//  EpisodeStoolCard.swift
+//  StoolEpisodeView.swift
 //
 //  Card to group all the stool-related metrics entered by the user.
 //
 import SwiftUI
 
-struct EpisodeStoolCard: View {
-    let episodeToView: Episode
+struct StoolEpisodeView: View {
+    let episodeToView: StoolEpisode
     
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
-            Text("Stool")
-                .font(.title2)
-                .fontWeight(.semibold)
-            
-            // Stool consistency info
+            // MARK: - Movement info
             HStack(alignment: .top, spacing: 8) {
-                Image(systemName: "toilet.fill")
+                Image(systemName: "calendar")
                     .foregroundStyle(.secondary)
                     .frame(width: 16, alignment: .center)
                 
-                Text("Bristol Stool Type:")
+                Text("Last Bowel Movement:")
                     .fontWeight(.semibold)
                 
-                Text("\(episodeToView.stoolConsistency) (\(episodeToView.bristolType.description))")
+                Text(episodeToView.onset.formatted(date: .abbreviated, time: .shortened))
                     .foregroundStyle(.secondary)
             }
             .font(.subheadline)
             
-            // Stool urgency info
+            // MARK: - Stool urgency info
             HStack(alignment: .top, spacing: 8) {
                 Image(systemName: "exclamationmark.circle")
                     .foregroundStyle(.secondary)
@@ -53,7 +49,7 @@ struct EpisodeStoolCard: View {
             }
             .font(.subheadline)
             
-            // Stool effort info
+            // MARK: - Stool effort info
             HStack(alignment: .top, spacing: 8) {
                 Image(systemName: "figure.run")
                     .foregroundStyle(.secondary)
@@ -74,6 +70,45 @@ struct EpisodeStoolCard: View {
                 Spacer()
                 
                 Text("\(episodeToView.stoolEffort)/5")
+                    .foregroundStyle(.secondary)
+            }
+            .font(.subheadline)
+            
+            // MARK: - Stool consistency info
+            HStack(alignment: .top, spacing: 8) {
+                Image(systemName: "toilet.fill")
+                    .foregroundStyle(.secondary)
+                    .frame(width: 16, alignment: .center)
+                
+                Text("Bristol Stool Type:")
+                    .fontWeight(.semibold)
+                
+                Text("\(episodeToView.stoolConsistency) (\(episodeToView.bristolType.description))")
+                    .foregroundStyle(.secondary)
+            }
+            .font(.subheadline)
+            
+            // MARK: - Stress info
+            HStack(alignment: .top, spacing: 8) {
+                Image(systemName: "figure.mind.and.body")
+                    .foregroundStyle(.secondary)
+                    .frame(width: 16, alignment: .center)
+                
+                Text("Stress:")
+                    .fontWeight(.semibold)
+                
+                Text(getEmoji(for: episodeToView.stress))
+            }
+            .font(.subheadline)
+            
+            HStack(spacing: 8) {
+                ProgressView(value: (Double(episodeToView.stress) / 5.0))
+                    .padding(.horizontal)
+                    .tint(getColor(for: episodeToView.stress))
+
+                Spacer()
+                
+                Text("\(episodeToView.stress)/5")
                     .foregroundStyle(.secondary)
             }
             .font(.subheadline)

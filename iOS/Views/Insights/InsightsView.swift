@@ -8,7 +8,18 @@ import SwiftData
 
 struct InsightsView: View {
     // Get a list of episodes, reverse sorted by time
-    @Query(sort: \Episode.onset, order: .reverse) private var episodes: [Episode]
+    @Query(sort: \BloatingEpisode.onset, order: .reverse) private var bloatingEpisodes: [BloatingEpisode]
+    @Query(sort: \ConstipationEpisode.onset, order: .reverse) private var constipationEpisodes: [ConstipationEpisode]
+    @Query(sort: \StoolEpisode.onset, order: .reverse) private var stoolEpisodes: [StoolEpisode]
+    
+    private var episodes: [Episode] {
+        (
+            bloatingEpisodes.map(Episode.bloating) +
+            constipationEpisodes.map(Episode.constipation) +
+            stoolEpisodes.map(Episode.stool)
+        )
+        .sorted { $0.onset > $1.onset }
+    }
     
     // Get a list of meals, reverse sorted by time
     @Query(sort: \Meal.date, order: .reverse) private var meals: [Meal]

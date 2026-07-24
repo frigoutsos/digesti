@@ -8,7 +8,18 @@ import SwiftData
 
 struct CalendarView: View {
     // Get a list of episodes, reverse sorted by time
-    @Query(sort: \Episode.onset, order: .reverse) private var episodes: [Episode]
+    @Query(sort: \BloatingEpisode.onset, order: .reverse) private var bloatingEpisodes: [BloatingEpisode]
+    @Query(sort: \ConstipationEpisode.onset, order: .reverse) private var constipationEpisodes: [ConstipationEpisode]
+    @Query(sort: \StoolEpisode.onset, order: .reverse) private var stoolEpisodes: [StoolEpisode]
+    
+    private var episodes: [Episode] {
+        (
+            bloatingEpisodes.map(Episode.bloating) +
+            constipationEpisodes.map(Episode.constipation) +
+            stoolEpisodes.map(Episode.stool)
+        )
+        .sorted { $0.onset > $1.onset }
+    }
     
     // State to keep track of our ViewModel object
     @State private var viewModel = CalendarViewModel()
@@ -42,10 +53,7 @@ struct CalendarView: View {
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
         .navigationTitle("Calendar")
-        .onAppear{
-            viewModel.episodes = episodes
-        }
-        .onChange(of: episodes) {
+        .task{
             viewModel.episodes = episodes
         }
         .onChange(of: viewModel.selectedDate) {
@@ -57,7 +65,7 @@ struct CalendarView: View {
                 VStack {
                     ScrollView {
                         EpisodeView(
-                            episodeToView: viewModel.selectedDayEpisodes[currentIndex]
+                            episode: viewModel.selectedDayEpisodes[currentIndex]
                         )
                     }
                     

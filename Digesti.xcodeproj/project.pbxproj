@@ -10,7 +10,6 @@
 		7D311E6B2FCBA7B000E8C4B1 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D311E6A2FCBA7B000E8C4B1 /* WidgetKit.framework */; };
 		7D311E6D2FCBA7B000E8C4B1 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D311E6C2FCBA7B000E8C4B1 /* SwiftUI.framework */; };
 		7D311E7A2FCBA7B100E8C4B1 /* WidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 7D311E682FCBA7B000E8C4B1 /* WidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		7DDD04A62FC8AB370075C184 /* Digesti Watch.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 7DDD049C2FC8AB360075C184 /* Digesti Watch.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -20,13 +19,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = 7D311E672FCBA7B000E8C4B1;
 			remoteInfo = WidgetExtension;
-		};
-		7DDD04A42FC8AB370075C184 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 7D84A78C2F8EA439008C8016 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 7DDD049B2FC8AB360075C184;
-			remoteInfo = "Digesti Watch App";
 		};
 /* End PBXContainerItemProxy section */
 
@@ -58,7 +50,6 @@
 			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
 			dstSubfolderSpec = 16;
 			files = (
-				7DDD04A62FC8AB370075C184 /* Digesti Watch.app in Embed Watch Content */,
 			);
 			name = "Embed Watch Content";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -238,7 +229,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				7DDD04A52FC8AB370075C184 /* PBXTargetDependency */,
 				7D311E792FCBA7B100E8C4B1 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
@@ -370,11 +360,6 @@
 			isa = PBXTargetDependency;
 			target = 7D311E672FCBA7B000E8C4B1 /* WidgetExtension */;
 			targetProxy = 7D311E782FCBA7B100E8C4B1 /* PBXContainerItemProxy */;
-		};
-		7DDD04A52FC8AB370075C184 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 7DDD049B2FC8AB360075C184 /* Digesti Watch */;
-			targetProxy = 7DDD04A42FC8AB370075C184 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 

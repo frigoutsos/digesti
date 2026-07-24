@@ -1,11 +1,11 @@
 //
-//  CustomButton.swift
+//  ToggleButton.swift
 //
 //  This struct creates a button to display a string.
 //
 import SwiftUI
 
-struct CustomButton: View {
+struct ToggleButton: View {
     // What text this button should display
     let text: String
     

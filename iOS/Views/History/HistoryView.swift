@@ -12,7 +12,18 @@ struct HistoryView: View {
     @Environment(\.modelContext) private var modelContext
     
     // Get a list of episodes, reverse sorted by time
-    @Query(sort: \Episode.onset, order: .reverse) private var episodes: [Episode]
+    @Query(sort: \BloatingEpisode.onset, order: .reverse) private var bloatingEpisodes: [BloatingEpisode]
+    @Query(sort: \ConstipationEpisode.onset, order: .reverse) private var constipationEpisodes: [ConstipationEpisode]
+    @Query(sort: \StoolEpisode.onset, order: .reverse) private var stoolEpisodes: [StoolEpisode]
+    
+    private var episodes: [Episode] {
+        (
+            bloatingEpisodes.map(Episode.bloating) +
+            constipationEpisodes.map(Episode.constipation) +
+            stoolEpisodes.map(Episode.stool)
+        )
+        .sorted { $0.onset > $1.onset }
+    }
     
     // Get a list of meals, reverse sorted by time
     @Query(sort: \Meal.date, order: .reverse) private var meals: [Meal]
@@ -78,27 +89,18 @@ struct HistoryView: View {
                         .foregroundStyle(.secondary)
                 }
                 
-                ForEach(viewModel.filteredEpisodes(from: episodes)) { episode in
+                ForEach(viewModel.filteredEpisodes(from: episodes), id: \.onset) { episode in
                     VStack(alignment: .leading, spacing: 6) {
-                        Text(episode.onset.formatted(date: .long, time: .shortened))
+                        Text(episode.title)
                             .font(.headline)
-                        
-                        Divider()
-                        
-                        Text("Bowel movement: \(episode.movement.formatted(date: .long, time: .shortened))")
+
+                        Text("\(episode.timingLabel): \(episode.onset.formatted(date: .long, time: .shortened))")
                             .font(.subheadline)
+                            .foregroundStyle(.secondary)
                         
-                        Text("Intensity: \(episode.intensity) / 10")
+                        episode.rowPreview
                             .font(.subheadline)
-                        
-                        Text("Stress: \(episode.stress) / 10")
-                            .font(.subheadline)
-                        
-                        if episode.bloating {
-                            Text("Bloating")
-                                .font(.subheadline)
-                                .foregroundStyle(.accent)
-                        }
+                            .foregroundStyle(.secondary)
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .contentShape(Rectangle())
@@ -109,11 +111,34 @@ struct HistoryView: View {
                 }
                 // Delete an episode from the app's data
                 .onDelete { indexSet in
-                    indexSet.map { viewModel.filteredEpisodes(from: episodes)[$0] }.forEach(modelContext.delete)
+                    indexSet
+                        .map { episodes[$0] }
+                        .forEach { $0.delete(from: modelContext) }
                     try? modelContext.save()
                 }
                 .sheet(item: $viewModel.selectedEpisode) { episode in
                     episodeSheet(for: episode)
+                }
+            }
+        }
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                Menu {
+                    ForEach(EpisodeFilter.allCases) { filter in
+                        Button {
+                            viewModel.filter = filter
+                        } label: {
+                            HStack {
+                                Text(filter.rawValue)
+                                
+                                if viewModel.filter == filter {
+                                    Image(systemName: "checkmark")
+                                }
+                            }
+                        }
+                    }
+                } label: {
+                    Image(systemName: "line.3.horizontal.decrease.circle")
                 }
             }
         }
@@ -126,7 +151,7 @@ struct HistoryView: View {
         NavigationStack {
             // Allow scrolling through summary view for those using larger text sizes
             ScrollView {
-                EpisodeView(episodeToView: episode)
+                EpisodeView(episode: episode)
             }
             .navigationTitle("Episode Summary")
             .navigationBarTitleDisplayMode(.inline)

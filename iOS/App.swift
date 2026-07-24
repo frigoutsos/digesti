@@ -22,6 +22,11 @@ struct MyApp: App {
                 .preferredColorScheme(selectedTheme.colorScheme)
         }
         // Set up the SwiftData model container
-        .modelContainer(for: [Episode.self, Meal.self])
+        .modelContainer(for: [
+            BloatingEpisode.self,
+            ConstipationEpisode.self,
+            StoolEpisode.self,
+            Meal.self
+        ])
     }
 }

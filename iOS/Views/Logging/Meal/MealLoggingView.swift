@@ -46,7 +46,7 @@ struct MealLoggingView: View {
                                 // Display each food in that category
                                 VStack(spacing: 10) {
                                     ForEach(viewModel.categorizedFoods[categoryName] ?? [], id: \.id) { food in
-                                        CustomButton(text: food.name, isSelected: viewModel.isSelected(food: food)) {
+                                        ToggleButton(text: food.name, isSelected: viewModel.isSelected(food: food)) {
                                             // Toggle selection logic
                                             if (viewModel.isSelected(food: food)) {
                                                 viewModel.input.foods.removeAll(where: { $0.id == food.id })
@@ -77,7 +77,7 @@ struct MealLoggingView: View {
                                 
                                 VStack(spacing: 10) {
                                     ForEach(viewModel.results) { food in
-                                        CustomButton(text: food.name, isSelected: viewModel.isSelected(food: food)) {
+                                        ToggleButton(text: food.name, isSelected: viewModel.isSelected(food: food)) {
                                             // Toggle selection logic
                                             if (viewModel.isSelected(food: food)) {
                                                 viewModel.input.foods.removeAll(where: { $0.id == food.id })

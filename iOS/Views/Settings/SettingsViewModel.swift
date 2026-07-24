@@ -14,10 +14,15 @@ class SettingsViewModel {
     // Function to clear the app's data
     func clearAllData(modelContext: ModelContext) {
         do {
-            let episodes = try modelContext.fetch(FetchDescriptor<Episode>())
+            let bloatingEpisodes = try modelContext.fetch(FetchDescriptor<BloatingEpisode>())
+            let constipationEpisodes = try modelContext.fetch(FetchDescriptor<ConstipationEpisode>())
+            let stoolEpisodes = try modelContext.fetch(FetchDescriptor<StoolEpisode>())
             let meals = try modelContext.fetch(FetchDescriptor<Meal>())
 
-            for episode in episodes { modelContext.delete(episode) }
+            for bloat in bloatingEpisodes { modelContext.delete(bloat) }
+            for constip in bloatingEpisodes { modelContext.delete(constip) }
+            for stool in bloatingEpisodes { modelContext.delete(stool) }
+            
             for meal in meals { modelContext.delete(meal) }
 
             try modelContext.save()
