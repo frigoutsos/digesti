@@ -34,32 +34,20 @@ struct MealLoggingView: View {
                 // Display all content, or just results if searching
                 ScrollView {
                     if viewModel.searchText.isEmpty {
-                        VStack(alignment: .leading, spacing: 20) {
-                            // Display each food category
-                            ForEach(viewModel.categorizedFoods.keys.sorted(), id: \.self) { categoryName in
-                                // Category header
-                                Text("\(categoryName)")
-                                    .font(.title2)
-                                    .fontWeight(.bold)
-                                    .padding(.top, 10)
-                                
-                                // Display each food in that category
-                                VStack(spacing: 10) {
-                                    ForEach(viewModel.categorizedFoods[categoryName] ?? [], id: \.id) { food in
-                                        CustomButton(text: food.name, isSelected: viewModel.isSelected(food: food)) {
-                                            // Toggle selection logic
-                                            if (viewModel.isSelected(food: food)) {
-                                                viewModel.input.foods.removeAll(where: { $0.id == food.id })
-                                            } else {
-                                                viewModel.input.foods.append(food)
-                                            }
-                                        }
-                                        .sensoryFeedback(.selection, trigger: viewModel.input.foods.contains(where: { $0.id == food.id }))
+                        VStack(spacing: 10) {
+                            ForEach(viewModel.sortedFoods) { food in
+                                CustomButton(text: food.name, isSelected: viewModel.isSelected(food: food)) {
+                                    // Toggle selection logic
+                                    if (viewModel.isSelected(food: food)) {
+                                        viewModel.input.foods.removeAll(where: { $0.id == food.id })
+                                    } else {
+                                        viewModel.input.foods.append(food)
                                     }
                                 }
-                                .padding(.horizontal)
+                                .sensoryFeedback(.selection, trigger: viewModel.input.foods.contains(where: { $0.id == food.id }))
                             }
                         }
+                        .padding(.horizontal)
                     } else {
                         VStack(alignment: .leading, spacing: 20) {
                             if viewModel.results.isEmpty {

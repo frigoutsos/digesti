@@ -4,10 +4,11 @@
 //  This view structures the layout of the app.
 //
 import SwiftUI
+//import SwiftData
 
 struct ContentView: View {
     // Get access to the model context to pass to the watch handler
-    @Environment(\.modelContext) private var modelContext
+//    @Environment(\.modelContext) private var modelContext
 
     // Load our navigation manager
     @State private var navigationManager = NavigationManager.shared
@@ -63,10 +64,10 @@ struct ContentView: View {
                 }
             }
             .tint(.accent)
-            .task {
-                // Start WatchConnectivity handler
-                WatchConnectivityHandler.shared.start(with: modelContext)
-            }
+//            .task {
+//                // Start WatchConnectivity handler
+//                WatchConnectivityHandler.shared.start(with: modelContext)
+//            }
         }
         .environment(navigationManager)
         .onAppear {

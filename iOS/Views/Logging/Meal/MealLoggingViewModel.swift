@@ -20,30 +20,11 @@ class MealLoggingViewModel {
     // Track if we saved the meal yet
     var didSave = false
 
-    // Get all categories of the foods in our list
-    func allCategories() -> [String] {
-        // Flatten into a long array
-        let allCategoryNames = allFoods.flatMap { $0.category }
-        
-        // Remove duplicates using a set and return as an array
-        return Array(Set(allCategoryNames)).sorted()
-    }
-
-    // Helper to group all foods by category name
-    var categorizedFoods: [String: [Food]] {
-        var dictionary: [String: [Food]] = [:]
-        
-        for categoryName in allCategories() {
-            // Get the list of food in each category
-            let foodsInThisCategory = allFoods.filter { food in
-                food.category.contains(categoryName)
-            }
-            
-            // Store the result in the dictionary
-            dictionary[categoryName] = foodsInThisCategory
+    // Present the uncategorized dataset in a predictable order.
+    var sortedFoods: [Food] {
+        allFoods.sorted {
+            $0.name.localizedCaseInsensitiveCompare($1.name) == .orderedAscending
         }
-            
-        return dictionary
     }
     
     // Computed property to build the meal on-the-fly
@@ -58,13 +39,7 @@ class MealLoggingViewModel {
     // Scored search for foods
     var results: [Food] {
         allFoods.map { food in
-            let fields = [food.name] + food.searchMatches + food.category
-
-            let bestScore = fields.map { field in
-                score(searchText, field)
-            }.max() ?? 0
-
-            return (food, bestScore)
+            (food, score(searchText, food.description))
         }
         .filter { $0.1 > 0 }
         .sorted { $0.1 > $1.1 }

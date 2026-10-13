@@ -60,7 +60,6 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "7DDD049B2FC8AB360075C184"
             BuildableName = "Digesti Watch.app"
-            BlueprintName = "Digesti Watch"
             ReferencedContainer = "container:Digesti.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -77,7 +76,6 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "7DDD049B2FC8AB360075C184"
             BuildableName = "Digesti Watch.app"
-            BlueprintName = "Digesti Watch"
             ReferencedContainer = "container:Digesti.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>

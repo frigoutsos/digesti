@@ -1,16 +1,16 @@
+////
+////  WatchApp.swift
+////
+////  This contains the watch app's top level logic.
+////
 //
-//  WatchApp.swift
+//import SwiftUI
 //
-//  This contains the watch app's top level logic.
-//
-
-import SwiftUI
-
-@main
-struct WatchApp: App {
-    var body: some Scene {
-        WindowGroup {
-            ContentView()
-        }
-    }
-}
+//@main
+//struct WatchApp: App {
+//    var body: some Scene {
+//        WindowGroup {
+//            ContentView()
+//        }
+//    }
+//}

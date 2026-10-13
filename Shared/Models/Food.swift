@@ -6,16 +6,40 @@
 import Foundation
 
 struct Food: Codable, Hashable, Identifiable {
-    let id: String
     let name: String
-    let searchMatches: [String]
-    let category: [String]
+    let description: String
     let highFodmap: Bool
+
+    // The dataset does not provide an ID, and each long description is unique.
+    var id: String { description }
+
+    private enum CodingKeys: String, CodingKey {
+        case name
+        case description
+        case highFodmap
+        case legacyID = "id"
+    }
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        name = try container.decode(String.self, forKey: .name)
+        highFodmap = try container.decode(Bool.self, forKey: .highFodmap)
+        description = try container.decodeIfPresent(String.self, forKey: .description)
+            ?? container.decodeIfPresent(String.self, forKey: .legacyID)
+            ?? name
+    }
+
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(name, forKey: .name)
+        try container.encode(description, forKey: .description)
+        try container.encode(highFodmap, forKey: .highFodmap)
+    }
 }
 
 func getFoods() -> [Food] {
-    guard let url = Bundle.main.url(forResource: "foods", withExtension: "json") else {
-        print("Error: foods.json not found!.")
+    guard let url = Bundle.main.url(forResource: "data", withExtension: "json") else {
+        print("Error: data.json not found.")
         return []
     }
     
